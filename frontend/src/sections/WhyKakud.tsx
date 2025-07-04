@@ -25,15 +25,15 @@ const whyItems = [
 
 const WhyKakud = () => {
     return (
-        <div className="w-full py-[2rem] sm:py-[3.5rem] px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] xl:px-[6rem] font-inter bg-purple-400">
-            <div className="bg-green-300 pb-12">
+        <div className="w-full py-[2rem] sm:py-[3.5rem] px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] xl:px-[6rem] font-inter">
+            <div className="pb-12">
                 <h2 className="text-[2rem] sm:text-[2.5rem]">Why Choose Kakud Agri?</h2>
-                <h3 className="text-[#1E1E1E] text-lg sm:text-xl sm:leading-[1.8rem] lg:text-2xl lg:leading-[2rem]">
+                <h3 className="text-[#1E1E1E] text-lg sm:text-xl sm:leading-[1.8rem]">
                     Discover the exceptional services offered by Kakud Agri. From high-quality products sourced from trusted manufacturers to expert consultation provided by our agricultural specialists, we are committed to delivering top-notch solutions for all your agricultural goals.
                 </h3>
             </div>
 
-            <div className="w-full space-y-6 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 bg-yellow-400">
+            <div className="w-full space-y-6 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {whyItems.map((item, index) => (
                     <KakudAdvantageCard key={index} {...item} />
                 ))}
@@ -45,7 +45,7 @@ const WhyKakud = () => {
 export const KakudAdvantageCard = ({ title, description, image }: { title: any, description: any, image: any }) => (
     <div className="w-full xs:w-[22rem] md:w-full mx-auto flex flex-col gap-6 border border-[#A69F9F] rounded-xl p-4">
         <div
-            className="w-full xs:w-[20rem] sm:w-full object-cover object-center bg-no-repeat h-[10.75rem] rounded-xl mx-auto bg-green-400"
+            className="w-full xs:w-[20rem] sm:w-full object-cover object-center bg-no-repeat h-[10.75rem] rounded-xl mx-auto"
             style={{
                 backgroundImage: `url(${image})`,
                 backgroundPosition: "center top",

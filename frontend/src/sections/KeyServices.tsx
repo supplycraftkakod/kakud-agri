@@ -27,13 +27,13 @@ const keyServicesData = [
 
 const KeyServices = () => {
     return (
-        <div className="w-full py-[2rem] sm:py-[3.5rem] px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] xl:px-[6rem] font-inter bg-orange-400">
-            <div className="bg-green-300 pb-12">
+        <div className="w-full py-[2rem] sm:py-[3.5rem] px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] xl:px-[6rem] font-inter">
+            <div className="pb-12">
                 <h2 className="text-[2.2rem] sm:text-[2.5rem]">Key Services</h2>
                 <h3 className="text-[1.8rem] sm:text-[2rem] text-[#1E1E1E] leading-none">Crop Management</h3>
             </div>
 
-            <div className="w-full space-y-6 sm:space-y-0 sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-6 bg-yellow-400">
+            <div className="w-full space-y-6 sm:space-y-0 sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {keyServicesData.map((service) => (
                     <KeyServiceCard
                         key={service.id}

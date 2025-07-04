@@ -84,8 +84,8 @@ const Testimonials = () => {
     };
 
     return (
-        <div className="w-full py-[2rem] sm:py-[3.5rem] font-inter bg-red-400">
-            <div className="w-full py-36 sm:h-[27rem] px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] xl:px-[6rem] flex items-center justify-between bg-[#F6F6F6] overflow-hidden">
+        <div className="w-full py-[2rem] sm:py-[3.5rem] font-inter">
+            <div className="w-full py-36 sm:h-[27rem] px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] xl:px-[6rem] flex items-center justify-between bg-[#e2e2e2] overflow-hidden">
                 <img
                     src={leftArrow}
                     alt="left"

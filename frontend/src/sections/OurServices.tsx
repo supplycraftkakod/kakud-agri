@@ -31,10 +31,10 @@ const services = [
 
 const OurServices = () => {
     return (
-        <div className="w-full py-[2rem] sm:py-[3.5rem] px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] xl:px-[6rem] font-inter bg-blue-300">
-            <h2 className="font-playfair italic text-[2.25rem] text-center bg-green-300">Our Services</h2>
+        <div className="w-full py-[2rem] sm:py-[3.5rem] px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] xl:px-[6rem] font-inter">
+            <h2 className="font-playfair italic text-[2.25rem] text-center">Our Services</h2>
 
-            <div className="pt-[2rem] flex flex-col gap-16 bg-orange-400">
+            <div className="pt-[2rem] flex flex-col gap-16">
                 {services.map((service, index) => (
                     <ServiceCard key={index} {...service} />
                 ))}
@@ -44,7 +44,7 @@ const OurServices = () => {
 };
 
 const ServiceCard = ({ id, title, description, buttonText, image }: { id: any, title: any, description: any, buttonText: any, image: any }) => (
-    <div className="w-full bg-purple-400 flex flex-col-reverse gap-y-6 lg:grid lg:grid-cols-2 gap-x-4">
+    <div className="w-full flex flex-col-reverse gap-y-6 lg:grid lg:grid-cols-2 gap-x-4">
         <div className="flex flex-col justify-start gap-6">
             <div className="space-y-1 sm:space-y-0">
                 <h4 className="text-xl sm:text-2xl text-[#505050]">{id}</h4>
@@ -59,7 +59,7 @@ const ServiceCard = ({ id, title, description, buttonText, image }: { id: any, t
                 </button>
             </div>
         </div>
-        <div className="w-[95%] xs:w-[24rem] xs:h-[24rem] xl:w-[27.5rem] xl:h-[27.5rem] m-auto lg:mx-0 rounded-2xl overflow-hidden bg-green-200 justify-self-end">
+        <div className="w-[95%] xs:w-[24rem] xs:h-[24rem] xl:w-[27.5rem] xl:h-[27.5rem] m-auto lg:mx-0 rounded-2xl overflow-hidden justify-self-end">
             <img src={image} alt={title} className="w-full h-full object-cover object-center" />
         </div>
     </div>

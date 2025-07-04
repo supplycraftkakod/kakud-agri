@@ -17,7 +17,7 @@ const KakudAgriMission = () => {
     }, []);
 
     return (
-        <div className="w-full py-[2rem] sm:py-[3.5rem]  font-inter bg-green-300">
+        <div className="w-full py-[2rem] sm:py-[3.5rem] font-inter">
             <div
                 className="min-h-screen bg-no-repeat bg-cover flex flex-col overflow-hidden relative px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] xl:px-[6rem]"
                 style={{

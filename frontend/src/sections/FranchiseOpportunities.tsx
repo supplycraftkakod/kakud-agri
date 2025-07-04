@@ -26,15 +26,15 @@ const whyItems = [
 
 const FranchiseOpportunities = () => {
     return (
-        <div className="w-full py-[2rem] sm:py-[3.5rem] px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] xl:px-[6rem] font-inter bg-purple-400">
-            <div className="bg-green-300 pb-12">
+        <div className="w-full pb-[5rem] sm:pb-[7rem] py-[2rem] sm:py-[3.5rem] px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] xl:px-[6rem] font-inter">
+            <div className="pb-12">
                 <h2 className="text-[2rem] sm:text-[2.5rem]">Franchise Opportunities</h2>
-                <h3 className="text-[#1E1E1E] text-lg sm:text-xl sm:leading-[1.8rem] lg:text-2xl lg:leading-[2rem]">
+                <h3 className="text-[#1E1E1E] text-lg sm:text-xl sm:leading-[1.8rem]">
                     Explore our franchise opportunities at Kakud. Join us and become a part of our exclusive retail franchise model or opt for our non-exclusive retail franchise model.
                 </h3>
             </div>
 
-            <div className="w-full space-y-6 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 bg-yellow-400">
+            <div className="w-full space-y-6 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {whyItems.map((item, index) => (
                     <KakudAdvantageCard key={index} {...item} />
                 ))}
