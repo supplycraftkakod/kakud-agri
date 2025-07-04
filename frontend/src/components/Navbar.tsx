@@ -13,7 +13,7 @@ export default function Navbar() {
     return (
         <div className="relative font-manrope ">
             {/* Navbar */}
-            <div className="hidden w-[95%] md:flex justify-between items-center px-10 h-[70px] bg-white bg-opacity-90 absolute top-6 left-1/2 transform -translate-x-1/2 rounded-full shadow-lg z-10">
+            <div className="hidden w-[95%] md:flex justify-between items-center px-10 h-[70px] backdrop-blur-md bg-white/40  bg-opacity-90 absolute top-6 left-1/2 transform -translate-x-1/2 rounded-full shadow-lg z-10">
                 <div className="flex items-center gap-3">
                     <Link to={"/"} className="flex items-center gap-3">
                         <span className="font-black text-lg">KAKUD</span>
