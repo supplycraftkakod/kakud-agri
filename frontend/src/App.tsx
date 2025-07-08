@@ -5,6 +5,7 @@ import SignUp from './auth/SignUp';
 import SignIn from './auth/SignIn';
 import Products from './pages/Products';
 import ProductDetails from './pages/ProductDetails';
+import AdminHome from './admin/AdminHome';
 
 function App() {
   const token = localStorage.getItem("token");
@@ -19,6 +20,7 @@ function App() {
         <Route path="/products" element={<Products />} />
         <Route path="/products/:id" element={<ProductDetails />} />
 
+        <Route path="/admin" element={<AdminHome />} />
       </Routes>
 
       <Toaster
