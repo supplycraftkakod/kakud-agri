@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import service1Img from "../assets/images/service-1.png";
 import service2Img from "../assets/images/service-2.png";
 import service3Img from "../assets/images/service-3.png";
@@ -54,9 +55,19 @@ const ServiceCard = ({ id, title, description, buttonText, image }: { id: any, t
                 <p className="text-xl leading-[2rem] xl:text-2xl xl:leading-[2.2rem] font-light">
                     {description}
                 </p>
-                <button className="w-fit text-xl sm:text-2xl px-6 sm:px-4 md:px-6 py-4 sm:py-2 rounded-full border lg:border-[#474747] flex items-center justify-center leading-none">
-                    {buttonText}
-                </button>
+                {
+                    buttonText === "Explore Products" ? (
+                        <Link to="/products">
+                            <button className="w-fit text-xl sm:text-2xl px-6 sm:px-4 md:px-6 py-4 sm:py-2 rounded-full border lg:border-[#474747] flex items-center justify-center leading-none">
+                                {buttonText}
+                            </button>
+                        </Link>
+                    ) : (
+                        <button className="w-fit text-xl sm:text-2xl px-6 sm:px-4 md:px-6 py-4 sm:py-2 rounded-full border lg:border-[#474747] flex items-center justify-center leading-none">
+                            {buttonText}
+                        </button>
+                    )
+                }
             </div>
         </div>
         <div className="w-[95%] xs:w-[24rem] xs:h-[24rem] xl:w-[27.5rem] xl:h-[27.5rem] m-auto lg:mx-0 rounded-2xl overflow-hidden justify-self-end">

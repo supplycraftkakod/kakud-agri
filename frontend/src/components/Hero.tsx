@@ -1,6 +1,7 @@
 import bgImage from "../assets/images/hero-image.png";
 import { useEffect, useState } from "react";
 import Navbar from "./Navbar";
+import { Link } from "react-router-dom";
 // import arrowRight from "../assets/svg/arrow-right-svg.svg"
 
 export default function Hero() {
@@ -43,9 +44,11 @@ export default function Hero() {
                         <button className="text-lg sm:text-xl px-8 sm:px-4 md:px-6 py-4 sm:py-2 rounded-full border text-white lg:text-black lg:border-[#767676] flex items-center justify-center leading-none backdrop-blur-md bg-white/20 border-white/20 shadow-lg">
                             Know More
                         </button>
-                        <button className="text-lg sm:text-xl px-8 sm:px-4 md:px-6 py-4 sm:py-2 rounded-full border text-white lg:text-black lg:border-[#767676] flex items-center justify-center leading-none backdrop-blur-md bg-white/20 border-white/20 shadow-lg">
-                            Explore Products
-                        </button>
+                        <Link to={"/products"}>
+                            <button className="text-lg sm:text-xl px-8 sm:px-4 md:px-6 py-4 sm:py-2 rounded-full border text-white lg:text-black lg:border-[#767676] flex items-center justify-center leading-none backdrop-blur-md bg-white/20 border-white/20 shadow-lg">
+                                Explore Products
+                            </button>
+                        </Link>
                     </div>
                 </div>
 
