@@ -3,10 +3,10 @@ import productGraph from "../../assets/images/product-graph.png"
 
 const AdminDashboard = () => {
     return (
-        <div className="font-inter flex flex-col gap-6">
-            <div className="w-full flex items-start flex-wrap gap-4">
+        <div className="font-inter flex flex-col gap-10">
+            <div className="w-full flex items-start flex-wrap gap-4 lg:grid grid-cols-3">
 
-                <div className="w-full sm:w-[340px]">
+                <div className="w-full sm:w-[340px] lg:w-full">
                     <div className="flex items-start justify-between pb-2 border-b border-[#A69F9F] ">
                         <h2 className="text-xl">Profile</h2>
                         <SquarePen className="w-6 h-6 cursor-pointer" />
@@ -19,7 +19,7 @@ const AdminDashboard = () => {
                     </div>
                 </div>
 
-                <div className="sm:w-[210px] bg-[#DBE4FF] px-6 py-4 rounded-xl flex flex-col gap-6">
+                <div className="sm:w-[210px] lg:min-w-full bg-[#DBE4FF] px-6 py-4 rounded-xl flex flex-col gap-6">
                     <Eye className="w-9 h-9" />
                     <div>
                         <h2 className="font-medium text-xl">24.6K</h2>
@@ -27,7 +27,7 @@ const AdminDashboard = () => {
                     </div>
                 </div>
 
-                <div className="sm:w-[210px] bg-[#FFF1DB] px-6 py-4 rounded-xl flex flex-col gap-6">
+                <div className="sm:w-[210px] lg:min-w-full bg-[#FFF1DB] px-6 py-4 rounded-xl flex flex-col gap-6">
                     <FileImage className="w-9 h-9" />
                     <div>
                         <h2 className="font-medium text-xl">147</h2>
@@ -54,7 +54,7 @@ const AdminDashboard = () => {
                         <h2 className="text-xl">Most viewed products</h2>
                     </div>
 
-                    <div className="pt-4">
+                    <div className="pt-4 flex flex-col justify-between gap-2">
                         <div className="text-lg flex items-start justify-between">
                             <h3>1. Analic</h3>
                             <h3>20K</h3>
