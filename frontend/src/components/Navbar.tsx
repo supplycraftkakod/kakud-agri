@@ -1,10 +1,16 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
+import { useLocation } from "react-router-dom";
 
 export default function Navbar() {
     const token = localStorage.getItem("token");
     const [isOpen, setIsOpen] = useState(false);
+
+    const location = useLocation();
+
+    const isHome = location.pathname === "/" || location.pathname === "/home";
+    const shadowClass = isHome ? "shadow-lg" : "shadow-none";
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
@@ -13,7 +19,7 @@ export default function Navbar() {
     return (
         <div className="relative font-manrope ">
             {/* Navbar */}
-            <div className="hidden w-[95%] md:flex justify-between items-center px-10 h-[70px] backdrop-blur-md bg-white/40  bg-opacity-90 absolute top-6 left-1/2 transform -translate-x-1/2 rounded-full shadow-lg z-10">
+            <div className={`hidden w-[95%] md:flex sha justify-between items-center px-10 h-[70px] backdrop-blur-md bg-white/40 bg-opacity-90 absolute top-6 left-1/2 transform -translate-x-1/2 rounded-full border border-gray-400 ${shadowClass} z-10`}>
                 <div className="flex items-center gap-3">
                     <Link to={"/"} className="flex items-center gap-3">
                         <span className="font-black text-lg">KAKUD</span>
