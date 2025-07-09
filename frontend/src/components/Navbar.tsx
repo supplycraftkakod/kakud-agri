@@ -1,10 +1,21 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../utils/logout";
 
 export default function Navbar() {
-    const token = localStorage.getItem("token");
+    const authStorage = localStorage.getItem("auth");
+    let token;
+    let userRole;
+
+    if (authStorage) {
+        const authData = JSON.parse(authStorage);
+        token = authData.token;
+        userRole = authData.role;
+    }
+
     const [isOpen, setIsOpen] = useState(false);
 
     const location = useLocation();
@@ -14,6 +25,19 @@ export default function Navbar() {
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
+    };
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        await logoutUser({
+            dispatch,
+            navigate,
+            showToast: true,
+            revokeRefreshToken: false, // only if your backend supports it
+            refreshToken: localStorage.getItem('refreshToken') || '',
+        });
     };
 
     return (
@@ -40,8 +64,11 @@ export default function Navbar() {
                     <a href="#features" className="hover:text-black">Contact</a>
                     {
                         token ? (
-                            <div>
-                                <Link to={"/profile"}><button className="bg-black text-white px-4 py-2 rounded-full text-sm">Account</button></Link>
+                            <div className="flex items-center gap-4">
+                                <button onClick={handleLogout} className="bg-red-500 text-white px-4 py-2 rounded-full text-sm">
+                                    Logout
+                                </button>
+                                <Link to={`${userRole === "ADMIN" ? "/admin" : "/profile"}`}><button className="bg-black text-white px-4 py-2 rounded-full text-sm">{userRole === "ADMIN" ? "Dashboard" : "Profile"}</button></Link>
                             </div>
                         ) : (
                             <div className="flex items-center gap-4">
@@ -74,9 +101,16 @@ export default function Navbar() {
 
                         {
                             token ? (
-                                <Link to={"/profile"} onClick={toggleMenu}>
-                                    <button className="bg-black text-white px-4 py-2 rounded-full text-sm w-full">Account</button>
-                                </Link>
+                                <div className="w-full grid grid-cols-2 gap-6">
+                                    <button onClick={handleLogout} className="bg-red-500 text-white px-4 py-2 rounded-full text-sm ">Logout</button>
+                                    <Link
+                                        to={`${userRole === "ADMIN" ? "/admin" : "/profile"}`}
+                                        onClick={toggleMenu}
+                                        className="bg-black text-white px-4 py-2 rounded-full text-sm text-center">
+                                        <button>{userRole === "ADMIN" ? "Dashboard" : "Profile"}</button>
+                                    </Link>
+                                </div>
+
                             ) : (
                                 <>
                                     <Link to={"/signin"} onClick={toggleMenu}>

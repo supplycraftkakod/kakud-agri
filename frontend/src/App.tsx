@@ -6,9 +6,10 @@ import SignIn from './auth/SignIn';
 import Products from './pages/Products';
 import ProductDetails from './pages/ProductDetails';
 import AdminHome from './admin/AdminHome';
+import ProtectedRoute from './admin/components/ProtectedRoute';
 
 function App() {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("auth");
 
   return (
     <BrowserRouter>
@@ -20,7 +21,7 @@ function App() {
         <Route path="/products" element={<Products />} />
         <Route path="/products/:id" element={<ProductDetails />} />
 
-        <Route path="/admin" element={<AdminHome />} />
+        <Route path="/admin" element={<ProtectedRoute allowedRoles={['ADMIN']}><AdminHome /></ProtectedRoute>} />
       </Routes>
 
       <Toaster

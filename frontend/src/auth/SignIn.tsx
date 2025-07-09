@@ -9,6 +9,8 @@ import { BE_URL } from "../../config"
 import showIcon from "../assets/icons/show.png"
 import hideIcon from "../assets/icons/hide.png"
 import Navbar from '../components/Navbar';
+import { useDispatch } from 'react-redux';
+import { setAuth } from '../redux/slices/authSlice';
 
 const SignIn: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -16,23 +18,29 @@ const SignIn: React.FC = () => {
     const [loading, setLoading] = useState(false);
     const [isShowHide, setIsShowHide] = useState(false);
 
+    const dispatch = useDispatch();
+
     const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
         try {
-            const response = await axios.post(`${BE_URL}/api/v1/auth/login`, {
+            const response = await axios.post<any>(`${BE_URL}/api/v1/auth/login`, {
                 email,
                 password,
             });
-            //@ts-ignore
-            localStorage.setItem('token', response.data.token);
-            toast.success('Signin successfully!')
-            setLoading(false);
-            navigate("/")
+
+            const { token, role, userId, email: userEmail } = response.data;
+
+            localStorage.setItem('auth', JSON.stringify({ token, role, userId, email: userEmail }));
+            dispatch(setAuth({ token, role, userId, email: userEmail }));
+
+            toast.success('Signin successfully!');
+            navigate('/');
         } catch (error) {
-            toast.error('Please check your email or password!')
+            toast.error('Please check your email or password!');
+        } finally {
             setLoading(false);
         }
     };

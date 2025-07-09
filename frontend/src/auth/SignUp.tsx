@@ -9,6 +9,8 @@ import { BE_URL } from '../../config';
 import showIcon from "../assets/icons/show.png"
 import hideIcon from "../assets/icons/hide.png"
 import Navbar from '../components/Navbar';
+import { useDispatch } from 'react-redux';
+import { setAuth } from '../redux/slices/authSlice';
 
 const SignUp: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -18,33 +20,45 @@ const SignUp: React.FC = () => {
     const [loading, setLoading] = useState(false);
     const [isShowHide, setIsShowHide] = useState(false);
 
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setLoading(true)
+        setLoading(true);
+
         if (password.length < 8) {
-            toast.error('Password must be at least 8 characters long!')
-            setLoading(false)
+            toast.error('Password must be at least 8 characters long!');
+            setLoading(false);
             return;
         }
+
         try {
-            const response = await axios.post(`${BE_URL}/api/v1/auth/signup`, {
+            const response = await axios.post<any>(`${BE_URL}/api/v1/auth/signup`, {
                 email,
                 password,
                 name,
                 phone
             });
-            // @ts-ignore
-            const { token } = response.data;
-            localStorage.setItem("token", token);
-            toast.success("Account Created!")
-            setLoading(false);
+
+            const { token, role, userId, email: userEmail } = response.data;
+
+            const authData = {
+                token,
+                role,
+                userId,
+                email: userEmail,
+            };
+
+            localStorage.setItem('auth', JSON.stringify(authData));
+            dispatch(setAuth(authData));
+
+            toast.success("Account Created!");
             navigate("/");
         } catch (error) {
-            setLoading(false);
             toast.error('Error during signup');
-            // console.error(error);
+        } finally {
+            setLoading(false);
         }
     };
 
