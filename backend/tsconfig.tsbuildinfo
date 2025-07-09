@@ -1,0 +1,1 @@
+{"root":["./src/index.ts","./src/prisma.ts","./src/types.d.ts","./src/controllers/auth.controller.ts","./src/middlewares/auth.middleware.ts","./src/routes/auth.route.ts","./src/routes/index.ts","./src/utils/hash.ts","./src/utils/passport.ts"],"version":"5.8.2"}
