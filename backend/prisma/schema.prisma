@@ -20,6 +20,56 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
+model Product {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  category    String
+  imageUrl    String
+  description String
+  lastUpdated DateTime
+
+  about             AboutPoint[]       @relation("ProductAbout")
+  benefits          BenefitPoint[]     @relation("ProductBenefits")
+  activeIngredients ActiveIngredient[] @relation("ProductIngredients")
+  formulationTypes  FormulationType[]  @relation("ProductFormulations")
+  crops             Crop[]             @relation("ProductCrops")
+}
+
+model AboutPoint {
+  id        Int     @id @default(autoincrement())
+  content   String
+  product   Product @relation("ProductAbout", fields: [productId], references: [id])
+  productId Int
+}
+
+model BenefitPoint {
+  id        Int     @id @default(autoincrement())
+  content   String
+  product   Product @relation("ProductBenefits", fields: [productId], references: [id])
+  productId Int
+}
+
+model ActiveIngredient {
+  id        Int     @id @default(autoincrement())
+  content   String
+  product   Product @relation("ProductIngredients", fields: [productId], references: [id])
+  productId Int
+}
+
+model FormulationType {
+  id        Int     @id @default(autoincrement())
+  content   String
+  product   Product @relation("ProductFormulations", fields: [productId], references: [id])
+  productId Int
+}
+
+model Crop {
+  id      Int     @id @default(autoincrement())
+  content String  @unique
+  product Product @relation("ProductCrops", fields: [cropId], references: [id])
+  cropId  Int
+}
+
 enum Role {
   ADMIN
   USER

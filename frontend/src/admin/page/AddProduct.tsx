@@ -1,7 +1,15 @@
-import { ImageUp, Plus } from "lucide-react"
+import { ImageUp, Plus } from "lucide-react";
 import { useState } from "react";
+import axios from "axios";
+import { BE_URL } from "../../../config";
+import toast from "react-hot-toast";
 
 const AddProduct = () => {
+  const [image, setImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [category, setCategory] = useState("");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
   const [about, setAbout] = useState([""]);
   const [benefits, setBenefits] = useState([""]);
   const [activeIngredients, setActiveIngredients] = useState([""]);
@@ -9,17 +17,14 @@ const AddProduct = () => {
   const [crop, setCrop] = useState([""]);
 
   const addInput = (type: "about" | "benefits" | "activeIngredients" | "formulationType" | "crop") => {
-    if (type === "about") {
-      setAbout([...about, ""]);
-    } else if (type === "benefits") {
-      setBenefits([...benefits, ""])
-    } else if (type === "activeIngredients") {
-      setActiveIngredients([...activeIngredients, ""])
-    } else if (type === "formulationType") {
-      setFormulationType([...formulationType, ""])
-    } else if (type === "crop") {
-      setCrop([...crop, ""])
-    }
+    const update = (setter: React.Dispatch<React.SetStateAction<string[]>>) =>
+      setter((prev) => [...prev, ""]);
+
+    if (type === "about") update(setAbout);
+    else if (type === "benefits") update(setBenefits);
+    else if (type === "activeIngredients") update(setActiveIngredients);
+    else if (type === "formulationType") update(setFormulationType);
+    else if (type === "crop") update(setCrop);
   };
 
   const handleInputChange = (
@@ -52,19 +57,48 @@ const AddProduct = () => {
     }
   };
 
+  const handleSubmit = async () => {
+    if (!image) {
+      alert("Please upload an image.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("category", category);
+    formData.append("description", description);
+    formData.append("image", image);
+    formData.append("about", JSON.stringify(about));
+    formData.append("benefits", JSON.stringify(benefits));
+    formData.append("activeIngredients", JSON.stringify(activeIngredients));
+    formData.append("formulationTypes", JSON.stringify(formulationType));
+    formData.append("crops", JSON.stringify(crop));
+
+    try {
+      toast.loading("Adding...")
+      const res = await axios.post<any>(`${BE_URL}/api/v1/admin/product`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+        },
+      });
+
+      if(res.data.message === "Product added successfully") {
+        toast.success("Product added successfully!")
+      }
+    } catch (err) {
+      toast.error("Failed to add product")
+    }
+  };
 
   return (
     <div className="w-full font-inter">
-
       {/* top */}
       <div className="w-full flex flex-col sm:flex-row items-center sm:items-stretch gap-8">
-
-        {/* <div className=" min-w-[150px] min-h-[150px] lg:min-w-[213px] lg:min-h-[186px] flex flex-col items-center justify-between p-3 lg:p-6 rounded-lg border border-dashed border-[#A69F9F] cursor-pointer">
-          <ImageUp className="w-[50px] h-[50px] lg:w-[86px] lg:h-[86px]" />
-          <h2 className="text-center">Click to upload image</h2>
-        </div> */}
-
-        <label htmlFor="image-upload" className="min-w-[150px] min-h-[150px] lg:min-w-[213px] lg:min-h-[186px] flex flex-col items-center justify-between p-3 lg:p-6 rounded-lg border border-dashed border-[#A69F9F] cursor-pointer">
+        <label
+          htmlFor="image-upload"
+          className="min-w-[150px] lg:min-w-[213px] flex flex-col items-center justify-center rounded-lg border border-dashed border-[#A69F9F] cursor-pointer"
+        >
           <input
             type="file"
             id="image-upload"
@@ -72,169 +106,112 @@ const AddProduct = () => {
             onChange={(e) => {
               const file = e.target.files?.[0];
               if (file) {
-                console.log("Selected image:", file);
-                // You can set to state or preview image here
+                setImage(file);
+                setImagePreview(URL.createObjectURL(file));
               }
             }}
             className="hidden"
           />
-          <ImageUp className="w-[50px] h-[50px] lg:w-[86px] lg:h-[86px]" />
-          <h2 className="text-center">Click to upload image</h2>
+          {
+            !imagePreview && (
+              <div className="flex flex-col items-center justify-cenrer p-3 lg:p-6 gap-8">
+                <ImageUp className="w-[50px] h-[50px] lg:w-[86px] lg:h-[86px]" />
+                <h2 className="text-center">Click to upload image</h2>
+              </div>
+            )
+          }
+          {imagePreview && (
+            <img
+              src={imagePreview}
+              alt="Preview"
+              className="mt-2 px-2 w-full h-auto object-contain rounded-lg"
+            />
+          )}
         </label>
 
-
-        <div className=" w-full flex flex-col gap-4">
+        <div className="w-full flex flex-col gap-4">
           <div className="w-full flex flex-col gap-2">
-            <input type="text" placeholder="Category" className="p-2 px-3 rounded-lg !outline-none border border-[#D9D9D9]" />
-            <input type="text" placeholder="Product Name" className="p-2 px-3 rounded-lg !outline-none border border-[#D9D9D9]" />
+            <h4 className="pl-1 text-gray-900">Product Category</h4>
+            <input
+              type="text"
+              placeholder="Category"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="p-2 px-3 rounded-lg !outline-none border border-[#D9D9D9]"
+            />
+            <h4 className="pl-1 mt-2 text-gray-900">Product Name</h4>
+            <input
+              type="text"
+              placeholder="Product Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="p-2 px-3 rounded-lg !outline-none border border-[#D9D9D9]"
+            />
           </div>
           <div>
-            <h4>Product Description</h4>
-            <textarea name="Description" placeholder="Description" id="" className="w-full p-2 px-3 rounded-lg !outline-none border border-[#D9D9D9]">
-            </textarea>
+            <h4 className="pl-1 pb-2 mt-1 text-gray-900">Product Description</h4>
+            <textarea
+              name="Description"
+              placeholder="Description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="w-full p-2 px-3 rounded-lg !outline-none border border-[#D9D9D9]"
+            />
           </div>
         </div>
-
       </div>
 
       {/* bottom */}
-      <div className="w-full mt-4 grid grid-cols-1 lg:grid-cols-2 gap-10 ">
-
-        {/* left */}
-        <div className="w-full flex flex-col gap-10 ">
-          {/* ABOUT */}
-          <div>
-            <h2 className="text-2xl">About</h2>
-            {about.map((_, index) => (
-              <div key={index} className="flex items-center gap-2 mt-2">
-                <input
-                  className="w-[90%] border-[1px] border-[#D9D9D9] !outline-none px-3 py-2 rounded-full placeholder:text-[0.9rem]"
-                  type="text"
-                  placeholder="Enter about info"
-                  value={about[index]}
-                  onChange={(e) => handleInputChange("about", index, e.target.value)}
-                />
-                {index === about.length - 1 && (
-                  <div
-                    className="w-8 h-8 p-1 rounded-full flex items-center justify-center bg-[#D9D9D9] cursor-pointer"
-                    onClick={() => addInput("about")}
-                  >
-                    <Plus />
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-
-          {/* BENEFITS */}
-          <div>
-            <h2 className="text-2xl">Benefits</h2>
-            {benefits.map((_, index) => (
-              <div key={index} className="flex items-center gap-2 mt-2">
-                <input
-                  className="w-[90%] border-[1px] border-[#D9D9D9] !outline-none px-3 py-2 rounded-full placeholder:text-[0.9rem]"
-                  type="text"
-                  placeholder="Enter benefit"
-                  value={benefits[index]}
-                  onChange={(e) => handleInputChange("benefits", index, e.target.value)}
-                />
-                {index === benefits.length - 1 && (
-                  <div
-                    className="w-8 h-8 p-1 rounded-full flex items-center justify-center bg-[#D9D9D9] cursor-pointer"
-                    onClick={() => addInput("benefits")}
-                  >
-                    <Plus />
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* right */}
+      <div className="w-full mt-8 mb-8 space-y-10 gap-10">
+        {/* Left Section */}
         <div className="w-full flex flex-col gap-10">
-          {/* ACTIVE INGREDIENTS */}
-          <div>
-            <h2 className="text-2xl">Active Ingredients</h2>
-            {activeIngredients.map((_, index) => (
-              <div key={index} className="flex items-center gap-2 mt-2">
-                <input
-                  className="w-[90%] border-[1px] border-[#D9D9D9] !outline-none px-3 py-2 rounded-full placeholder:text-[0.9rem]"
-                  type="text"
-                  placeholder="Enter ingredient"
-                  value={activeIngredients[index]}
-                  onChange={(e) => handleInputChange("activeIngredients", index, e.target.value)}
-                />
-                {index === activeIngredients.length - 1 && (
-                  <div
-                    className="w-8 h-8 p-1 rounded-full flex items-center justify-center bg-[#D9D9D9] cursor-pointer"
-                    onClick={() => addInput("activeIngredients")}
-                  >
-                    <Plus />
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-
-          {/* FORMULATION TYPE */}
-          <div>
-            <h2 className="text-2xl">Formulation Type</h2>
-            {formulationType.map((_, index) => (
-              <div key={index} className="flex items-center gap-2 mt-2">
-                <input
-                  className="w-[90%] border-[1px] border-[#D9D9D9] !outline-none px-3 py-2 rounded-full placeholder:text-[0.9rem]"
-                  type="text"
-                  placeholder="Enter formulation type"
-                  value={formulationType[index]}
-                  onChange={(e) => handleInputChange("formulationType", index, e.target.value)}
-                />
-                {index === formulationType.length - 1 && (
-                  <div
-                    className="w-8 h-8 p-1 rounded-full flex items-center justify-center bg-[#D9D9D9] cursor-pointer"
-                    onClick={() => addInput("formulationType")}
-                  >
-                    <Plus />
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-
-          {/* CROP */}
-          <div>
-            <h2 className="text-2xl">Crop</h2>
-            {crop.map((_, index) => (
-              <div key={index} className="flex items-center gap-2 mt-2">
-                <input
-                  className="w-[90%] border-[1px] border-[#D9D9D9] !outline-none px-3 py-2 rounded-full placeholder:text-[0.9rem]"
-                  type="text"
-                  placeholder="Enter crop"
-                  value={crop[index]}
-                  onChange={(e) => handleInputChange("crop", index, e.target.value)}
-                />
-                {index === crop.length - 1 && (
-                  <div
-                    className="w-8 h-8 p-1 rounded-full flex items-center justify-center bg-[#D9D9D9] cursor-pointer"
-                    onClick={() => addInput("crop")}
-                  >
-                    <Plus />
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-
+          {/* ABOUT */}
+          <TextListInput title="About" type="about" list={about} onChange={handleInputChange} onAdd={addInput} />
+          {/* BENEFITS */}
+          <TextListInput title="Benefits" type="benefits" list={benefits} onChange={handleInputChange} onAdd={addInput} />
         </div>
 
+        {/* Right Section */}
+        <div className="w-full flex flex-col gap-10">
+          <TextListInput title="Active Ingredients" type="activeIngredients" list={activeIngredients} onChange={handleInputChange} onAdd={addInput} />
+          <TextListInput title="Formulation Type" type="formulationType" list={formulationType} onChange={handleInputChange} onAdd={addInput} />
+          <TextListInput title="Crop" type="crop" list={crop} onChange={handleInputChange} onAdd={addInput} />
+        </div>
       </div>
 
-      <div className="w-full py-2 mt-4 text-center text-white rounded-lg bg-black cursor-pointer">
+      <div
+        className="w-full py-2 mt-4 text-center text-white rounded-lg bg-black cursor-pointer"
+        onClick={handleSubmit}
+      >
         <h2>Add</h2>
       </div>
-
     </div>
-  )
-}
+  );
+};
 
-export default AddProduct
+const TextListInput = ({ title, list, type, onChange, onAdd, }: { title: string; list: string[]; type: "about" | "benefits" | "activeIngredients" | "formulationType" | "crop"; onChange: (type: any, index: number, value: string) => void; onAdd: (type: any) => void; }) => (
+  <div>
+    <h2 className="text-xl font-medium">{title}</h2>
+    {list.map((_, index) => (
+      <div key={index} className="flex items-center gap-2 mt-2">
+        <input
+          className="w-[90%] border-[1px] border-[#D9D9D9] !outline-none px-3 py-2 rounded-full placeholder:text-[0.9rem]"
+          type="text"
+          placeholder={`Enter ${title.toLowerCase()}`}
+          value={list[index]}
+          onChange={(e) => onChange(type, index, e.target.value)}
+        />
+        {index === list.length - 1 && (
+          <div
+            className="w-8 h-8 p-1 rounded-full flex items-center justify-center bg-[#D9D9D9] cursor-pointer"
+            onClick={() => onAdd(type)}
+          >
+            <Plus />
+          </div>
+        )}
+      </div>
+    ))}
+  </div>
+);
+
+export default AddProduct;
