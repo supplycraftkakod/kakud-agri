@@ -4,6 +4,7 @@ import AdminButton from "./components/AdminButton"
 import AdminDashboard from "./page/AdminDashboard";
 import ViewAllProducts from "./page/ViewAllProducts";
 import AddProduct from "./page/AddProduct";
+import Banners from "./page/Banners";
 
 const AdminHome = () => {
     const [selectedComponent, setSelectedComponent] = useState("adminDashboard");
@@ -45,6 +46,12 @@ const AdminHome = () => {
                             selectedComponent={selectedComponent}
                             handleComponentSelection={handleComponentSelection}
                         />
+                        <AdminButton
+                            label="Banners"
+                            componentName="banners"
+                            selectedComponent={selectedComponent}
+                            handleComponentSelection={handleComponentSelection}
+                        />
                     </div>
                 </div>
 
@@ -52,6 +59,7 @@ const AdminHome = () => {
                     {selectedComponent === "adminDashboard" && <AdminDashboard />}
                     {selectedComponent === "viewAllProducts" && <ViewAllProducts />}
                     {selectedComponent === "addNewProduct" && <AddProduct />}
+                    {selectedComponent === "banners" && <Banners />}
                 </div>
             </div>
         </div>
