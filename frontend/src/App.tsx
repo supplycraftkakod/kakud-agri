@@ -7,6 +7,7 @@ import Products from './pages/Products';
 import ProductDetails from './pages/ProductDetails';
 import AdminHome from './admin/AdminHome';
 import ProtectedRoute from './admin/components/ProtectedRoute';
+import EditProduct from './admin/page/EditProduct';
 
 function App() {
   const token = localStorage.getItem("auth");
@@ -22,6 +23,7 @@ function App() {
         <Route path="/products/:id" element={<ProductDetails />} />
 
         <Route path="/admin" element={<ProtectedRoute allowedRoles={['ADMIN']}><AdminHome /></ProtectedRoute>} />
+        <Route path="/admin/products/:id/edit" element={<ProtectedRoute allowedRoles={['ADMIN']}><EditProduct /></ProtectedRoute>} />
       </Routes>
 
       <Toaster
