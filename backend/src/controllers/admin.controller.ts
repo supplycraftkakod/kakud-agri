@@ -55,3 +55,86 @@ export const addProduct = async (req: Request, res: Response) => {
         return res.status(500).json({ message: 'Internal Server Error', error });
     }
 };
+
+// Update Product
+export const updateProduct = async (req: Request, res: Response) => {
+    const productId = parseInt(req.params.id);
+
+    const {
+        name,
+        category,
+        description,
+        imageUrl,
+        aboutPoints,
+        benefitPoints,
+        activeIngredients,
+        formulationTypes,
+        crops,
+    } = req.body;
+
+    try {
+        const existingProduct = await prisma.product.findUnique({
+            where: { id: productId },
+        });
+
+        if (!existingProduct) {
+            return res.status(404).json({ success: false, message: "Product not found" });
+        }
+
+        // Update product base fields
+        await prisma.product.update({
+            where: { id: productId },
+            data: {
+                name,
+                category,
+                description,
+                imageUrl,
+                lastUpdated: new Date(),
+            },
+        });
+
+        // Delete old relations
+        await prisma.aboutPoint.deleteMany({ where: { productId } });
+        await prisma.benefitPoint.deleteMany({ where: { productId } });
+        await prisma.activeIngredient.deleteMany({ where: { productId } });
+        await prisma.formulationType.deleteMany({ where: { productId } });
+        await prisma.crop.deleteMany({ where: { cropId: productId } });
+
+        // Re-insert updated related arrays
+        if (Array.isArray(aboutPoints)) {
+            await prisma.aboutPoint.createMany({
+                data: aboutPoints.map(content => ({ content, productId })),
+            });
+        }
+
+        if (Array.isArray(benefitPoints)) {
+            await prisma.benefitPoint.createMany({
+                data: benefitPoints.map(content => ({ content, productId })),
+            });
+        }
+
+        if (Array.isArray(activeIngredients)) {
+            await prisma.activeIngredient.createMany({
+                data: activeIngredients.map(content => ({ content, productId })),
+            });
+        }
+
+        if (Array.isArray(formulationTypes)) {
+            await prisma.formulationType.createMany({
+                data: formulationTypes.map(content => ({ content, productId })),
+            });
+        }
+
+        if (Array.isArray(crops)) {
+            await prisma.crop.createMany({
+                data: crops.map(content => ({ content, cropId: productId })),
+                skipDuplicates: true, // avoids error if crop already exists
+            });
+        }
+
+        res.status(200).json({ success: true, message: "Product updated successfully" });
+    } catch (error) {
+        console.error("Update failed:", error);
+        res.status(500).json({ success: false, message: "Server error during update" });
+    }
+};
