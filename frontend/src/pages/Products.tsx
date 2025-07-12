@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store/store";
 import { fetchProducts } from "../redux/slices/productSlice";
+import { Link } from "react-router-dom";
 
 const PRODUCTS_PER_PAGE = 8;
 
@@ -90,7 +91,9 @@ const Products = () => {
                                                 <p className="text-sm text-gray-600">
                                                     {product.description.split(" ").slice(0, 6).join(" ")}...
                                                 </p>
-                                                <button className="w-full py-2 rounded bg-[#338735] text-white">View</button>
+                                                <Link to={`/products/${product.id}`}>
+                                                    <button className="w-full py-2 rounded bg-[#338735] text-white">View</button>
+                                                </Link>
                                             </div>
                                         </div>
                                     ))}
