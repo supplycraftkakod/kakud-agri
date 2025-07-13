@@ -32,7 +32,7 @@ const services = [
 
 const OurServices = () => {
     return (
-        <div className="w-full py-[2rem] sm:py-[3.5rem] px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] xl:px-[6rem] font-inter">
+        <div id="services"  className="w-full py-[2rem] sm:py-[3.5rem] px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] xl:px-[6rem] font-inter">
             <h2 className="font-playfair italic text-[2.25rem] text-center">Our Services</h2>
 
             <div className="pt-[2rem] flex flex-col gap-16">

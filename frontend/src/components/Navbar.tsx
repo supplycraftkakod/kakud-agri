@@ -58,10 +58,10 @@ export default function Navbar() {
                 </div> */}
 
                 <div className="flex items-center text-gray-700 gap-10 text-[1.1rem]">
-                    <a href="#features" className="hover:text-black">Our Brands</a>
-                    <a href="#features" className="hover:text-black">Services</a>
-                    <a href="#features" className="hover:text-black">About</a>
-                    <a href="#features" className="hover:text-black">Contact</a>
+                    <a href="#" className="hover:text-black">Our Brands</a>
+                    <a href="#services" className="hover:text-black">Services</a>
+                    <a href="#about" className="hover:text-black">About</a>
+                    <a href="#contact" className="hover:text-black">Contact</a>
                     {
                         token ? (
                             <div className="flex items-center gap-4">
@@ -95,9 +95,9 @@ export default function Navbar() {
                 isOpen && (
                     <div className="md:hidden fixed top-14 left-0 w-full bg-white shadow-md p-4 z-50 flex flex-col gap-4 text-gray-700 text-base">
                         <a href="#" className="hover:text-black" onClick={toggleMenu}>Our Brands</a>
-                        <a href="#" className="hover:text-black" onClick={toggleMenu}>Services</a>
-                        <a href="#" className="hover:text-black" onClick={toggleMenu}>About</a>
-                        <a href="#" className="hover:text-black" onClick={toggleMenu}>Contact</a>
+                        <a href="#services" className="hover:text-black" onClick={toggleMenu}>Services</a>
+                        <a href="#about" className="hover:text-black" onClick={toggleMenu}>About</a>
+                        <a href="#contact" className="hover:text-black" onClick={toggleMenu}>Contact</a>
 
                         {
                             token ? (
