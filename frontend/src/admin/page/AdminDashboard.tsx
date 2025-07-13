@@ -1,7 +1,69 @@
-import { Eye, FileImage, SquarePen } from "lucide-react"
-import productGraph from "../../assets/images/product-graph.png"
+import { useEffect, useState } from "react";
+import { Eye, FileImage, SquarePen } from "lucide-react";
+import axios from "axios";
+import { BE_URL } from "../../../config";
+import {
+    BarChart,
+    Bar,
+    XAxis,
+    YAxis,
+    Tooltip,
+    CartesianGrid,
+    ResponsiveContainer,
+} from "recharts";
+
+interface MostViewedProduct {
+    id: number;
+    name: string;
+    views: number;
+}
 
 const AdminDashboard = () => {
+    const [totalViews, setTotalViews] = useState<number>(0);
+    const [totalProducts, setTotalProducts] = useState<number>(0);
+    const [mostViewed, setMostViewed] = useState<MostViewedProduct[]>([]);
+    const [productsByMonth, setProductsByMonth] = useState<{ [month: string]: number }>({});
+    const [userDetails, setUserDetails] = useState<any>({});
+
+    console.log(userDetails);
+
+
+    useEffect(() => {
+        const fetchDashboardData = async () => {
+            try {
+                const authStorage = localStorage.getItem("auth");
+                let token;
+
+                if (authStorage) {
+                    const authData = JSON.parse(authStorage);
+                    token = authData.token;
+                }
+
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                };
+
+                const [viewsRes, productsRes, mostViewedRes, monthlyRes, userDetails] = await Promise.all<any>([
+                    axios.get(`${BE_URL}/api/v1/admin/views`, config),
+                    axios.get(`${BE_URL}/api/v1/admin/count`, config),
+                    axios.get(`${BE_URL}/api/v1/admin/most-viewed`, config),
+                    axios.get(`${BE_URL}/api/v1/admin/monthly`, config),
+                    axios.get(`${BE_URL}/api/v1/user/me`, config),
+                ]);
+
+                setTotalViews(viewsRes.data.totalViews);
+                setTotalProducts(productsRes.data.totalProducts);
+                setMostViewed(mostViewedRes.data.mostViewed);
+                setProductsByMonth(monthlyRes.data.productsByMonth);
+                setUserDetails(userDetails.data.user);
+            } catch (err) {}
+        };
+
+        fetchDashboardData();
+    }, []);
+
     return (
         <div className="font-inter flex flex-col gap-10">
             <div className="w-full flex items-start flex-wrap gap-4 lg:grid grid-cols-3">
@@ -13,16 +75,22 @@ const AdminDashboard = () => {
                     </div>
 
                     <div className="pt-4">
-                        <h3 className="text-lg">Name: Abul Khasim</h3>
-                        <h3 className="text-lg">Phone: +91 8413333131</h3>
-                        <h3 className="text-lg">Email: abulkhasim@gamil.com</h3>
+                        <h3 className="text-lg">Name: {userDetails.name}</h3>
+                        <h3 className="text-lg">Phone: +91 {userDetails.phone}</h3>
+                        <h3 className="text-lg">Email: {userDetails.email}</h3>
                     </div>
                 </div>
 
                 <div className="sm:w-[210px] lg:min-w-full bg-[#DBE4FF] px-6 py-4 rounded-xl flex flex-col gap-6">
                     <Eye className="w-9 h-9" />
                     <div>
-                        <h2 className="font-medium text-xl">24.6K</h2>
+                        {
+                            totalViews > 1000 ? (
+                                <h2 className="font-medium text-xl">{(totalViews / 1000).toFixed(1)}K</h2>
+                            ) : (
+                                <h2 className="font-medium text-xl">{totalViews}</h2>
+                            )
+                        }
                         <h3 className="text-lg text-[#505050]">Total Views</h3>
                     </div>
                 </div>
@@ -30,7 +98,7 @@ const AdminDashboard = () => {
                 <div className="sm:w-[210px] lg:min-w-full bg-[#FFF1DB] px-6 py-4 rounded-xl flex flex-col gap-6">
                     <FileImage className="w-9 h-9" />
                     <div>
-                        <h2 className="font-medium text-xl">147</h2>
+                        <h2 className="font-medium text-xl">{totalProducts}</h2>
                         <h3 className="text-lg text-[#505050]">Total Products</h3>
                     </div>
                 </div>
@@ -45,7 +113,21 @@ const AdminDashboard = () => {
                     </div>
 
                     <div className="pt-4">
-                        <img src={productGraph} alt="graph" className="lg:max-w-[672px]" />
+                        <ResponsiveContainer width="100%" height={300}>
+                            <BarChart
+                                data={Object.entries(productsByMonth).map(([month, count]) => ({
+                                    month,
+                                    count,
+                                }))}
+                                margin={{ top: 20, right: 30, left: 0, bottom: 5 }}
+                            >
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="month" />
+                                <YAxis />
+                                <Tooltip />
+                                <Bar dataKey="count" fill="#8884d8" radius={[5, 5, 0, 0]} />
+                            </BarChart>
+                        </ResponsiveContainer>
                     </div>
                 </div>
 
@@ -55,32 +137,21 @@ const AdminDashboard = () => {
                     </div>
 
                     <div className="pt-4 flex flex-col justify-between gap-2">
-                        <div className="text-lg flex items-start justify-between">
-                            <h3>1. Analic</h3>
-                            <h3>20K</h3>
-                        </div>
-                        <div className="text-lg flex items-start justify-between">
-                            <h3>2. Acemain</h3>
-                            <h3>20K</h3>
-                        </div>
-                        <div className="text-lg flex items-start justify-between">
-                            <h3>3. Agas</h3>
-                            <h3>20K</h3>
-                        </div>
-                        <div className="text-lg flex items-start justify-between">
-                            <h3>4. Agil</h3>
-                            <h3>20K</h3>
-                        </div>
-                        <div className="text-lg flex items-start justify-between">
-                            <h3>5. Bazak</h3>
-                            <h3>20K</h3>
-                        </div>
+                        {mostViewed.map((product, index) => (
+                            <div
+                                key={product.id}
+                                className="text-lg flex items-start justify-between"
+                            >
+                                <h3>{index + 1}. {product.name}</h3>
+                                <h3>{(product.views / 1000).toFixed(1)}K</h3>
+                            </div>
+                        ))}
                     </div>
                 </div>
-                
+
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default AdminDashboard
+export default AdminDashboard;
