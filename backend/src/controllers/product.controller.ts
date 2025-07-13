@@ -159,3 +159,23 @@ export const getSingleProduct = async (req: Request, res: Response) => {
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
+
+// Increment product views
+export const incrementProductView = async (req: Request, res: Response) => {
+  const productId = parseInt(req.params.id);
+
+  try {
+    const updated = await prisma.product.update({
+      where: { id: productId },
+      data: {
+        views: {
+          increment: 1,
+        },
+      },
+    });
+
+    res.status(200).json({ message: "View incremented", views: updated.views });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to increment view count" });
+  }
+};
