@@ -195,7 +195,7 @@ const TextListInput = ({ title, list, type, onChange, onAdd, }: { title: string;
     {list.map((_, index) => (
       <div key={index} className="flex items-center gap-2 mt-2">
         <input
-          className="w-[90%] border-[1px] border-[#D9D9D9] !outline-none px-3 py-2 rounded-full placeholder:text-[0.9rem]"
+          className="w-[96%] border-[1px] border-[#D9D9D9] !outline-none px-3 py-2 rounded-full placeholder:text-[0.9rem]"
           type="text"
           placeholder={`Enter ${title.toLowerCase()}`}
           value={list[index]}
