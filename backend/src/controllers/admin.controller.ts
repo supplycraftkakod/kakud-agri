@@ -141,7 +141,7 @@ export const updateProduct = async (req: Request, res: Response) => {
 
 // Delete Product
 export const deleteProductById = async (req: Request, res: Response) => {
-  const productId = parseInt(req.params.id);  
+  const productId = parseInt(req.params.id);
 
   if (isNaN(productId)) {
     return res.status(400).json({ error: 'Invalid product ID' });
@@ -166,5 +166,77 @@ export const deleteProductById = async (req: Request, res: Response) => {
   } catch (error) {
     console.error('Error deleting product:', error);
     return res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+// 1. Get cumulative views of all products
+export const getTotalProductViews = async (_req: Request, res: Response) => {
+  try {
+    const totalViews = await prisma.product.aggregate({
+      _sum: {
+        views: true,
+      },
+    });
+
+    res.json({ totalViews: totalViews._sum.views || 0 });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to get total product views' });
+  }
+};
+
+// 2. Get total number of products
+export const getTotalProductCount = async (_req: Request, res: Response) => {
+  try {
+    const count = await prisma.product.count();
+    res.json({ totalProducts: count });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to get product count' });
+  }
+};
+
+// 3. Get products added by month
+export const getProductsGroupedByMonth = async (_req: Request, res: Response) => {
+  try {
+    const products = await prisma.product.findMany({
+      select: {
+        createdAt: true,
+      },
+    });
+
+    const grouped: { [key: string]: number } = {};
+
+    products.forEach((product) => {
+      const key = `${product.createdAt.getFullYear()}-${String(product.createdAt.getMonth() + 1).padStart(2, '0')}`;
+      grouped[key] = (grouped[key] || 0) + 1;
+    });
+    
+    res.json({ productsByMonth: grouped });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to get monthly product grouping' });
+  }
+};
+
+// 4. Get most viewed products (top 5 by default)
+export const getMostViewedProducts = async (req: Request, res: Response) => {
+  const limit = parseInt(req.query.limit as string) || 5;
+
+  try {
+    const products = await prisma.product.findMany({
+      orderBy: {
+        views: 'desc',
+      },
+      take: limit,
+      select: {
+        id: true,
+        name: true,
+        views: true,
+        imageUrl: true,
+        createdAt: true,
+      },
+    });
+
+    res.json({ mostViewed: products });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to get most viewed products' });
   }
 };
