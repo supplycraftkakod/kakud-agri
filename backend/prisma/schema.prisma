@@ -38,35 +38,35 @@ model Product {
 model AboutPoint {
   id        Int     @id @default(autoincrement())
   content   String
-  product   Product @relation("ProductAbout", fields: [productId], references: [id])
+  product   Product @relation("ProductAbout", fields: [productId], references: [id],  onDelete: Cascade)
   productId Int
 }
 
 model BenefitPoint {
   id        Int     @id @default(autoincrement())
   content   String
-  product   Product @relation("ProductBenefits", fields: [productId], references: [id])
+  product   Product @relation("ProductBenefits", fields: [productId], references: [id],  onDelete: Cascade)
   productId Int
 }
 
 model ActiveIngredient {
   id        Int     @id @default(autoincrement())
   content   String
-  product   Product @relation("ProductIngredients", fields: [productId], references: [id])
+  product   Product @relation("ProductIngredients", fields: [productId], references: [id],  onDelete: Cascade)
   productId Int
 }
 
 model FormulationType {
   id        Int     @id @default(autoincrement())
   content   String
-  product   Product @relation("ProductFormulations", fields: [productId], references: [id])
+  product   Product @relation("ProductFormulations", fields: [productId], references: [id],  onDelete: Cascade)
   productId Int
 }
 
 model Crop {
   id      Int     @id @default(autoincrement())
   content String  @unique
-  product Product @relation("ProductCrops", fields: [cropId], references: [id])
+  product Product @relation("ProductCrops", fields: [cropId], references: [id],  onDelete: Cascade)
   cropId  Int
 }
 

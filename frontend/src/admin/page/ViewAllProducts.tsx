@@ -4,6 +4,10 @@ import { FiChevronLeft, FiChevronRight, FiSearch } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { AppDispatch, RootState } from "../../redux/store/store";
 import { fetchProducts } from "../../redux/slices/productSlice";
+import { Trash2 } from "lucide-react";
+import { BE_URL } from "../../../config";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const PRODUCTS_PER_PAGE = 8;
 
@@ -27,6 +31,23 @@ const ViewAllProducts = () => {
     setSearch(e.target.value);
     setPage(1);
   };
+
+  const handleDelete = async (id: number) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this product?");
+    if (!confirmDelete) return;
+
+    try {
+      toast.loading("Deleting..")
+      await axios.delete(`${BE_URL}/api/v1/admin/products/${id}`);
+      toast.success("Product deleted successfully");
+      // Optionally refresh product list here
+      // fetchAllProducts(); // or setProducts(...) etc.
+      dispatch(fetchProducts({ page, limit: PRODUCTS_PER_PAGE, search }));
+    } catch (error) {
+      toast.error("Failed to delete the product.");
+    }
+  };
+
 
   return (
     <div className="w-full">
@@ -53,23 +74,34 @@ const ViewAllProducts = () => {
               {products.map((product) => (
                 <div
                   key={product.id}
-                  className="border border-[#A69F9F] rounded-lg p-4 hover:shadow-sm transition"
+                  className="border border-[#A69F9F] flex flex-col justify-between rounded-lg p-4 hover:shadow-sm transition"
                 >
                   <img
                     src={product.imageUrl}
                     alt={product.name}
                     className="w-full h-auto object-contain mb-4"
                   />
-                  <div className="flex flex-col gap-2 leading-none">
-                    <h3 className="font-medium text-xl">{product.name}</h3>
-                    <p className="text-sm text-gray-600">
-                      {product.description.split(" ").slice(0, 3).join(" ")}...
-                    </p>
-                    <Link to={`/admin/products/${product.id}/edit`}>
-                      <button className="w-full py-2 rounded bg-[#338735] text-white">
-                        Edit
+                  <div className="flex justify-between flex-col gap-2 leading-none">
+                    <div>
+                      <h3 className="font-medium text-xl">{product.name}</h3>
+                      <p className="text-sm text-gray-600">
+                        {product.description.split(" ").slice(0, 3).join(" ")}...
+                      </p>
+                    </div>
+                    <div className="flex items-center justify-between gap-2">
+                      <Link to={`/admin/products/${product.id}/edit`}
+                        className="w-full py-3 bg-[#338735] rounded-full"
+                      >
+                        <button className="w-full text-white">
+                          Edit
+                        </button>
+                      </Link>
+                      <button
+                        onClick={() => handleDelete(product.id)}
+                        className="bg-[#eb1f1f] w-fit p-2 rounded-full flex items-center justify-center text-white">
+                        <Trash2 />
                       </button>
-                    </Link>
+                    </div>
                   </div>
                 </div>
               ))}

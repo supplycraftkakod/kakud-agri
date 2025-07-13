@@ -1,6 +1,6 @@
 import express from 'express';
 import { upload } from '../middlewares/upload';
-import { addProduct, updateProduct } from '../controllers/admin.controller';
+import { addProduct, deleteProductById, updateProduct } from '../controllers/admin.controller';
 
 
 const router = express.Router();
@@ -9,5 +9,7 @@ const router = express.Router();
 router.post('/product', upload.single('image') as RequestHandler, addProduct);
 //@ts-ignore
 router.put('/product/:id', updateProduct);
+//@ts-ignore
+router.delete('/products/:id', deleteProductById);
 
 export default router;

@@ -138,3 +138,33 @@ export const updateProduct = async (req: Request, res: Response) => {
     res.status(500).json({ success: false, message: "Server error during update" });
   }
 };
+
+// Delete Product
+export const deleteProductById = async (req: Request, res: Response) => {
+  const productId = parseInt(req.params.id);  
+
+  if (isNaN(productId)) {
+    return res.status(400).json({ error: 'Invalid product ID' });
+  }
+
+  try {
+    // Check if product exists
+    const product = await prisma.product.findUnique({
+      where: { id: productId },
+    });
+
+    if (!product) {
+      return res.status(404).json({ error: 'Product not found' });
+    }
+
+    // Delete the product (cascade deletes will handle children)
+    await prisma.product.delete({
+      where: { id: productId },
+    });
+
+    return res.status(200).json({ message: 'Product deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting product:', error);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+};
