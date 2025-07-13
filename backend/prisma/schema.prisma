@@ -74,8 +74,8 @@ model Banner {
   id            Int      @id @default(autoincrement())
   imageUrl      String
   shouldVisible Boolean
-  // title         String
-  // paragraph     String
+  title         String
+  paragraph     String
   createdAt     DateTime @default(now())
 }
 

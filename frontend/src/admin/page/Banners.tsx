@@ -1,19 +1,26 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { BE_URL } from "../../../config";
-import { ImageUp } from "lucide-react";
 
 interface Banner {
   id: number;
   imageUrl: string;
+  title: string;
+  paragraph: string;
   shouldVisible: boolean;
   createdAt: string;
 }
 
+interface BannerInput {
+  file: File;
+  previewUrl: string;
+  title: string;
+  paragraph: string;
+}
+
 const Banners = () => {
   const [banners, setBanners] = useState<Banner[]>([]);
-  const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
-  const [previews, setPreviews] = useState<string[]>([]);
+  const [bannersToUpload, setBannersToUpload] = useState<BannerInput[]>([]);
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -41,40 +48,38 @@ const Banners = () => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
 
-    // Validations
     if (files.length > 5) {
       setError("You can upload up to 5 images at once.");
       return;
     }
 
-    for (let file of files) {
-      if (!file.type.startsWith("image/")) {
-        setError("Only image files are allowed.");
-        return;
-      }
-    }
+    const inputs: BannerInput[] = Array.from(files).map((file) => ({
+      file,
+      previewUrl: URL.createObjectURL(file),
+      title: "",
+      paragraph: "",
+    }));
 
-    setSelectedFiles(files);
+    setBannersToUpload(inputs);
     setError(null);
-    const previews = Array.from(files).map((file) =>
-      URL.createObjectURL(file)
-    );
-    setPreviews(previews);
   };
 
+
   const handleUpload = async () => {
-    if (!selectedFiles || selectedFiles.length === 0) return;
+    if (bannersToUpload.length === 0) return;
 
     setIsUploading(true);
     const formData = new FormData();
-    Array.from(selectedFiles).forEach((file) =>
-      formData.append("images", file)
-    );
+
+    bannersToUpload.forEach((banner) => {
+      formData.append("images", banner.file);
+      formData.append("titles", banner.title);
+      formData.append("paragraphs", banner.paragraph);
+    });
 
     try {
       await axios.post(`${BE_URL}/api/v1/banners/upload`, formData);
-      setSelectedFiles(null);
-      setPreviews([]);
+      setBannersToUpload([]);
       fetchBanners();
     } catch (err) {
       console.error("Upload failed", err);
@@ -83,6 +88,7 @@ const Banners = () => {
       setIsUploading(false);
     }
   };
+
 
   const handleDelete = async (id: number) => {
     try {
@@ -107,46 +113,59 @@ const Banners = () => {
   return (
     <div className="space-y-6">
       {/* Upload Section */}
-      <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
-        <label
-          htmlFor="image-upload"
-          className="min-w-[180px] flex flex-col items-center justify-center rounded-lg border border-dashed border-[#A69F9F] cursor-pointer p-4"
-        >
-          <input
-            type="file"
-            id="image-upload"
-            accept="image/*"
-            multiple
-            onChange={handleFileChange}
-            className="hidden"
-          />
-          {previews.length === 0 ? (
-            <div className="flex flex-col items-center justify-center gap-2">
-              <ImageUp className="w-8 h-8 text-gray-500" />
-              <span className="text-sm text-gray-600">Click to upload images</span>
-            </div>
-          ) : (
-            <div className="grid grid-cols-2 gap-2">
-              {previews.map((src, index) => (
+      <div className="flex flex-col gap-6">
+        <input
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={handleFileChange}
+          className="text-sm"
+        />
+
+        {bannersToUpload.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {bannersToUpload.map((banner, index) => (
+              <div key={index} className="p-4 border rounded-lg space-y-2">
                 <img
-                  key={index}
-                  src={src}
+                  src={banner.previewUrl}
                   alt={`Preview ${index}`}
-                  className="w-16 h-16 object-cover rounded border"
+                  className="w-full h-40 object-cover rounded"
                 />
-              ))}
-            </div>
-          )}
-        </label>
+                <input
+                  type="text"
+                  placeholder="Title"
+                  value={banner.title}
+                  onChange={(e) => {
+                    const updated = [...bannersToUpload];
+                    updated[index].title = e.target.value;
+                    setBannersToUpload(updated);
+                  }}
+                  className="w-full px-3 py-1 border rounded !outline-none"
+                />
+                <textarea
+                  placeholder="Paragraph"
+                  value={banner.paragraph}
+                  onChange={(e) => {
+                    const updated = [...bannersToUpload];
+                    updated[index].paragraph = e.target.value;
+                    setBannersToUpload(updated);
+                  }}
+                  className="w-full px-3 py-1 border rounded !outline-none"
+                />
+              </div>
+            ))}
+          </div>
+        )}
 
         <button
           onClick={handleUpload}
-          disabled={isUploading || !selectedFiles}
+          disabled={isUploading || bannersToUpload.length === 0}
           className="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 disabled:opacity-60"
         >
           {isUploading ? "Uploading..." : "Upload"}
         </button>
       </div>
+
 
       {/* Error Message */}
       {error && <p className="text-red-500 text-sm">{error}</p>}
@@ -167,23 +186,24 @@ const Banners = () => {
                 className="w-full h-48 object-cover"
               />
               <div className="p-4 space-y-2">
-                <button
-                  onClick={() =>
-                    handleToggleVisibility(banner.id, banner.shouldVisible)
-                  }
-                  className={`w-full py-1 px-3 rounded-full text-white ${
-                    banner.shouldVisible ? "bg-yellow-500" : "bg-green-600"
-                  }`}
-                >
-                  {banner.shouldVisible ? "Make Invisible" : "Make Visible"}
-                </button>
-                <button
-                  onClick={() => handleDelete(banner.id)}
-                  className="w-full py-1 px-3 rounded-full bg-red-600 text-white hover:bg-red-700"
-                >
-                  Delete
-                </button>
-              </div>
+  <h3 className="font-semibold">{banner.title}</h3>
+  <p className="text-sm text-gray-600">{banner.paragraph}</p>
+  <button
+    onClick={() => handleToggleVisibility(banner.id, banner.shouldVisible)}
+    className={`w-full py-1 px-3 rounded-full text-white ${
+      banner.shouldVisible ? "bg-yellow-500" : "bg-green-600"
+    }`}
+  >
+    {banner.shouldVisible ? "Make Invisible" : "Make Visible"}
+  </button>
+  <button
+    onClick={() => handleDelete(banner.id)}
+    className="w-full py-1 px-3 rounded-full bg-red-600 text-white hover:bg-red-700"
+  >
+    Delete
+  </button>
+</div>
+
             </div>
           ))}
         </div>

@@ -6,17 +6,21 @@ import { uploadToCloudinary } from '../utils/cloudinaryUpload';
 export const uploadBanners = async (req: Request, res: Response) => {
   try {
     const files = req.files as Express.Multer.File[];
+    const { titles, paragraphs } = req.body;
+    
     if (!files || files.length === 0) {
       return res.status(400).json({ message: "No files uploaded" });
     }
 
-    const bannerPromises = files.map(async (file) => {
+    const bannerPromises = files.map(async (file, index) => {
       const cloudResult = await uploadToCloudinary(file.path, "banners");
 
       return prisma.banner.create({
         data: {
           imageUrl: cloudResult.secure_url,
           shouldVisible: true,
+          title: titles || "Default Title",
+          paragraph: paragraphs || "Default paragraph",
         },
       });
     });

@@ -9,6 +9,8 @@ import defaultBg from "../assets/images/hero-image.png";
 interface Banner {
     id: number;
     imageUrl: string;
+    title: string;
+    paragraph: string;
     shouldVisible: boolean;
     createdAt: string;
 }
@@ -16,7 +18,7 @@ interface Banner {
 export default function Hero() {
     const [isDesktop, setIsDesktop] = useState(false);
     const [banners, setBanners] = useState<Banner[]>([]);
-    const [currentSlideIndex, setCurrentSlideIndex] = useState(0); // 0 = default hero
+    const [currentSlideIndex, setCurrentSlideIndex] = useState(0); // 0 = default hero    
 
     useEffect(() => {
         const handleResize = () => {
@@ -53,6 +55,16 @@ export default function Hero() {
         ? defaultBg
         : banners[currentSlideIndex - 1]?.imageUrl;
 
+    useEffect(() => {
+        if (banners.length === 0) return;
+
+        const interval = setInterval(() => {
+            setCurrentSlideIndex((prevIndex) => (prevIndex + 1) % totalSlides);
+        }, 5000);
+
+        return () => clearInterval(interval);
+    }, [banners, totalSlides]);
+
     return (
         <div
             className="min-h-screen bg-no-repeat bg-cover flex flex-col overflow-hidden relative transition-all duration-500"
@@ -67,6 +79,7 @@ export default function Hero() {
             <div className="w-full h-screen px-6 lg:px-[2rem] pt-60 xs:pt-32 md:pt-52 flex flex-col items-center gap-8 font-inter relative">
                 {/* ✅ Static Hero */}
                 {isDefaultHero ? (
+                    // Static Hero
                     <div className="w-full flex flex-col items-center gap-6">
                         <div className="flex flex-col gap-4">
                             <h1 className="leading-[3.5rem] sm:leading-none font-medium text-[3rem] sm:text-[6vw] md:text-[5vw] lg:text-[3rem] text-center">
@@ -92,18 +105,21 @@ export default function Hero() {
                         </div>
                     </div>
                 ) : (
+                    // Dynamic Banner Slide
                     <div className="w-full flex flex-col items-center gap-6 text-white">
-                        <h1 className="text-4xl sm:text-6xl font-semibold text- text-center">
-                            Discover Agri Innovation
-                        </h1>
-                        <p className="text-lg text-center max-w-2xl">
-                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore, deleniti vel reprehenderit veritatis dolor quam labore adipisci eos esse blanditiis!
-                        </p>
-                        <Link to={"/products"}>
-                            <button className="px-8 py-3 rounded-full bg-white/20 border border-white/30 text-white hover:bg-white/30 transition-all">
-                                Explore Products
-                            </button>
-                        </Link>
+                        <div className="bg-black/50 backdrop-blur-md rounded-xl px-6 py-8 text-white text-center max-w-3xl">
+                            <h1 className="text-4xl sm:text-6xl font-semibold mb-4">
+                                {banners[currentSlideIndex - 1]?.title || "Untitled"}
+                            </h1>
+                            <p className="text-lg mb-6">
+                                {banners[currentSlideIndex - 1]?.paragraph || "No description available."}
+                            </p>
+                            <Link to={"/products"}>
+                                <button className="px-8 py-3 rounded-full bg-white/20 border border-white/30 text-white hover:bg-white/30 transition-all">
+                                    Explore Products
+                                </button>
+                            </Link>
+                        </div>
                     </div>
                 )}
 
