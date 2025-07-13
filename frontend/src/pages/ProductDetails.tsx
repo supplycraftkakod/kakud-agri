@@ -8,6 +8,8 @@ import Navbar from "../components/Navbar";
 import { Download } from "lucide-react";
 import { AppDispatch, RootState } from "../redux/store/store";
 import { fetchProductById } from "../redux/slices/singleProductSlice";
+import { BE_URL } from "../../config";
+import axios from "axios";
 
 const ProductDetails = () => {
     const contentRef = useRef<HTMLDivElement>(null);
@@ -21,6 +23,11 @@ const ProductDetails = () => {
             dispatch(fetchProductById(id));
         }
     }, [id, dispatch]);
+
+    useEffect(() => {
+        // Increment view count when component mounts
+        axios.post(`${BE_URL}/api/v1/product/increment-view/${id}`)
+    }, [id]);
 
     const handleDownloadPDF = async () => {
         const doc = new jsPDF();
@@ -83,7 +90,7 @@ const ProductDetails = () => {
 
         // Split and wrap description
         const descLines = doc.splitTextToSize(`Description: ${product.description}`, contentWidth);
-        descLines.forEach((line:any) => {
+        descLines.forEach((line: any) => {
             doc.text(line, textX, textY);
             textY += 6;
         });
@@ -107,7 +114,7 @@ const ProductDetails = () => {
                 ? doc.splitTextToSize(content, pageWidth - margin * 2)
                 : content.flatMap(item => doc.splitTextToSize(item, pageWidth - margin * 2));
 
-            lines.forEach((line:any) => {
+            lines.forEach((line: any) => {
                 if (y + 10 > pageHeight - 20) {
                     doc.addPage();
                     currentPage++;
@@ -123,11 +130,11 @@ const ProductDetails = () => {
 
         // --- Add Remaining Fields ---
         if (product.aboutPoints?.length) {
-            addText("About:", product.aboutPoints.map((pt:any) => `• ${pt}`));
+            addText("About:", product.aboutPoints.map((pt: any) => `• ${pt}`));
         }
 
         if (product.benefitPoints?.length) {
-            addText("Benefits:", product.benefitPoints.map((pt:any) => `• ${pt}`));
+            addText("Benefits:", product.benefitPoints.map((pt: any) => `• ${pt}`));
         }
 
         if (product.activeIngredients?.length) {
