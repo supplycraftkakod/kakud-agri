@@ -14,6 +14,7 @@
     "@types/axios": "^0.9.36",
     "axios": "^1.8.4",
     "framer-motion": "^12.23.0",
+    "jspdf": "^3.0.1",
     "lucide-react": "^0.488.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
