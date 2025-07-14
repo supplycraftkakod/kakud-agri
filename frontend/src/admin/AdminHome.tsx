@@ -35,7 +35,7 @@ const AdminHome = () => {
 
                 const res = await axios.get<any>(`${BE_URL}/api/v1/user/me`, config)
                 setUserDetails(res.data.user);
-            } catch (err) {}
+            } catch (err) { }
         };
 
         fetchDashboardData();
@@ -51,11 +51,17 @@ const AdminHome = () => {
                 <div className="w-full md:max-w-[250px] md:min-h-[82vh] p-4 flex flex-col gap-10 border border-[#A69F9F] rounded-xl font-playfair">
                     <div className="flex flex-col items-center gap-2">
                         <div className="w-[72px] h-[72px] bg-pink-300 rounded-full text-2xl flex items-center justify-center">
-                            {/* <h2>{userDetails?.name[0]}</h2> */}
-                            <h2>A</h2>
+                            {userDetails?.name &&
+                                <h2>{userDetails.name[0]}</h2>}
+                            {/* <h2>A</h2> */}
                         </div>
-                        {/* <h2 className="text-xl">{userDetails.name}</h2> */}
-                        <h2>Abul Khasim</h2>
+                        <h2 className="text-xl">
+                            {userDetails?.name &&
+                                <h2>
+                                    {userDetails?.name}
+                                </h2>}
+                        </h2>
+                        {/* <h2>Abul Khasim</h2> */}
                     </div>
                     <div className="flex flex-col gap-2">
                         <AdminButton

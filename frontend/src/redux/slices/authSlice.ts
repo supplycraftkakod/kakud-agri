@@ -22,7 +22,7 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        setAuth: (state, action: PayloadAction<AuthType>) => {
+        setAuth: (_, action: PayloadAction<AuthType>) => {
             localStorage.setItem("auth", JSON.stringify(action.payload));
             return action.payload;
         },
