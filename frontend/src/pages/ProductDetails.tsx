@@ -10,6 +10,7 @@ import { AppDispatch, RootState } from "../redux/store/store";
 import { fetchProductById } from "../redux/slices/singleProductSlice";
 import { BE_URL } from "../../config";
 import axios from "axios";
+import Loader from "../components/Loader";
 
 const ProductDetails = () => {
     const contentRef = useRef<HTMLDivElement>(null);
@@ -155,13 +156,10 @@ const ProductDetails = () => {
         doc.save(`${product.name}_Details.pdf`);
     };
 
-
-
-
     if (loading || !product) {
         return (
             <div className="min-h-screen flex items-center justify-center text-xl font-medium">
-                {loading ? "Loading..." : "Product not found"}
+                {loading ? <Loader/> : "Product not found"}
             </div>
         );
     }

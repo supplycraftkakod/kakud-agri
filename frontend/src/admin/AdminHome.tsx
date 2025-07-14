@@ -7,10 +7,12 @@ import AddProduct from "./page/AddProduct";
 import Banners from "./page/Banners";
 import { BE_URL } from "../../config";
 import axios from "axios";
+import Loader from "../components/Loader";
 
 const AdminHome = () => {
     const [selectedComponent, setSelectedComponent] = useState("adminDashboard");
     const [userDetails, setUserDetails] = useState<any>();
+    const [loading, setLoading] = useState(false);
 
     const handleComponentSelection = (component: string) => {
         setSelectedComponent(component)
@@ -19,6 +21,7 @@ const AdminHome = () => {
     useEffect(() => {
         const fetchDashboardData = async () => {
             try {
+                setLoading(true);
                 const authStorage = localStorage.getItem("auth");
                 let token;
 
@@ -35,11 +38,20 @@ const AdminHome = () => {
 
                 const res = await axios.get<any>(`${BE_URL}/api/v1/user/me`, config)
                 setUserDetails(res.data.user);
-            } catch (err) { }
+                setLoading(false);
+            } catch (err) {
+                setLoading(false);
+            }
         };
 
         fetchDashboardData();
     }, []);
+
+    if (loading) {
+        return <div className="w-full h-screen flex items-center justify-center">
+            <Loader />
+        </div>
+    }
 
     return (
         <div>

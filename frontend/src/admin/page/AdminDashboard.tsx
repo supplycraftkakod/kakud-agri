@@ -11,6 +11,7 @@ import {
     CartesianGrid,
     ResponsiveContainer,
 } from "recharts";
+import Loader from "../../components/Loader";
 
 interface MostViewedProduct {
     id: number;
@@ -24,13 +25,12 @@ const AdminDashboard = () => {
     const [mostViewed, setMostViewed] = useState<MostViewedProduct[]>([]);
     const [productsByMonth, setProductsByMonth] = useState<{ [month: string]: number }>({});
     const [userDetails, setUserDetails] = useState<any>({});
-
-    console.log(userDetails);
-
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const fetchDashboardData = async () => {
             try {
+                setLoading(true);
                 const authStorage = localStorage.getItem("auth");
                 let token;
 
@@ -58,11 +58,20 @@ const AdminDashboard = () => {
                 setMostViewed(mostViewedRes.data.mostViewed);
                 setProductsByMonth(monthlyRes.data.productsByMonth);
                 setUserDetails(userDetails.data.user);
-            } catch (err) {}
+                setLoading(false);
+            } catch (err) {
+                setLoading(false);
+            }
         };
 
         fetchDashboardData();
     }, []);
+
+    if (loading) {
+        return <div className="w-full h-screen flex items-center justify-center">
+            <Loader />
+        </div>
+    }
 
     return (
         <div className="font-inter flex flex-col gap-10">

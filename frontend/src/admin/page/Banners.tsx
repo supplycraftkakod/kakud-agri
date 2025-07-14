@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { BE_URL } from "../../../config";
+import Loader from "../../components/Loader";
 
 interface Banner {
   id: number;
@@ -172,7 +173,9 @@ const Banners = () => {
 
       {/* Loading */}
       {loading ? (
-        <p className="text-center text-gray-500">Loading banners...</p>
+        <div className="w-full flex items-center justify-center text-gray-500">
+          <Loader />
+        </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {banners.map((banner) => (
@@ -186,23 +189,22 @@ const Banners = () => {
                 className="w-full h-48 object-cover"
               />
               <div className="p-4 space-y-2">
-  <h3 className="font-semibold">{banner.title}</h3>
-  <p className="text-sm text-gray-600">{banner.paragraph}</p>
-  <button
-    onClick={() => handleToggleVisibility(banner.id, banner.shouldVisible)}
-    className={`w-full py-1 px-3 rounded-full text-white ${
-      banner.shouldVisible ? "bg-yellow-500" : "bg-green-600"
-    }`}
-  >
-    {banner.shouldVisible ? "Make Invisible" : "Make Visible"}
-  </button>
-  <button
-    onClick={() => handleDelete(banner.id)}
-    className="w-full py-1 px-3 rounded-full bg-red-600 text-white hover:bg-red-700"
-  >
-    Delete
-  </button>
-</div>
+                <h3 className="font-semibold">{banner.title}</h3>
+                <p className="text-sm text-gray-600">{banner.paragraph}</p>
+                <button
+                  onClick={() => handleToggleVisibility(banner.id, banner.shouldVisible)}
+                  className={`w-full py-1 px-3 rounded-full text-white ${banner.shouldVisible ? "bg-yellow-500" : "bg-green-600"
+                    }`}
+                >
+                  {banner.shouldVisible ? "Make Invisible" : "Make Visible"}
+                </button>
+                <button
+                  onClick={() => handleDelete(banner.id)}
+                  className="w-full py-1 px-3 rounded-full bg-red-600 text-white hover:bg-red-700"
+                >
+                  Delete
+                </button>
+              </div>
 
             </div>
           ))}

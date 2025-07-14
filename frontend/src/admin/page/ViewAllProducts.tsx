@@ -8,6 +8,7 @@ import { Trash2 } from "lucide-react";
 import { BE_URL } from "../../../config";
 import axios from "axios";
 import toast from "react-hot-toast";
+import Loader from "../../components/Loader";
 
 const PRODUCTS_PER_PAGE = 8;
 
@@ -66,7 +67,9 @@ const ViewAllProducts = () => {
           </div>
 
           {loading ? (
-            <div className="text-center text-lg">Loading...</div>
+            <div className="w-full flex items-center justify-center">
+              <Loader />
+            </div>
           ) : products.length === 0 ? (
             <div className="text-center text-lg">No products found..</div>
           ) : (
