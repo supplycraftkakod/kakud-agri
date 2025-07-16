@@ -8,6 +8,8 @@ import Banners from "./page/Banners";
 import { BE_URL } from "../../config";
 import axios from "axios";
 import Loader from "../components/Loader";
+import BlogEditor from "./page/BlogEditor";
+import ViewAllBlogs from "./page/ViewAllBlogs";
 
 const AdminHome = () => {
     const [selectedComponent, setSelectedComponent] = useState("adminDashboard");
@@ -100,6 +102,18 @@ const AdminHome = () => {
                             selectedComponent={selectedComponent}
                             handleComponentSelection={handleComponentSelection}
                         />
+                        <AdminButton
+                            label="Write a Blog"
+                            componentName="blog"
+                            selectedComponent={selectedComponent}
+                            handleComponentSelection={handleComponentSelection}
+                        />
+                        <AdminButton
+                            label="View All Blogs"
+                            componentName="viewAllBlogs"
+                            selectedComponent={selectedComponent}
+                            handleComponentSelection={handleComponentSelection}
+                        />
                     </div>
                 </div>
 
@@ -108,6 +122,8 @@ const AdminHome = () => {
                     {selectedComponent === "viewAllProducts" && <ViewAllProducts />}
                     {selectedComponent === "addNewProduct" && <AddProduct />}
                     {selectedComponent === "banners" && <Banners />}
+                    {selectedComponent === "blog" && <BlogEditor />}
+                    {selectedComponent === "viewAllBlogs" && <ViewAllBlogs />}
                 </div>
             </div>
         </div>
