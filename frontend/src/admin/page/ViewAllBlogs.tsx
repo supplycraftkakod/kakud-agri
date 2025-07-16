@@ -108,8 +108,8 @@ const ViewAllBlogs: React.FC = () => {
                                         }}
                                     ></div>
                                     <div className="flex flex-col gap-2">
-                                        <h3 className="text-xl leading-none">{blog.title}</h3>
-                                        <p className="text-xs text-gray-600 line-clamp-3">
+                                        <h3 className="text-xl leading-none line-clamp-1">{blog.title}</h3>
+                                        <p className="text-xs text-gray-600 line-clamp-2">
                                             {paragraphBlock?.value || "No description available."}
                                         </p>
                                         <div className="flex gap-2">

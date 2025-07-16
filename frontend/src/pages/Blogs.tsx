@@ -74,7 +74,7 @@ const Blogs = () => {
                       }}
                     ></div>
                     <div className="flex flex-col gap-4">
-                      <h3 className="text-2xl leading-none">{blog.title}</h3>
+                      <h3 className="text-2xl leading-none line-clamp-1">{blog.title}</h3>
                       <p className="text-sm text-gray-600 line-clamp-3">
                         {paragraphBlock?.value || 'No description available.'}
                       </p>
