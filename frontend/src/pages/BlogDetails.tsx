@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Loader from "../components/Loader";
+import axios from "axios";
+import { BE_URL } from "../../config";
 
 interface ContentBlock {
     type: "bigHeading" | "subHeading" | "paragraph" | "image";
@@ -24,17 +26,26 @@ const BlogDetails = () => {
     useEffect(() => {
         const fetchBlog = async () => {
             try {
-                const res = await fetch("http://localhost:5000/api/v1/admin/all");
-                const data = await res.json();
+                const authStorage = localStorage.getItem("auth");
+                let token;
 
-                if (!res.ok) throw new Error(data.error || "Failed to fetch blogs");
+                if (authStorage) {
+                    const authData = JSON.parse(authStorage);
+                    token = authData.token;
+                }
 
-                const foundBlog = data.blogs.find((b: Blog) => b.id === id);
+                const res = await axios.get<any>(`${BE_URL}/api/v1/admin/all`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                const foundBlog = res.data.blogs.find((b: Blog) => b.id === id);
                 if (!foundBlog) throw new Error("Blog not found");
 
                 setBlog(foundBlog);
             } catch (err: any) {
-                setError(err.message || "Something went wrong");
+                setError(err.response?.data?.error || err.message || "Something went wrong");
             } finally {
                 setLoading(false);
             }
@@ -49,7 +60,7 @@ const BlogDetails = () => {
     if (error) return <div className="p-4 text-red-500">Error occured!</div>;
     if (!blog) return null;
 
-    const firstImageBlock = blog.contentBlocks.find(b => b.type === "image");    
+    const firstImageBlock = blog.contentBlocks.find(b => b.type === "image");
 
     return (
         <div className="max-w-[100em] mx-auto">

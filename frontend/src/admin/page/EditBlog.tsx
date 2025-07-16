@@ -2,6 +2,8 @@ import React, { useEffect, useState, ChangeEvent } from 'react';
 import { useParams } from 'react-router-dom';
 import Loader from '../../components/Loader';
 import toast from 'react-hot-toast';
+import { BE_URL } from '../../../config';
+import axios from 'axios';
 
 type BlockType = 'bigHeading' | 'subHeading' | 'paragraph' | 'image';
 
@@ -21,12 +23,24 @@ const EditBlog: React.FC = () => {
     useEffect(() => {
         const fetchBlog = async () => {
             try {
-                const res = await fetch(`http://localhost:5000/api/v1/admin/blogs/${id}`);
-                const data = await res.json();
+                const authStorage = localStorage.getItem("auth");
+                let token;
 
-                if (!res.ok) throw new Error(data.error);
+                if (authStorage) {
+                    const authData = JSON.parse(authStorage);
+                    token = authData.token;
+                }
+
+                const res = await axios.get<any>(`${BE_URL}/api/v1/admin/blogs/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                const data = res.data;
 
                 setTitle(data.blog.title);
+
                 const prefilledBlocks: Block[] = data.blog.contentBlocks
                     .sort((a: any, b: any) => a.order - b.order)
                     .map((b: any) => ({
@@ -37,8 +51,8 @@ const EditBlog: React.FC = () => {
 
                 setBlocks(prefilledBlocks);
                 setLoading(false);
-            } catch (error) {
-                console.error("Error loading blog:", error);
+            } catch (error: any) {
+                console.error("Error loading blog:", error.response?.data?.error || error.message);
             }
         };
 
@@ -82,19 +96,28 @@ const EditBlog: React.FC = () => {
 
         formData.append('blocks', JSON.stringify(updatedBlocks));
 
-        const toastId = toast.loading("Updating...");
+        const toastId = toast.loading("Updating blog...");
 
         try {
-            const res = await fetch(`http://localhost:5000/api/v1/admin/blogs/${id}`, {
-                method: 'PUT',
-                body: formData,
+            const authStorage = localStorage.getItem("auth");
+            let token;
+
+            if (authStorage) {
+                const authData = JSON.parse(authStorage);
+                token = authData.token;
+            }
+
+            await axios.put<any>(`${BE_URL}/api/v1/admin/blogs/${id}`, formData, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data', // Important for FormData
+                },
             });
 
-            const result = await res.json();
-            if (!res.ok) throw new Error(result.error);
-            toast.success("Blog updated successfully!", { id: toastId })
-        } catch (err) {
-            toast.error("Failed to update blog!", { id: toastId })
+            toast.success("Blog updated successfully!", { id: toastId });
+        } catch (err: any) {
+            console.error(err);
+            toast.error(err.response?.data?.error || "Failed to update blog!", { id: toastId });
         }
     };
 

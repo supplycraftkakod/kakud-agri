@@ -98,9 +98,7 @@ const BlogEditor: React.FC = () => {
       setBlocks([]);
       setTitle("");
       toast.success("Blog created successfully!", { id: toastId });
-    } catch (error: any) {
-      console.log(error);
-      
+    } catch (error: any) {      
       const message =
         error.response?.data?.error || "Failed to publish blog!";
       toast.error(message, { id: toastId });
