@@ -2,6 +2,7 @@ import { Plus } from 'lucide-react';
 import React, { useState, ChangeEvent } from 'react';
 import toast from 'react-hot-toast';
 import { BE_URL } from '../../../config';
+import axios from 'axios';
 
 type BlockType = 'bigHeading' | 'subHeading' | 'paragraph' | 'image';
 
@@ -98,6 +99,8 @@ const BlogEditor: React.FC = () => {
       setTitle("");
       toast.success("Blog created successfully!", { id: toastId });
     } catch (error: any) {
+      console.log(error);
+      
       const message =
         error.response?.data?.error || "Failed to publish blog!";
       toast.error(message, { id: toastId });
