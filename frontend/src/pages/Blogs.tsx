@@ -52,7 +52,7 @@ const Blogs = () => {
         ) : error ? (
           <p className="text-center text-red-500">Error occred!</p>
         ) : blogs.length === 0 ? (
-          <p className="text-center"><Loader /></p>
+          <p className="text-center">No Blogs Found</p>
         ) : (
           <>
             <div className="w-full space-y-6 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 xl:gap-8">
