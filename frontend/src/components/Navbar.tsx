@@ -6,6 +6,8 @@ import { useDispatch } from "react-redux";
 import { logoutUser } from "../utils/logout";
 
 export default function Navbar() {
+    const [showMore, setShowMore] = useState(false);
+
     const authStorage = localStorage.getItem("auth");
     let token;
     let userRole;
@@ -40,6 +42,10 @@ export default function Navbar() {
         });
     };
 
+    const toggleMore = () => {
+        setShowMore(prev => !prev);
+    };
+
     return (
         <div className="relative font-manrope ">
             {/* Navbar */}
@@ -57,25 +63,55 @@ export default function Navbar() {
                     <a href="#features" className="hover:text-black">About</a>
                 </div> */}
 
-                <div className="flex items-center text-gray-700 gap-10 text-[1.1rem]">
-                    <a href="#" className="hover:text-black">Our Brands</a>
-                    <a href="#services" className="hover:text-black">Services</a>
-                    <a href="#about" className="hover:text-black">About</a>
-                    <a href="#contact" className="hover:text-black">Contact</a>
+                <div className="relative flex items-center text-gray-700 gap-10 text-[1.1rem]">
+                    {/* More button */}
+                    <div className="relative">
+                        <button onClick={toggleMore} className="hover:text-black">
+                            More
+                        </button>
+
+                        {/* Dropdown content */}
+                        {showMore && (
+                            <div className="absolute left-0 mt-2 bg-white shadow-md rounded-md p-4 z-50 flex flex-col gap-2 min-w-[150px]">
+                                <a onClick={toggleMore} href="#about" className="hover:text-black">About</a>
+                                <a onClick={toggleMore} href="#contact" className="hover:text-black">Contact</a>
+                                <a onClick={toggleMore} href="#" className="hover:text-black">Our Brands</a>
+                                <Link to={"/events"}
+                                    onClick={toggleMore} className="hover:text-black"
+                                >
+                                    Events
+                                </Link>
+                                <Link to={"/blogs"}
+                                    onClick={toggleMore} className="hover:text-black"
+                                >
+                                    Read Blogs
+                                </Link>
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Other nav links */}
+                    <a onClick={toggleMore} href="#services" className="hover:text-black">Services</a>
+
+                    {/* Auth Buttons */}
                     {
                         token ? (
                             <div className="flex items-center gap-4">
                                 <button onClick={handleLogout} className="bg-red-500 text-white px-4 py-2 rounded-full text-sm">
                                     Logout
                                 </button>
-                                <Link to={`${userRole === "ADMIN" ? "/admin" : "/profile"}`}><button className="bg-black text-white px-4 py-2 rounded-full text-sm">{userRole === "ADMIN" ? "Dashboard" : "Profile"}</button></Link>
+                                <Link to={userRole === "ADMIN" ? "/admin" : "/profile"}>
+                                    <button className="bg-black text-white px-4 py-2 rounded-full text-sm">
+                                        {userRole === "ADMIN" ? "Dashboard" : "Profile"}
+                                    </button>
+                                </Link>
                             </div>
                         ) : (
                             <div className="flex items-center gap-4">
-                                {/* <Link to={"/signin"}> <button className="text-sm">Signup</button></Link> */}
-                                <Link to={"/signin"}><button className="bg-black text-white px-4 py-2 rounded-full text-sm">Login</button></Link>
+                                <Link to={"/signin"}>
+                                    <button className="bg-black text-white px-4 py-2 rounded-full text-sm">Login</button>
+                                </Link>
                             </div>
-
                         )
                     }
                 </div>
@@ -94,10 +130,20 @@ export default function Navbar() {
             {
                 isOpen && (
                     <div className="md:hidden fixed top-14 left-0 w-full bg-white shadow-md p-4 z-50 flex flex-col gap-4 text-gray-700 text-base">
-                        <a href="#" className="hover:text-black" onClick={toggleMenu}>Our Brands</a>
-                        <a href="#services" className="hover:text-black" onClick={toggleMenu}>Services</a>
                         <a href="#about" className="hover:text-black" onClick={toggleMenu}>About</a>
                         <a href="#contact" className="hover:text-black" onClick={toggleMenu}>Contact</a>
+                        <a href="#services" className="hover:text-black" onClick={toggleMenu}>Services</a>
+                        <a href="#" className="hover:text-black" onClick={toggleMenu}>Our Brands</a>
+                        <Link to={"/events"}
+                            onClick={toggleMore} className="hover:text-black"
+                        >
+                            Events
+                        </Link>
+                        <Link to={"/blogs"}
+                            onClick={toggleMore} className="hover:text-black"
+                        >
+                            Read Blogs
+                        </Link>
 
                         {
                             token ? (
