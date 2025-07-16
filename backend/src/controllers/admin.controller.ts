@@ -1,6 +1,9 @@
 import { Request, Response } from 'express';
 import prisma from '../prisma';
 import { uploadToCloudinary } from '../utils/cloudinaryUpload';
+import { Prisma } from '@prisma/client';
+
+// ---------------------------------------------------------------Product--------------------------------------------------
 
 // Controller to add a product
 export const addProduct = async (req: Request, res: Response) => {
@@ -209,7 +212,7 @@ export const getProductsGroupedByMonth = async (_req: Request, res: Response) =>
       const key = `${product.createdAt.getFullYear()}-${String(product.createdAt.getMonth() + 1).padStart(2, '0')}`;
       grouped[key] = (grouped[key] || 0) + 1;
     });
-    
+
     res.json({ productsByMonth: grouped });
   } catch (err) {
     res.status(500).json({ error: 'Failed to get monthly product grouping' });
@@ -240,3 +243,238 @@ export const getMostViewedProducts = async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Failed to get most viewed products' });
   }
 };
+
+// ---------------------------------------------------------------Blog--------------------------------------------------
+
+interface BlockPayload {
+  type: 'bigHeading' | 'subHeading' | 'paragraph' | 'image';
+  value?: string; // For text blocks
+  fileIndex?: number; // For image blocks (matched from req.files)
+}
+
+// Create Blog
+export const createBlog = async (req: Request, res: Response) => {
+  try {
+    const filesMap = new Map<string, Express.Multer.File>();
+    (req.files as Express.Multer.File[]).forEach((file) => {
+      filesMap.set(file.fieldname, file);
+    });
+
+    const { title, blocks } = req.body;
+
+    if (!title || !blocks) {
+      return res.status(400).json({ error: 'Title and blocks are required' });
+    }
+
+    const parsedBlocks: BlockPayload[] = JSON.parse(blocks);
+
+    const uploadedBlocks: {
+      type: BlockPayload['type'];
+      value?: string;
+      order: number;
+    }[] = [];
+
+    for (let i = 0; i < parsedBlocks.length; i++) {
+      const block = parsedBlocks[i];
+
+      // inside loop
+      if (block.type === 'image') {
+        const file = filesMap.get(`file-${block.fileIndex}`);
+        if (!file) {
+          return res.status(400).json({ error: `Missing file for image block at index ${i}` });
+        }
+
+        const uploadResult = await uploadToCloudinary(file.path, 'blog_blocks');
+
+        uploadedBlocks.push({
+          type: 'image',
+          value: uploadResult.secure_url,
+          order: i,
+        });
+      } else {
+        uploadedBlocks.push({
+          type: block.type,
+          value: block.value || '',
+          order: i,
+        });
+      }
+    }
+
+    // Create blog and nested content blocks
+    const newBlog = await prisma.blog.create({
+      data: {
+        title,
+        contentBlocks: {
+          create: uploadedBlocks,
+        },
+      },
+      include: {
+        contentBlocks: true,
+      },
+    });
+
+    return res.status(201).json({ blog: newBlog });
+  } catch (error: any) {
+    console.error('Error creating blog:', error);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+// Get all blogs
+export const getAllBlogs = async (req: Request, res: Response) => {
+  try {
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 6;
+    const search = (req.query.search as string) || '';
+    const skip = (page - 1) * limit;
+
+    const whereCondition = search
+      ? {
+        title: {
+          contains: search,
+          mode: Prisma.QueryMode.insensitive,
+        },
+      }
+      : {};
+
+    const [blogs, total] = await Promise.all([
+      prisma.blog.findMany({
+        where: whereCondition,
+        skip,
+        take: limit,
+        orderBy: { createdAt: 'desc' },
+        include: {
+          contentBlocks: {
+            orderBy: { order: 'asc' },
+          },
+        },
+      }),
+      prisma.blog.count({ where: whereCondition }),
+    ]);
+
+    const totalPages = Math.ceil(total / limit);
+
+    res.status(200).json({ blogs, totalPages });
+  } catch (error) {
+    console.error('[GET_ALL_BLOGS_ERROR]', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+export const getBlogById = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    const blog = await prisma.blog.findUnique({
+      where: { id },
+      include: {
+        contentBlocks: {
+          orderBy: {
+            order: 'asc',
+          },
+        },
+      },
+    });
+
+    if (!blog) {
+      return res.status(404).json({ error: 'Blog not found' });
+    }
+
+    res.status(200).json({ blog });
+  } catch (err) {
+    console.error('[GET BLOG BY ID ERROR]', err);
+    res.status(500).json({ error: 'Failed to fetch blog' });
+  }
+};
+
+export const updateBlogById = async (req: Request, res: Response) => {
+  try {
+
+    const filesArray = req.files as Express.Multer.File[];
+    const filesMap = new Map<string, Express.Multer.File>();
+    filesArray.forEach((file) => {
+      filesMap.set(file.fieldname, file);
+    });
+
+
+    const blogId = req.params.id;
+    const { title } = req.body;
+    const blocks = JSON.parse(req.body.blocks || '[]');
+
+    // 1. Validate
+    if (!title || !blocks.length) {
+      return res.status(400).json({ error: 'Title and blocks are required' });
+    }
+
+    // 2. Upload any new images (check for fileIndex and use that to access uploaded file)
+    for (let i = 0; i < blocks.length; i++) {
+      if (blocks[i].type === 'image') {
+        const fileIndex = blocks[i].fileIndex;
+        const file = filesMap.get(`file-${fileIndex}`);
+
+        if (!file) {
+          return res.status(400).json({
+            error: `Missing file for image block at index ${i}`,
+          });
+        }
+
+        const cloudinaryResult = await uploadToCloudinary(file.path, 'blog_blocks');
+        blocks[i].value = cloudinaryResult.secure_url;
+      }
+    }
+
+    // 3. Update blog title
+    await prisma.blog.update({
+      where: { id: blogId },
+      data: {
+        title,
+      },
+    });
+
+    // 4. Delete existing blocks
+    await prisma.contentBlock.deleteMany({
+      where: { blogId },
+    });
+
+    // 5. Re-insert blocks in correct order
+    const newBlocks = blocks.map((block: any, index: number) => ({
+      type: block.type,
+      value: block.value || '',
+      order: index,
+      blogId,
+    }));
+
+    await prisma.contentBlock.createMany({
+      data: newBlocks,
+    });
+
+    return res.status(200).json({ message: 'Blog updated successfully' });
+  } catch (error) {
+    console.error('[UPDATE BLOG ERROR]', error);
+    return res.status(500).json({ error: 'Failed to update blog' });
+  }
+};
+
+export const deleteBlogById = async (req: Request, res: Response) => {
+  try {
+    const blogId = req.params.id;
+
+    const existingBlog = await prisma.blog.findUnique({
+      where: { id: blogId },
+    });
+
+    if (!existingBlog) {
+      return res.status(404).json({ error: "Blog not found" });
+    }
+
+    await prisma.blog.delete({
+      where: { id: blogId },
+    });
+
+    return res.status(200).json({ message: "Blog deleted successfully" });
+  } catch (error) {
+    console.error("[DELETE_BLOG_ERROR]", error);
+    return res.status(500).json({ error: "Failed to delete blog" });
+  }
+};
+
