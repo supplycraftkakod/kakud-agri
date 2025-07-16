@@ -1,6 +1,7 @@
 import { Plus } from 'lucide-react';
 import React, { useState, ChangeEvent } from 'react';
 import toast from 'react-hot-toast';
+import { BE_URL } from '../../../config';
 
 type BlockType = 'bigHeading' | 'subHeading' | 'paragraph' | 'image';
 
@@ -74,22 +75,34 @@ const BlogEditor: React.FC = () => {
 
     const toastId = toast.loading("Creating...");
     try {
-      const response = await fetch("http://localhost:5000/api/v1/admin/create", {
-        method: "POST",
-        body: formData,
-      });
+      const authStorage = localStorage.getItem("auth");
+      let token;
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Something went wrong");
+      if (authStorage) {
+        const authData = JSON.parse(authStorage);
+        token = authData.token;
       }
+
+      await axios.post(
+        `${BE_URL}/api/v1/admin/create`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
       setBlocks([]);
       setTitle("");
       toast.success("Blog created successfully!", { id: toastId });
-    } catch (error) {
-      toast.error("Failed to publish blog!", { id: toastId });
+    } catch (error: any) {
+      const message =
+        error.response?.data?.error || "Failed to publish blog!";
+      toast.error(message, { id: toastId });
     }
+
   };
 
   const moveBlockUp = (index: number) => {

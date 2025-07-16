@@ -1,66 +1,26 @@
-import Navbar from "../components/Navbar";
-import { useEffect, useState } from "react";
-import { FiSearch, FiChevronLeft, FiChevronRight } from "react-icons/fi";
-import { Link } from "react-router-dom";
-import Loader from "../components/Loader";
-
-interface ContentBlock {
-  type: "bigHeading" | "subHeading" | "paragraph" | "image";
-  value?: string;
-}
-
-interface Blog {
-  id: string;
-  title: string;
-  contentBlocks: ContentBlock[];
-  createdAt: string;
-}
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Navbar from '../components/Navbar';
+import { FiSearch, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
+import Loader from '../components/Loader';
+import { fetchBlogs, setPage, setSearch } from '../redux/slices/blog/blogSlice';
+import { AppDispatch, RootState } from '../redux/store/store';
 
 const Blogs = () => {
-  const [blogs, setBlogs] = useState<Blog[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [page, setPage] = useState<number>(1);
-  const [totalPages, setTotalPages] = useState<number>(1);
-  const [search, setSearch] = useState<string>("");
-  const [debouncedSearch, setDebouncedSearch] = useState<string>("");
+  const dispatch = useDispatch<AppDispatch>();
 
-  const limit = 9;
+  const { blogs, loading, error, page, totalPages, search } = useSelector(
+    (state: RootState) => state.blogs
+  );
 
-  // Debounce search
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      setDebouncedSearch(search);
-      setPage(1); // Reset to first page on new search
+    const delayDebounce = setTimeout(() => {
+      dispatch(fetchBlogs({ page, limit: 9, search }));
     }, 500);
 
-    return () => clearTimeout(timeout);
-  }, [search]);
-
-  const fetchBlogs = async () => {
-    try {
-      setLoading(true);
-      const res = await fetch(
-        `http://localhost:5000/api/v1/admin/all?page=${page}&limit=${limit}&search=${debouncedSearch}`
-      );
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to fetch blogs");
-      setBlogs(data.blogs);
-      setTotalPages(data.totalPages || 1);
-    } catch (err: any) {
-      setError(err.message || "Something went wrong");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchBlogs();
-  }, [page, debouncedSearch]);
-
-  const handlePageChange = (newPage: number) => {
-    if (newPage >= 1 && newPage <= totalPages) setPage(newPage);
-  };
+    return () => clearTimeout(delayDebounce);
+  }, [page, search]);
 
   return (
     <div>
@@ -80,7 +40,7 @@ const Blogs = () => {
               type="text"
               placeholder="Search the blog..."
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e) => dispatch(setSearch(e.target.value))}
               className="w-full px-4 py-2 border border-gray-300 rounded-full text-sm !outline-none"
             />
             <FiSearch className="absolute right-4 top-2.5 text-gray-500 cursor-pointer" />
@@ -90,15 +50,15 @@ const Blogs = () => {
         {loading ? (
           <Loader />
         ) : error ? (
-          <p className="text-center text-red-500">{error}</p>
+          <p className="text-center text-red-500">Error occred!</p>
         ) : blogs.length === 0 ? (
-          <p className="text-center">No blogs found.</p>
+          <p className="text-center"><Loader /></p>
         ) : (
           <>
             <div className="w-full space-y-6 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 xl:gap-8">
               {blogs.map((blog) => {
-                const imageBlock = blog.contentBlocks.find((b) => b.type === "image");
-                const paragraphBlock = blog.contentBlocks.find((b) => b.type === "paragraph");
+                const imageBlock = blog.contentBlocks.find((b) => b.type === 'image');
+                const paragraphBlock = blog.contentBlocks.find((b) => b.type === 'paragraph');
 
                 return (
                   <div
@@ -108,17 +68,16 @@ const Blogs = () => {
                     <div
                       className="w-full xs:w-[20rem] sm:w-full object-cover object-center bg-no-repeat h-[10.75rem] rounded-xl mx-auto"
                       style={{
-                        backgroundImage: `url(${imageBlock?.value || "/fallback.jpg"})`,
-                        backgroundPosition: "center top",
-                        backgroundSize: "cover",
+                        backgroundImage: `url(${imageBlock?.value || '/fallback.jpg'})`,
+                        backgroundPosition: 'center top',
+                        backgroundSize: 'cover',
                       }}
                     ></div>
                     <div className="flex flex-col gap-4">
                       <h3 className="text-2xl leading-none">{blog.title}</h3>
                       <p className="text-sm text-gray-600 line-clamp-3">
-                        {paragraphBlock?.value || "No description available."}
+                        {paragraphBlock?.value || 'No description available.'}
                       </p>
-
                       <Link to={`/blogs/${blog.id}`}>
                         <button className="w-full py-2 rounded-full bg-gray-900 text-white">
                           View
@@ -134,22 +93,22 @@ const Blogs = () => {
             {totalPages > 1 && (
               <div className="mt-10 flex justify-center items-center gap-4 text-sm font-medium">
                 <FiChevronLeft
-                  className={`cursor-pointer ${page === 1 ? "text-gray-400" : ""}`}
-                  onClick={() => handlePageChange(page - 1)}
+                  className={`cursor-pointer ${page === 1 ? 'text-gray-400' : ''}`}
+                  onClick={() => dispatch(setPage(page - 1))}
                 />
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
                   <span
                     key={p}
-                    className={`px-2 cursor-pointer ${p === page ? "rounded-full bg-black text-white px-3 py-1" : ""
+                    className={`px-2 cursor-pointer ${p === page ? 'rounded-full bg-black text-white px-3 py-1' : ''
                       }`}
-                    onClick={() => handlePageChange(p)}
+                    onClick={() => dispatch(setPage(p))}
                   >
                     {p}
                   </span>
                 ))}
                 <FiChevronRight
-                  className={`cursor-pointer ${page === totalPages ? "text-gray-400" : ""}`}
-                  onClick={() => handlePageChange(page + 1)}
+                  className={`cursor-pointer ${page === totalPages ? 'text-gray-400' : ''}`}
+                  onClick={() => dispatch(setPage(page + 1))}
                 />
               </div>
             )}
