@@ -81,6 +81,32 @@ model Banner {
   createdAt     DateTime @default(now())
 }
 
+// ----------------------------------------------------------------------Blog-----------------------------------------------
+
+model Blog {
+  id            String         @id @default(cuid())
+  title         String
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  contentBlocks ContentBlock[]
+}
+
+model ContentBlock {
+  id     String    @id @default(cuid())
+  type   BlockType
+  value  String? // text (heading, paragraph) or Cloudinary image URL
+  order  Int
+  blogId String
+  blog   Blog      @relation(fields: [blogId], references: [id], onDelete: Cascade)
+}
+
+enum BlockType {
+  bigHeading
+  subHeading
+  paragraph
+  image
+}
+
 enum Role {
   ADMIN
   USER
