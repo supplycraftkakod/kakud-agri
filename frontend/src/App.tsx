@@ -8,7 +8,9 @@ import ProductDetails from './pages/ProductDetails';
 import AdminHome from './admin/AdminHome';
 import ProtectedRoute from './admin/components/ProtectedRoute';
 import EditProduct from './admin/page/EditProduct';
+import Events from './pages/Events';
 import Blogs from './pages/Blogs';
+import EventDetails from './pages/EventDetails';
 import EditBlog from './admin/page/EditBlog';
 import BlogDetails from './pages/BlogDetails';
 
@@ -24,6 +26,9 @@ function App() {
 
         <Route path="/products" element={<Products />} />
         <Route path="/products/:id" element={<ProductDetails />} />
+
+        <Route path="/events" element={<Events />} />
+        <Route path="/events/:id" element={<EventDetails />} />
 
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/blogs/:id" element={<BlogDetails />} />

@@ -1,0 +1,161 @@
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchEventById } from "../redux/slices/event/eventSlice";
+
+import Navbar from "../components/Navbar"
+
+const EventDetails = () => {
+    const { id } = useParams(); // assuming you're using React Router
+    const dispatch = useDispatch();
+    const { data: event, loading, error } = useSelector((state: any) => state.event);
+
+    useEffect(() => {
+        //@ts-ignore
+        if (id) dispatch(fetchEventById(id));
+    }, [id]);
+
+    if (loading) return <p className="text-center py-10">Loading event...</p>;
+    if (error) return <p className="text-center py-10 text-red-600">Error: {error}</p>;
+    if (!event) return null;
+
+
+    return (
+        <div className="max-w-[100em] mx-auto">
+            <div className="pb-16 md:pb-28">
+                <Navbar />
+            </div>
+            <div className="w-full pt-6 pb-10 px-6 md:px-[1.5rem] lg:px-[8rem] xl:px-[12rem] font-inter">
+                {/* event image */}
+                <div
+                    className="h-[13rem] xs:h-[20rem] sm:h-[24rem] md:h-[28rem] lg:h-[30rem] bg-no-repeat bg-cover bg-center rounded-lg flex flex-col overflow-hidden relative transition-all duration-500 border border-gray-300"
+                    style={{
+                        backgroundImage: `url(${event.heroImageUrl})`,
+                        backgroundPosition: "center top",
+                    }}
+                >
+
+                    <div className="w-[220px] h-[220px] absolute top-0 right-0">
+                        <div className="w-[280px] h-[35px] rotate-[45deg] flex items-center justify-center bg-[#2AB72F]">
+                            <h2 className="text-white text-center pl-20 leading-none">UPCOMING</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="mt-4 flex flex-wrap items-center gap-4 sm:justify-between">
+                    <div className="flex items-center gap-4 flex-wrap">
+                        <BgColorComponent locationName={event.city} bgColor="bg-purple-200" textColor="text-purple-900" />
+                        <BgColorComponent locationName={event.state} bgColor="bg-pink-200" textColor="text-pink-900" />
+                        <BgColorComponent locationName={new Date(event.date).toDateString()} bgColor="bg-blue-200" textColor="text-blue-900" />
+                        <BgColorComponent locationName={event.timing} bgColor="bg-blue-200" textColor="text-blue-900" />
+
+                    </div>
+                    <a href={event.registerLink} target="_blank" rel="noopener noreferrer">
+                        <button className={`w-full md:w-fit px-4 py-2 md:py-[2px] rounded-full bg-gray-800 text-white`}>
+                            Register Now
+                        </button>
+                    </a>
+                </div>
+
+                {/* title & paragraph */}
+                <div className="mt-8 sm:mt-14">
+                    <h2 className="text-xl sm:text-2xl mb-2 font-semibold">{event.name}</h2>
+                    <p className="sm:text-lg font-light">{event.shortDesc}</p>
+
+                </div>
+
+                {/* speakers */}
+                <div className="mt-8 sm:mt-14">
+                    {event.speakers.length > 0 && (
+                        <div className="mt-8 sm:mt-14">
+                            <h2 className="font-playfair text-2xl italic font-medium text-center mb-8">Speakers</h2>
+                            <div className="w-full flex items-center justify-center flex-wrap gap-6 sm:gap-10">
+                                {event.speakers.map((speaker: any) => (
+                                    <SpeakerComponent
+                                        key={speaker.id}
+                                        imgSrc={speaker.imageUrl}
+                                        name={speaker.name}
+                                        designation={speaker.role}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                </div>
+
+                {/* venue and why attend */}
+                <div className="mt-8 sm:mt-14 grid md:grid-cols-2 gap-4">
+                    {event.venue && (
+                        <div className="w-full p-4 border border-[#747474] rounded-lg">
+                            <h2 className="font-playfair text-2xl italic font-medium text-center mb-4">Venue</h2>
+                            <div className="flex flex-col gap-3">
+                                <PointComponent point={event.venue.address} />
+                                {event.venue.landmark && <PointComponent point={event.venue.landmark} />}
+                            </div>
+                            <a href={event.venue.googleMapUrl} target="_blank" rel="noopener noreferrer">
+                                <button className="w-full py-2 px-4 mt-4 bg-black text-white rounded-full">
+                                    View on Google Maps
+                                </button>
+                            </a>
+                        </div>
+                    )}
+
+
+                    {event?.whyAttend?.length > 0 && (
+                        <div className="w-full p-4 border border-[#747474] rounded-lg">
+                            <h2 className="font-playfair text-2xl italic font-medium text-center mb-4">Why Attend!</h2>
+                            <div className="flex flex-col gap-3">
+                                {
+                                    event.whyAttend.map((point: string, idx: number) => (
+                                        <PointComponent key={idx} point={point} />
+                                    ))
+                                }
+                            </div>
+                        </div>
+                    )}
+
+                </div>
+
+                {/* socials */}
+                <div className="mt-8 sm:mt-14">
+                    <h2 className="text-center">Follow us on LinkedIn | Twitter | Instagram</h2>
+                </div>
+
+            </div>
+        </div>
+    )
+}
+
+
+
+export function PointComponent({ point }: { point: string }) {
+    return (
+        <div className="w-full flex items-center gap-3">
+            <div className="min-w-3 min-h-3 bg-black rounded-full"></div>
+            <p className="text-lgleading-none"> {point}</p>
+        </div>
+    )
+}
+
+export function SpeakerComponent({ imgSrc, name, designation }: { imgSrc: any, name: any, designation: any }) {
+    return (
+        <div className="flex flex-col items-center">
+            <div className="w-[200px] h-[200px] sm:w-[240px] sm:h-[240px] rounded-full overflow-hidden bg-black">
+                <img src={imgSrc} alt="speaker image" className="w-full h-full object-cover" />
+            </div>
+            <h2 className="text-lg font-medium mt-3">{name}</h2>
+            <h2 className="text-base font-medium text-[#595959]">{designation}</h2>
+        </div>
+    )
+}
+
+export function BgColorComponent({ locationName, bgColor, textColor }: { locationName: string, bgColor: any, textColor: any }) {
+    return (
+        <div className={`w-fit px-4 py-[2px] rounded-full ${bgColor} ${textColor}`}>
+            {locationName}
+        </div>
+    )
+}
+
+export default EventDetails

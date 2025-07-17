@@ -10,6 +10,8 @@ import axios from "axios";
 import Loader from "../components/Loader";
 import BlogEditor from "./page/BlogEditor";
 import ViewAllBlogs from "./page/ViewAllBlogs";
+import AddEvent from "./page/event/AddEvent";
+import VIewAllEvents from "./page/event/VIewAllEvents";
 
 const AdminHome = () => {
     const [selectedComponent, setSelectedComponent] = useState("adminDashboard");
@@ -114,6 +116,18 @@ const AdminHome = () => {
                             selectedComponent={selectedComponent}
                             handleComponentSelection={handleComponentSelection}
                         />
+                        <AdminButton
+                            label="Add Event"
+                            componentName="addEvent"
+                            selectedComponent={selectedComponent}
+                            handleComponentSelection={handleComponentSelection}
+                        />
+                        <AdminButton
+                            label="View All Events"
+                            componentName="viewAllEvents"
+                            selectedComponent={selectedComponent}
+                            handleComponentSelection={handleComponentSelection}
+                        />
                     </div>
                 </div>
 
@@ -124,6 +138,8 @@ const AdminHome = () => {
                     {selectedComponent === "banners" && <Banners />}
                     {selectedComponent === "blog" && <BlogEditor />}
                     {selectedComponent === "viewAllBlogs" && <ViewAllBlogs />}
+                    {selectedComponent === "addEvent" && <AddEvent />}
+                    {selectedComponent === "viewAllEvents" && <VIewAllEvents />}
                 </div>
             </div>
         </div>
