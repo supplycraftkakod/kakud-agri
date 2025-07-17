@@ -3,6 +3,8 @@ import authReducer from '../slices/authSlice';
 import productReducer from "../slices/productSlice";
 import singleProductReducer from "../slices/singleProductSlice"
 import blogReducer from "../slices/blog/blogSlice"
+import allEventsReducer from "../slices/event/allEventsSlice"
+import eventReducer from "../slices/event/eventSlice"
 
 export const store = configureStore({
     reducer: {
@@ -10,6 +12,8 @@ export const store = configureStore({
         products: productReducer,
         singleProduct: singleProductReducer,
         blogs: blogReducer,
+        events: allEventsReducer,
+        event: eventReducer,
     },
 });
 
