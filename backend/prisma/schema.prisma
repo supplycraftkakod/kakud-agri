@@ -107,6 +107,52 @@ enum BlockType {
   image
 }
 
+// ----------------------------------------------------------------------Event-----------------------------------------------
+
+model Event {
+  id           String   @id @default(uuid())
+  name         String
+  shortDesc    String
+  heroImageUrl String
+  city         String
+  state        String
+  date         DateTime
+  timing       String
+  registerLink String
+
+  speakers  Speaker[]
+  venue     Venue?
+  whyAttend WhyAttendPoint[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Speaker {
+  id       String @id @default(uuid())
+  name     String
+  imageUrl String
+  role     String
+  event    Event  @relation(fields: [eventId], references: [id])
+  eventId  String
+}
+
+model Venue {
+  id           String  @id @default(uuid())
+  address      String
+  landmark     String?
+  googleMapUrl String
+  event        Event   @relation(fields: [eventId], references: [id])
+  eventId      String  @unique
+}
+
+model WhyAttendPoint {
+  id      String @id @default(uuid())
+  point   String
+  event   Event  @relation(fields: [eventId], references: [id])
+  eventId String
+}
+
 enum Role {
   ADMIN
   USER
