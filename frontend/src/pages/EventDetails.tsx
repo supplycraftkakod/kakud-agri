@@ -18,10 +18,11 @@ const EventDetails = () => {
         if (id) dispatch(fetchEventById(id));
     }, [id]);
 
+    const isUpcoming = upcoming && new Date(upcoming) > new Date();
+
     if (loading) return <Loader />
     if (error) return <p className="text-center py-10 text-red-600">Error occured</p>;
     if (!event) return null;
-
 
     return (
         <div className="max-w-[100em] mx-auto">
@@ -39,8 +40,8 @@ const EventDetails = () => {
                 >
 
                     <div className="w-[220px] h-[220px] absolute top-0 right-0">
-                        <div className={`w-[280px] h-[35px] rotate-[45deg] flex items-center justify-center ${upcoming === "true" ? "bg-[#2AB72F]" : "bg-[#b73f2a]"}`}>
-                            <h2 className="text-white text-center pl-20 leading-none">{upcoming === "true" ? "UPCOMING" : "PAST"}</h2>
+                        <div className={`w-[280px] h-[35px] rotate-[45deg] flex items-center justify-center ${isUpcoming ? "bg-[#2AB72F]" : "bg-[#b73f2a]"}`}>
+                            <h2 className="text-white text-center pl-20 leading-none">{isUpcoming ? "UPCOMING" : "PAST"}</h2>
                         </div>
                     </div>
                 </div>

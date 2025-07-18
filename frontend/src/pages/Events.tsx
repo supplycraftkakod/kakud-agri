@@ -27,20 +27,23 @@ const Events = () => {
 
             <div className="w-full px-6 pb-10 md:px-[1.5rem] lg:px-[4rem] xl:px-[6rem] font-inter">
                 {/* Toggle Buttons */}
-                <div className="flex justify-center gap-4 mb-8">
-                    <button
+                <div className="flex justify-center items-center gap-4 mb-8">
+
+                    <h2
                         onClick={() => setShowUpcoming(true)}
+                        className={`cursor-pointer w-fit text-center text-xl mx-auto mt-4 mb-8 px-4 py-1 rounded-full ${showUpcoming ? "bg-green-300" : "bg-green-100 hover:bg-green-300"} }`}
                     >
-                        <h2 className={`w-fit text-center text-xl mx-auto mt-4 mb-8 px-4 py-1 rounded-full ${showUpcoming ? "bg-green-300" : "bg-green-100 hover:bg-green-300"} }`}>Upcoming <span className="font-playfair italic font-medium">Events</span></h2>
+                        Upcoming <span className="font-playfair italic font-medium">Events</span>
+                    </h2>
 
-                    </button>
-                    <button
+
+                    <h2
                         onClick={() => setShowUpcoming(false)}
-
+                        className={`cursor-pointer w-fit text-center text-xl mx-auto mt-4 mb-8 px-4 py-1 rounded-full ${showUpcoming ? "bg-orange-100 hover:bg-orange-300" : "bg-orange-300"}`}
                     >
-                        <h2 className={`w-fit text-center text-xl mx-auto mt-4 mb-8 px-4 py-1 rounded-full ${showUpcoming ? "bg-orange-100 hover:bg-orange-300" : "bg-orange-300"}`}>Past <span className="font-playfair italic font-medium">Events</span></h2>
+                        Past <span className="font-playfair italic font-medium">Events</span>
+                    </h2>
 
-                    </button>
                 </div>
 
                 {/* Loader and Error */}
@@ -54,29 +57,45 @@ const Events = () => {
                         {showUpcoming ? (
                             <>
                                 <div className="w-full space-y-6 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 xl:gap-8">
-                                    {upcomingEvents.map((event: any, index: number) => (
-                                        <EventCard
-                                            key={index}
-                                            {...event}
-                                            upcoming={true}
-                                            buttonColor="bg-green-700"
-                                            borderColor="border-green-200"
-                                        />
-                                    ))}
+                                    {
+                                        upcomingEvents.length > 0 ? (
+                                            upcomingEvents?.map((event: any, index: number) => (
+                                                <EventCard
+                                                    key={index}
+                                                    {...event}
+                                                    upcoming={event.date.split("T")[0]}
+                                                    buttonColor="bg-green-700"
+                                                    borderColor="border-green-200"
+                                                />
+                                            ))
+
+                                        ) : (
+                                            <div>
+                                                No events.
+                                            </div>
+                                        )
+                                    }
+
                                 </div>
                             </>
                         ) : (
                             <>
                                 <div className="w-full space-y-6 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 xl:gap-8">
-                                    {pastEvents.map((event: any, index: number) => (
-                                        <EventCard
-                                            key={index}
-                                            {...event}
-                                            upcoming={false}
-                                            buttonColor="bg-orange-700"
-                                            borderColor="border-orange-200"
-                                        />
-                                    ))}
+                                    {
+                                        pastEvents.length > 0 ? (
+                                            pastEvents.map((event: any, index: number) => (
+                                                <EventCard
+                                                    key={index}
+                                                    {...event}
+                                                    upcoming={event.date.split("T")[0]}
+                                                    buttonColor="bg-orange-700"
+                                                    borderColor="border-orange-200"
+                                                />
+                                            ))
+                                        ) : (
+                                            <div>No events.</div>
+                                        )
+                                    }
                                 </div>
                             </>
                         )}

@@ -47,6 +47,7 @@ const VIewAllEvents = () => {
                                 {...event}
                                 buttonColor="bg-green-700"
                                 borderColor="border-green-200"
+                                upcoming={event.date.split("T")[0]}
                             />
                         ))
                     ) : (

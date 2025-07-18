@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { LocationComponent } from "../../components/EventCard";
 import { Trash2 } from "lucide-react";
 import toast from "react-hot-toast";
@@ -15,6 +14,7 @@ interface EventCardProps {
     buttonColor: string;
     borderColor: string;
     date: string;
+    upcoming: boolean;
 }
 
 export default function EventCardAdmin({
@@ -26,7 +26,8 @@ export default function EventCardAdmin({
     shortDesc,
     buttonColor,
     borderColor,
-    date
+    date,
+    upcoming,
 }: EventCardProps) {
 
     const dateObj = new Date(date);
@@ -90,11 +91,12 @@ export default function EventCardAdmin({
                 <p className="text-xs line-clamp-2">{shortDesc}</p>
 
                 <div className="flex gap-2">
-                    <Link to={`/events/${id}`}
+                    <a href={`/events/${id}/?upcoming=${upcoming}`}
+                        target="_blank"
                         className="w-full"
                     >
                         <button className={`w-full py-2 rounded-full ${buttonColor} text-white`}>View</button>
-                    </Link>
+                    </a>
                     <button
                         onClick={() => handleDelete(id)}
                         className="bg-[#eb1f1f] w-fit p-2 rounded-full flex items-center justify-center text-white"
