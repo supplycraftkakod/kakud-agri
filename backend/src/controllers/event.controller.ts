@@ -173,3 +173,27 @@ export const getEventById = async (req: Request, res: Response) => {
         res.status(500).json({ message: "Internal server error" });
     }
 };
+
+
+export const deleteEventById = async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    try {
+        const existingEvent = await prisma.event.findUnique({
+            where: { id },
+        });
+
+        if (!existingEvent) {
+            return res.status(404).json({ message: "Event not found" });
+        }
+
+        await prisma.event.delete({
+            where: { id },
+        });
+
+        res.status(200).json({ message: "Event deleted successfully" });
+    } catch (error) {
+        console.error("Error deleting event:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};

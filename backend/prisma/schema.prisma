@@ -133,7 +133,7 @@ model Speaker {
   name     String
   imageUrl String
   role     String
-  event    Event  @relation(fields: [eventId], references: [id])
+  event    Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
   eventId  String
 }
 
@@ -142,14 +142,14 @@ model Venue {
   address      String
   landmark     String?
   googleMapUrl String
-  event        Event   @relation(fields: [eventId], references: [id])
+  event        Event   @relation(fields: [eventId], references: [id], onDelete: Cascade)
   eventId      String  @unique
 }
 
 model WhyAttendPoint {
   id      String @id @default(uuid())
   point   String
-  event   Event  @relation(fields: [eventId], references: [id])
+  event   Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
   eventId String
 }
 

@@ -1,5 +1,9 @@
 import { Link } from "react-router-dom";
 import { LocationComponent } from "../../components/EventCard";
+import { Trash2 } from "lucide-react";
+import toast from "react-hot-toast";
+import { BE_URL } from "../../../config";
+import axios from "axios";
 
 interface EventCardProps {
     id: string;
@@ -39,6 +43,31 @@ export default function EventCardAdmin({
 
     const formattedDate = `${getOrdinal(day)} ${month} ${year}`;
 
+    const handleDelete = async (id: string) => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this Event?");
+        if (!confirmDelete) return;
+        const toastId = toast.loading("Deleting...");
+
+        try {
+            const authStorage = localStorage.getItem("auth");
+            let token;
+
+            if (authStorage) {
+                const authData = JSON.parse(authStorage);
+                token = authData.token;
+            }
+
+            await axios.delete(`${BE_URL}/api/v1/admin/event/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            toast.success("Event deleted successfully", { id: toastId });
+        } catch (error) {
+            toast.error("Failed to delete the Event.", { id: toastId });
+        }
+    };
+
     return (
         <div className={`w-full xs:w-[22rem] md:w-full mx-auto flex flex-col gap-3 border ${borderColor} rounded-xl p-4`}>
             <div
@@ -66,12 +95,12 @@ export default function EventCardAdmin({
                     >
                         <button className={`w-full py-2 rounded-full ${buttonColor} text-white`}>View</button>
                     </Link>
-                    {/* <button
-                        // onClick={() => handleDelete(blog.id)}
+                    <button
+                        onClick={() => handleDelete(id)}
                         className="bg-[#eb1f1f] w-fit p-2 rounded-full flex items-center justify-center text-white"
                     >
                         <Trash2 />
-                    </button> */}
+                    </button>
                 </div>
 
             </div>
