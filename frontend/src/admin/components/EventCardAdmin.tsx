@@ -40,9 +40,9 @@ export default function EventCardAdmin({
     const formattedDate = `${getOrdinal(day)} ${month} ${year}`;
 
     return (
-        <div className={`w-full xs:w-[22rem] md:w-full mx-auto flex flex-col gap-6 border ${borderColor} rounded-xl p-4`}>
+        <div className={`w-full xs:w-[22rem] md:w-full mx-auto flex flex-col gap-3 border ${borderColor} rounded-xl p-4`}>
             <div
-                className="w-full h-[10.75rem] sm:h-[7rem] xs:w-[20rem] sm:w-full rounded-xl mx-auto bg-no-repeat bg-center"
+                className="w-full h-[10.75rem] sm:h-[8rem] xs:w-[20rem] sm:w-full rounded-xl mx-auto bg-no-repeat bg-center"
                 style={{
                     backgroundImage: `url(${heroImageUrl})`,
                     backgroundSize: "cover",
@@ -60,9 +60,20 @@ export default function EventCardAdmin({
                 <h3 className="text-xl line-clamp-2">{name}</h3>
                 <p className="text-xs line-clamp-2">{shortDesc}</p>
 
-                <Link to={`/events/${id}`}>
-                    <button className={`w-full py-2 rounded-full ${buttonColor} text-white`}>View</button>
-                </Link>
+                <div className="flex gap-2">
+                    <Link to={`/events/${id}`}
+                        className="w-full"
+                    >
+                        <button className={`w-full py-2 rounded-full ${buttonColor} text-white`}>View</button>
+                    </Link>
+                    {/* <button
+                        // onClick={() => handleDelete(blog.id)}
+                        className="bg-[#eb1f1f] w-fit p-2 rounded-full flex items-center justify-center text-white"
+                    >
+                        <Trash2 />
+                    </button> */}
+                </div>
+
             </div>
         </div>
     );
