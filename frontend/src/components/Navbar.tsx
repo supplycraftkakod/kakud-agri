@@ -91,7 +91,7 @@ export default function Navbar() {
                     </div>
 
                     {/* Other nav links */}
-                    <a onClick={toggleMore} href="#services" className="hover:text-black">Services</a>
+                    <a href="#services" className="hover:text-black">Services</a>
 
                     {/* Auth Buttons */}
                     {
