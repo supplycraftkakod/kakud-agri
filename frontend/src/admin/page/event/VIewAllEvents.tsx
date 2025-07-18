@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchAllEvents } from "../../../redux/slices/event/allEventsSlice";
 import { FiSearch } from "react-icons/fi";
 import EventCardAdmin from "../../components/EventCardAdmin";
+import Loader from "../../../components/Loader";
 
 const VIewAllEvents = () => {
     const dispatch = useDispatch();
@@ -30,9 +31,9 @@ const VIewAllEvents = () => {
                 </div>
 
                 {loading ? (
-                    <p>Loading events...</p>
+                    <Loader />
                 ) : error ? (
-                    <p className="text-red-600">Error: {error}</p>
+                    <p className="text-red-600">Error occured</p>
                 ) : (
                     <div className="w-full md:space-y-0 grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                         {events.map((event: any, index: number) => (

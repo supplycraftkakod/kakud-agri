@@ -1,12 +1,15 @@
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEventById } from "../redux/slices/event/eventSlice";
 
 import Navbar from "../components/Navbar"
+import Loader from "../components/Loader";
 
 const EventDetails = () => {
-    const { id } = useParams(); // assuming you're using React Router
+    const [searchParams] = useSearchParams();
+    const upcoming = searchParams.get("upcoming");
+    const { id } = useParams();
     const dispatch = useDispatch();
     const { data: event, loading, error } = useSelector((state: any) => state.event);
 
@@ -15,8 +18,8 @@ const EventDetails = () => {
         if (id) dispatch(fetchEventById(id));
     }, [id]);
 
-    if (loading) return <p className="text-center py-10">Loading event...</p>;
-    if (error) return <p className="text-center py-10 text-red-600">Error: {error}</p>;
+    if (loading) return <Loader />
+    if (error) return <p className="text-center py-10 text-red-600">Error occured</p>;
     if (!event) return null;
 
 
@@ -36,8 +39,8 @@ const EventDetails = () => {
                 >
 
                     <div className="w-[220px] h-[220px] absolute top-0 right-0">
-                        <div className="w-[280px] h-[35px] rotate-[45deg] flex items-center justify-center bg-[#2AB72F]">
-                            <h2 className="text-white text-center pl-20 leading-none">UPCOMING</h2>
+                        <div className={`w-[280px] h-[35px] rotate-[45deg] flex items-center justify-center ${upcoming === "true" ? "bg-[#2AB72F]" : "bg-[#b73f2a]"}`}>
+                            <h2 className="text-white text-center pl-20 leading-none">{upcoming === "true" ? "UPCOMING" : "PAST"}</h2>
                         </div>
                     </div>
                 </div>

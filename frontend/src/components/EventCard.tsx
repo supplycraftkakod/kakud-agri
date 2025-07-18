@@ -10,6 +10,7 @@ interface EventCardProps {
     buttonColor: string;
     borderColor: string;
     date: string;
+    upcoming: boolean;
 }
 
 export default function EventCard({
@@ -21,7 +22,8 @@ export default function EventCard({
     shortDesc,
     buttonColor,
     borderColor,
-    date
+    date,
+    upcoming,
 }: EventCardProps) {
 
     const dateObj = new Date(date);
@@ -59,7 +61,7 @@ export default function EventCard({
                 <h3 className="text-2xl line-clamp-2">{name}</h3>
                 <p className="line-clamp-2">{shortDesc}</p>
 
-                <Link to={`/events/${id}`}>
+                <Link to={`/events/${id}/?upcoming=${upcoming}`}>
                     <button className={`w-full py-2 rounded-full ${buttonColor} text-white`}>View</button>
                 </Link>
             </div>
