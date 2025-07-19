@@ -35,7 +35,7 @@ const OurServices = () => {
         <div id="services"  className="w-full py-[2rem] sm:py-[3.5rem] px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] xl:px-[6rem] font-inter">
             <h2 className="font-playfair italic text-[2.25rem] text-center">Our Services</h2>
 
-            <div className="pt-[2rem] flex flex-col gap-16">
+            <div className="pt-[2rem] flex flex-col gap-20 sm:gap-24">
                 {services.map((service, index) => (
                     <ServiceCard key={index} {...service} />
                 ))}
@@ -46,31 +46,31 @@ const OurServices = () => {
 
 const ServiceCard = ({ id, title, description, buttonText, image }: { id: any, title: any, description: any, buttonText: any, image: any }) => (
     <div className="w-full flex flex-col-reverse gap-y-6 lg:grid lg:grid-cols-2 gap-x-4">
-        <div className="flex flex-col justify-start gap-6">
+        <div className="flex flex-col justify-between gap-6">
             <div className="space-y-1 sm:space-y-0">
-                <h4 className="text-xl sm:text-2xl text-[#505050]">{id}</h4>
+                <h4 className="text-lg sm:text-xl text-[#505050]">{id}</h4>
                 <h2 className="text-2xl leading-normal sm:text-[2rem] sm:leading-[2.5rem] xl:text-[2rem] uppercase">{title}</h2>
             </div>
             <div className="flex flex-col gap-5">
-                <p className="text-xl leading-[2rem] xl:text-2xl xl:leading-[2.2rem] font-light">
+                <p className="text-base sm:text-xl font-light">
                     {description}
                 </p>
                 {
                     buttonText === "Explore Products" ? (
                         <Link to="/products">
-                            <button className="w-fit text-xl sm:text-2xl px-6 sm:px-4 md:px-6 py-4 sm:py-2 rounded-full border lg:border-[#474747] flex items-center justify-center leading-none">
+                            <button className="w-fit  px-6 sm:px-4 md:px-6 py-4 sm:py-2 rounded-full border lg:border-[#474747] flex items-center justify-center leading-none">
                                 {buttonText}
                             </button>
                         </Link>
                     ) : (
-                        <button className="w-fit text-xl sm:text-2xl px-6 sm:px-4 md:px-6 py-4 sm:py-2 rounded-full border lg:border-[#474747] flex items-center justify-center leading-none">
+                        <button className="w-fit px-6 sm:px-4 md:px-6 py-4 sm:py-2 rounded-full border lg:border-[#474747] flex items-center justify-center leading-none">
                             {buttonText}
                         </button>
                     )
                 }
             </div>
         </div>
-        <div className="w-[95%] xs:w-[24rem] xs:h-[24rem] xl:w-[27.5rem] xl:h-[27.5rem] m-auto lg:mx-0 rounded-2xl overflow-hidden justify-self-end">
+        <div className="xs:w-[22rem] m-auto lg:mx-0 rounded-2xl overflow-hidden justify-self-end">
             <img src={image} alt={title} className="w-full h-full object-cover object-center" />
         </div>
     </div>

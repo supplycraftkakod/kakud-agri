@@ -27,9 +27,9 @@ const whyItems = [
 const FranchiseOpportunities = () => {
     return (
         <div className="w-full pb-[5rem] sm:pb-[7rem] py-[2rem] sm:py-[3.5rem] px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] xl:px-[6rem] font-inter">
-            <div className="pb-12">
-                <h2 className="text-[2rem] sm:text-[2.5rem]">Franchise Opportunities</h2>
-                <h3 className="text-[#1E1E1E] text-lg sm:text-xl sm:leading-[1.8rem]">
+            <div className="pb-12 flex flex-col gap-4">
+                <h2 className="text-3xl sm:text-[2.5rem]">Franchise Opportunities</h2>
+                <h3 className="text-[#1E1E1E] sm:text-lg sm:leading-[1.5rem]">
                     Explore our franchise opportunities at Kakud. Join us and become a part of our exclusive retail franchise model or opt for our non-exclusive retail franchise model.
                 </h3>
             </div>

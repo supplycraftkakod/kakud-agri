@@ -192,7 +192,7 @@ const ProductDetails = () => {
                                     <Download className="text-white" />
                                 </div>
                             </div>
-                            <p className="text-lg font-light mt-2">{product.description}</p>
+                            <p className="md:text-lg font-light mt-2">{product.description}</p>
                         </div>
                     </div>
 
@@ -203,7 +203,7 @@ const ProductDetails = () => {
                                 product.aboutPoints?.filter((a: any) => a.trim() !== '').length > 0 && (
                                     <div className="mt-10">
                                         <h3 className="text-2xl mb-3">About {product.name}</h3>
-                                        <ul className="text-lg list-disc space-y-1 px-8 sm:px-10">
+                                        <ul className="md:text-lg font-light list-disc space-y-1 px-8 sm:px-10">
                                             {product.aboutPoints?.map((point: string, i: number) => (
                                                 <li key={i}>{point}</li>
                                             ))}
@@ -217,7 +217,7 @@ const ProductDetails = () => {
                                 product.benefitPoints?.filter((a: any) => a.trim() !== '').length > 0 && (
                                     <div className="mt-10">
                                         <h3 className="text-2xl mb-3">Benefits</h3>
-                                        <ul className="text-lg list-disc space-y-1 px-8 sm:px-10">
+                                        <ul className="md:text-lg font-light list-disc space-y-1 px-8 sm:px-10">
                                             {product.benefitPoints?.map((benefit: string, i: number) => (
                                                 <li key={i}>{benefit}</li>
                                             ))}
@@ -237,8 +237,8 @@ const ProductDetails = () => {
                             {
                                 product.activeIngredients?.filter((a: any) => a.trim() !== '').length > 0 && (
                                     <div className="bg-[#F0F0F0] p-3 rounded-lg">
-                                        <p className="text-[#505050] font-light leading-none pb-2">Active Ingredients</p>
-                                        <p className="text-xl ">
+                                        <p className="text-[#505050] font-medium leading-none pb-2">Active Ingredients</p>
+                                        <p className="md:text-xl font-light">
                                             {product.activeIngredients?.join(", ") || "N/A"}
                                         </p>
                                     </div>
@@ -249,8 +249,8 @@ const ProductDetails = () => {
                             {
                                 product.formulationTypes?.filter((a: any) => a.trim() !== '').length > 0 && (
                                     <div className="bg-[#F0F0F0] p-3 rounded-lg">
-                                        <p className="text-[#505050] font-light leading-none pb-2">Formulation Type</p>
-                                        <p className="text-xl ">
+                                        <p className="text-[#505050] font-medium leading-none pb-2">Formulation Type</p>
+                                        <p className="md:text-xl font-light">
                                             {product.formulationTypes?.join(", ") || "N/A"}
                                         </p>
                                     </div>
@@ -260,12 +260,12 @@ const ProductDetails = () => {
                             {
                                 product.crops?.filter((a: any) => a.trim() !== '').length > 0 && (
                                     <div className="bg-[#F0F0F0] p-4 rounded-lg">
-                                        <p className="text-[#505050] font-light leading-none pb-3">Crops</p>
+                                        <p className="text-[#505050] font-medium leading-none pb-3">Crops</p>
                                         <div className="flex flex-wrap gap-2">
                                             {product.crops?.map((crop: string) => (
                                                 <span
                                                     key={crop}
-                                                    className="bg-purple-200 text-purple-800 px-3 py-1 rounded-full text-xl"
+                                                    className="bg-purple-200 text-purple-800 px-3 py-1 font-light rounded-full md:text-xl"
                                                 >
                                                     {crop}
                                                 </span>
