@@ -13,6 +13,7 @@ import Blogs from './pages/Blogs';
 import EventDetails from './pages/EventDetails';
 import EditBlog from './admin/page/EditBlog';
 import BlogDetails from './pages/BlogDetails';
+import AboutUs from './pages/AboutUs';
 
 function App() {
   const token = localStorage.getItem("auth");
@@ -23,6 +24,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={!token ? <SignUp /> : <Navigate to={"/"} replace />} />
         <Route path="/signin" element={!token ? <SignIn /> : <Navigate to={"/"} replace />} />
+
+        <Route path="/about" element={<AboutUs />} />
 
         <Route path="/products" element={<Products />} />
         <Route path="/products/:id" element={<ProductDetails />} />
