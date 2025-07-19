@@ -14,6 +14,7 @@ import EventDetails from './pages/EventDetails';
 import EditBlog from './admin/page/EditBlog';
 import BlogDetails from './pages/BlogDetails';
 import AboutUs from './pages/AboutUs';
+import AboutProducts from './pages/AboutProducts';
 
 function App() {
   const token = localStorage.getItem("auth");
@@ -26,6 +27,7 @@ function App() {
         <Route path="/signin" element={!token ? <SignIn /> : <Navigate to={"/"} replace />} />
 
         <Route path="/about" element={<AboutUs />} />
+        <Route path="/about-products" element={<AboutProducts />} />
 
         <Route path="/products" element={<Products />} />
         <Route path="/products/:id" element={<ProductDetails />} />

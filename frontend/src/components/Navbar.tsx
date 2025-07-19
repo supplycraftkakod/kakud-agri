@@ -73,7 +73,7 @@ export default function Navbar() {
                         {/* Dropdown content */}
                         {showMore && (
                             <div className="absolute left-0 mt-2 bg-white shadow-md rounded-md p-4 z-50 flex flex-col gap-2 min-w-[150px]">
-                                <Link to={"/products"}
+                                <Link to={"/about-products"}
                                     onClick={toggleMore}
                                     className="hover:text-black"
                                 >
@@ -147,7 +147,7 @@ export default function Navbar() {
                         >
                             About Us
                         </Link>
-                        <Link to={"/products"}
+                        <Link to={"/about-products"}
                             onClick={toggleMore}
                             className="hover:text-black"
                         >
