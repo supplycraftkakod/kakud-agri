@@ -73,7 +73,12 @@ export default function Navbar() {
                         {/* Dropdown content */}
                         {showMore && (
                             <div className="absolute left-0 mt-2 bg-white shadow-md rounded-md p-4 z-50 flex flex-col gap-2 min-w-[150px]">
-                                <a onClick={toggleMore} href="/products" className="hover:text-black">Products</a>
+                                <Link to={"/products"}
+                                    onClick={toggleMore}
+                                    className="hover:text-black"
+                                >
+                                    Products
+                                </Link>
                                 <a onClick={toggleMore} href="#services" className="hover:text-black">Services</a>
                                 <a onClick={toggleMore} href="#" className="hover:text-black">Franchise</a>
                                 <Link to={"/blogs"}
@@ -94,7 +99,11 @@ export default function Navbar() {
                     </div>
 
                     {/* Other nav links */}
-                    <a href="#about" className="hover:text-black">About Us</a>
+                    <Link to={"/about"}
+                        className="hover:text-black"
+                    >
+                        About Us
+                    </Link>
 
                     {/* Auth Buttons */}
                     {
@@ -133,8 +142,17 @@ export default function Navbar() {
             {
                 isOpen && (
                     <div className="md:hidden fixed top-14 left-0 w-full bg-white shadow-md p-4 z-50 flex flex-col gap-4 text-gray-700 text-base">
-                        <a href="#about" className="hover:text-black" onClick={toggleMenu}>About Us</a>
-                        <a href="/products" className="hover:text-black" onClick={toggleMenu}>Products</a>
+                        <Link to={"/about"}
+                            className="hover:text-black"
+                        >
+                            About Us
+                        </Link>
+                        <Link to={"/products"}
+                            onClick={toggleMore}
+                            className="hover:text-black"
+                        >
+                            Products
+                        </Link>
                         <a href="#services" className="hover:text-black" onClick={toggleMenu}>Services</a>
                         <a href="#" className="hover:text-black" onClick={toggleMenu}>Franchise</a>
                         <Link to={"/blogs"}
