@@ -48,7 +48,7 @@ export const ServiceCard = ({
     image: any;
 }) => (
     <div className="w-full flex flex-col-reverse gap-y-6 lg:grid lg:grid-cols-[1.5fr_1fr] gap-x-4">
-        <div className="flex flex-col justify-between gap-6">
+        <div className="flex flex-col gap-6">
             <div className="space-y-1 sm:space-y-0">
                 <h4 className="text-lg sm:text-xl text-[#505050]">{id}</h4>
                 <h2 className="text-2xl leading-normal sm:text-[2rem] sm:leading-[2.5rem] xl:text-[2rem] uppercase">
