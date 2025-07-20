@@ -85,7 +85,7 @@ export default function Navbar() {
                                 >
                                     Services
                                 </Link>
-                                <a onClick={toggleMore} href="#" className="hover:text-black">Franchise</a>
+                                <a onClick={toggleMore} href="#franchise" className="hover:text-black">Franchise</a>
                                 <Link to={"/blogs"}
                                     onClick={toggleMore} className="hover:text-black"
                                 >
@@ -142,7 +142,7 @@ export default function Navbar() {
                 </div>
             </div>
             {/* Mobile Navbar */}
-            <div className="md:hidden flex justify-between items-center px-4 py-3 bg-white shadow-md fixed top-0 left-0 right-0 z-50">
+            <div className="md:hidden flex justify-between items-center px-4 py-3 shadow-md fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/50 bg-opacity-90">
                 <Link to="/" className="flex items-center gap-2">
                     <span className="font-black text-lg">KAKUD</span>
                 </Link>
@@ -154,7 +154,7 @@ export default function Navbar() {
             {/* Mobile Menu Drawer */}
             {
                 isOpen && (
-                    <div className="md:hidden fixed top-14 left-0 w-full bg-white shadow-md p-4 z-50 flex flex-col gap-4 text-gray-700 text-base">
+                    <div className="md:hidden font-medium text-lg fixed top-12 left-0 w-full shadow-md p-4 z-50 flex flex-col gap-4 text-gray-700 backdrop-blur-md bg-white/50 bg-opacity-90">
                         <Link to={"/about"}
                             className="hover:text-black"
                         >
@@ -172,7 +172,7 @@ export default function Navbar() {
                         >
                             Services
                         </Link>
-                        <a href="#" className="hover:text-black" onClick={toggleMenu}>Franchise</a>
+                        <a href="#franchise" className="hover:text-black" onClick={toggleMenu}>Franchise</a>
                         <Link to={"/blogs"}
                             onClick={toggleMore} className="hover:text-black"
                         >

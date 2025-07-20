@@ -5,16 +5,41 @@ import linkedIn from "../assets/icons/linkedin.png"
 import { Link } from "react-router-dom"
 import { FiYoutube } from "react-icons/fi"
 
-const Footer = () => {
+import footerImg from "../assets/images/footer.png"
+
+const Footer = ({ heading, subHeading }: { heading?: string, subHeading?: string }) => {
     return (
         <div
             id="footer"
-            className="w-full pb-4 pt-[4rem] sm:pt-[3.5rem] px-8  md:px-[3rem] lg:px-[3rem] xl:px-[6rem] font-inter flex flex-col gap-20 bg-[#F0FDF4]">
+            className="w-full pb-4 pt-[4rem] sm:pt-[3.5rem] px-8  md:px-[3rem] lg:px-[3rem] xl:px-[6rem] font-inter flex flex-col bg-no-repeat gap-20"
+            style={{
+                backgroundImage: `url(${footerImg})`,
+                backgroundPosition: "center bottom",
+            }}
+        >
+
             <div>
-                <div className="pb-12 sm:pb-16 text-2xl sm:text-4xl font-light tracking-wide">
-                    <h2>Get in touch today and take your farming to the next level with Kakud Agri!</h2>
-                </div>
                 <div>
+                    {
+                        heading ? (
+                            <div className="pb-2 text-2xl sm:text-4xl font-light tracking-wide">
+                                <h2>{heading}</h2>
+                            </div>
+                        ) : (
+                            <div className="pb-2 text-2xl sm:text-4xl font-light tracking-wide">
+                                <h2>Get in touch today and take your farming to the next level with Kakud Agri!</h2>
+                            </div>
+
+                        )}
+                </div>
+                {
+                    subHeading &&
+                    <div className="sm:text-2xl font-light tracking-wide">
+                        <h2>{subHeading}</h2>
+                    </div>
+                }
+
+                <div className="pt-12 sm:pt-16">
                     <h2 className="text-2xl">Kakud</h2>
                     <div className="w-full grid md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-14">
                         <div className="font-light">
@@ -71,7 +96,7 @@ const Footer = () => {
                                     <img src={linkedIn} alt="linkedIn" className="w-8" />
                                 </a>
                                 <a href="https://youtube.com/@kakudagri?si=Mt-eO04xfQHZSowY" target="_blank">
-                                    <FiYoutube className="w-8 h-8 p-1 rounded-full bg-black text-white"/>
+                                    <FiYoutube className="w-8 h-8 p-1 rounded-full bg-black text-white" />
                                 </a>
                             </div>
                         </div>

@@ -5,7 +5,9 @@ import { ArrowDown } from "lucide-react";
 import service1Img from "../assets/images/service-1.png";
 import service2Img from "../assets/images/service-2.png";
 import service3Img from "../assets/images/service-3.png";
+import servicesHeroImg from "../assets/images/services-hero1.png";
 import { ServiceCard } from "../sections/OurServices";
+import Footer from "../components/Footer";
 
 const services = [
     {
@@ -126,8 +128,8 @@ const OurServicesPage = () => {
                 <div
                     className="absolute inset-0 "
                     style={{
-                        // backgroundImage: `url(${aboutProductsImg})`,
-                        backgroundPosition: isDesktop ? "center -2rem" : "center top",
+                        backgroundImage: `url(${servicesHeroImg})`,
+                        backgroundPosition: isDesktop ? "center -6rem" : "center top",
                         backgroundSize: "cover",
                         backgroundRepeat: "no-repeat",
                         zIndex: 0,
@@ -136,7 +138,7 @@ const OurServicesPage = () => {
                 {/* <div className="absolute inset-0 bg-black/50"></div> */}
                 <Navbar />
 
-                <div className="w-full absolute top-24 md:top-32 flex flex-col gap-2 px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] ">
+                <div className="w-full absolute top-24 md:top-32 flex flex-col gap-2 px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem]">
                     <h1 className="text-[5.5vw] sm:text-3xl font-medium tracking-wide rounded-full">
                         Agriculture Consultation Centre.
                     </h1>
@@ -145,13 +147,13 @@ const OurServicesPage = () => {
                     </h1>
                 </div>
 
-                <div className="max-w-5xl absolute bottom-8 right-0 px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] flex flex-col-reverse md:flex-row items-start gap-4">
+                <div className="max-w-5xl absolute bottom-8 right-0 px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] flex flex-col-reverse md:flex-row items-start gap-4 text-white sm:text-black">
                     <a href="#services">
-                        <button className="text-lg sm:text-xl p-4 rounded-full border border-[#292929] flex items-center justify-center leading-none">
+                        <button className="text-lg sm:text-xl p-4 rounded-full border border-white sm:border-[#292929] flex items-center justify-center leading-none">
                             <ArrowDown />
                         </button>
                     </a>
-                    <p className="sm:text-xl ">
+                    <p className="sm:text-xl font-light">
                         The Kakud Agri Agriculture Consultation Centre is a one-stop solution for farmers seeking
                         professional advice and technical support to improve their farming practices and increase their yield.
                         Our consultation centre brings together a team of experienced agronomists, soil scientists, crop
@@ -175,7 +177,7 @@ const OurServicesPage = () => {
                 </div>
             </div>
 
-            <div className="mt-12 p-6 py-20 bg-green-50 text-center rounded-xl shadow-md">
+            {/* <div className="mt-12 p-6 py-20 bg-green-50 text-center rounded-xl shadow-md">
                 <h3 className="text-xl sm:text-2xl font-semibold text-green-800 mb-2">
                     Need Help with Your Farm?
                 </h3>
@@ -185,7 +187,11 @@ const OurServicesPage = () => {
                 <button className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-full text-base sm:text-lg transition-all">
                     Request Agri Consultancy from Agri Experts
                 </button>
-            </div>
+            </div> */}
+
+            <Footer
+                heading="Need Help with Your Farm?"
+                subHeading="Get expert guidance tailored to your crops, soil, and climate. Our agronomists are here to help you grow better." />
 
         </div>
     )

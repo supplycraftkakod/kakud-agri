@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import heroImg from "../assets/images/about-hero.png"
 import Navbar from "../components/Navbar"
+import Footer from "../components/Footer";
 
 const AboutUs = () => {
   const [isDesktop, setIsDesktop] = useState(false);
@@ -77,7 +78,7 @@ const AboutUs = () => {
           className="w-full py-10 pt-16 px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] xl:px-[6rem]"
         >
           <div className="block sm:hidden">
-            <h2 className="text-4xl mb-8 sm:text-center font-playfair">About Kakud Agri</h2>
+            <h2 className="text-4xl mb-8 text-center font-playfair">About Kakud Agri</h2>
 
             <p className="sm:text-lg mb-6 text-gray-900">
               <strong>Kakud Agri</strong>, a brand of
@@ -208,7 +209,7 @@ const AboutUs = () => {
         </section>
 
         {/* CTA Section */}
-        <section className="bg-gray-300 text-black py-20 px-6 text-center">
+        {/* <section className="bg-[#F0FDF4] text-black py-20 px-6 text-center">
           <h2 className="text-3xl font-light">
             Join the Agri-Tech Revolution with Kakud Agri
           </h2>
@@ -216,7 +217,11 @@ const AboutUs = () => {
             Together, we can create a future of sustainable farming and empowered
             communities.
           </p>
-        </section>
+        </section> */}
+
+        <Footer
+          heading="Join the Agri-Tech Revolution with Kakud Agri"
+          subHeading="Together, we can create a future of sustainable farming and empowered communities."/>
 
       </div>
     </div>

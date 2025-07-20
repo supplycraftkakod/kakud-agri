@@ -7,7 +7,7 @@ const OurServices = () => {
 
             <div className="flex flex-col  pt-[2rem]">
                 <h3 className="text-2xl sm:text-3xl  mb-2">
-                    Agriculture Consultation Centre
+                    Agriculture Consultation Centre.
                 </h3>
                 <h3 className="text-lg sm:text-2xl  mb-6 font-light">
                     Transforming Farming Through Expert Guidance

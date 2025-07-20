@@ -37,7 +37,9 @@ const franchiseItems = [
 
 const FranchiseOpportunities = () => {
     return (
-        <div className="w-full py-[2rem] sm:py-[3.5rem] px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] xl:px-[6rem] font-inter">
+        <div
+            id="franchise"
+            className="w-full py-[2rem] sm:py-[3.5rem] px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] xl:px-[6rem] font-inter">
             <div className="pb-12 flex flex-col gap-4">
                 <h2 className="text-3xl sm:text-[2.5rem]">Franchise Opportunities</h2>
                 <h3 className="text-[#1E1E1E] sm:text-lg sm:leading-[1.5rem]">

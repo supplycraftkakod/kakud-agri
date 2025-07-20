@@ -5,6 +5,7 @@ import fertilizerImg from "../assets/images/products-page/fertilizer.png"
 import Navbar from "../components/Navbar";
 import { ArrowDown } from "lucide-react";
 import { Link } from "react-router-dom";
+import Footer from "../components/Footer";
 
 const productRange = [
     {
@@ -78,7 +79,10 @@ export default function AboutProducts() {
                 <Navbar />
 
                 <div className="w-full absolute top-24 md:top-32 flex flex-col gap-4 px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] text-white">
-                    <h1 className="text-[5.5vw] sm:text-4xl font-light tracking-wide leading-none backdrop-blur-md bg-white/40 bg-opacity-90 border border-gray-400 w-fit px-4 sm:px-8 py-3 rounded-full">
+                    {/* <h1 className="text-[5.5vw] sm:text-4xl font-light tracking-wide leading-none backdrop-blur-md bg-white/40 bg-opacity-90 border border-gray-400 w-fit px-4 sm:px-8 py-3 rounded-full">
+                        Agricultural Input Products.
+                    </h1> */}
+                    <h1 className="text[5.5vw] sm:text-5xl">
                         Agricultural Input Products.
                     </h1>
                     <p className="sm:text-xl font-light tracking-wider max-w-2xl">
@@ -102,7 +106,7 @@ export default function AboutProducts() {
             {/* Product Range */}
             <div
                 id="product-range"
-                className="px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] py-10">
+                className="px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] xl:px-[6rem] py-10">
                 <h2 className="text-2xl sm:text-3xl font-light mb-10">
                     Our product range includes:
                 </h2>
@@ -110,7 +114,7 @@ export default function AboutProducts() {
                     {productRange.map((product, idx) => (
                         <div
                             key={idx}
-                            className="bg-gray-50 border border-gray-200 rounded-lg p-4"
+                            className="w-[70%] mx-auto sm:w-full bg-gray-50 border border-gray-200 rounded-lg p-4"
                         >
                             <img src={product.imgSrc} alt={product.imgSrc} className="w-[150px] xs:w-[200px] sm:w-full p-4 mb-4 mx-auto" />
                             <h2 className="sm:text-xl  mb-2">{product.title}</h2>
@@ -122,11 +126,11 @@ export default function AboutProducts() {
 
             {/* Product Categories */}
             <div
-                className="px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] py-10">
+                className="px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] xl:px-[6rem] py-10">
 
                 <div className="">
                     <h2 className="text-2xl sm:text-3xl font-light mb-10">
-                        Product Categories
+                        Product Categories:
                     </h2>
                     <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4">
                         {categories.map((cat, idx) => (
@@ -134,7 +138,15 @@ export default function AboutProducts() {
                                 key={idx}
                                 className="bg-gray-50 border border-gray-200 rounded-lg p-4"
                             >
-                                <h4 className="text-gray-600">0{idx+1}</h4>
+                                {idx < 9 ? (
+                                    <div>
+                                        <h4 className="text-gray-600">0{idx + 1}</h4>
+                                    </div>
+                                ) : (
+                                    <div>
+                                        <h4 className="text-gray-600">{idx + 1}</h4>
+                                    </div>
+                                )}
                                 <h3 className="sm:text-xl">{cat}</h3>
                             </div>
                         ))}
@@ -155,6 +167,8 @@ export default function AboutProducts() {
                     </Link>
                 </div>
             </div>
+
+            <Footer />
         </div>
     );
 }

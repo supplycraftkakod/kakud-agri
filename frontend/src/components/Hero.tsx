@@ -23,7 +23,7 @@ const staticSlides = [
             "At Kakud Agri, we provide high-quality agro-inputs, expert consultation, and modern agri-solutions — all under one roof. Join our mission to empower farmers and feed the future sustainably.",
         buttons: [
             { label: "Explore Our Products", link: "/products" },
-            { label: "Become a Franchise Partner", link: "/franchise" },
+            { label: "Become a Franchise Partner", link: "#franchise" },
         ],
     },
     {
@@ -42,7 +42,7 @@ const staticSlides = [
         description:
             "Be part of a nationwide agri-revolution. Choose from exclusive or non-exclusive franchise models and build a profitable, purpose-driven business with Kakud Agri.",
         buttons: [
-            { label: "Explore Franchise Models", link: "/franchise-models" },
+            { label: "Explore Franchise Models", link: "#franchise" },
             { label: "Get Started Today", link: "/get-started" },
         ],
     },
@@ -124,11 +124,19 @@ export default function Hero() {
                         </div>
                         <div className="flex flex-col items-center md:flex-row gap-4">
                             {staticSlide.buttons.map((btn, idx) => (
-                                <Link to={btn.link} key={idx}>
-                                    <button className="text-lg sm:text-xl px-8 sm:px-4 md:px-6 py-4 sm:py-2 rounded-full border text-white lg:text-black lg:border-[#767676] flex items-center justify-center leading-none backdrop-blur-md bg-white/20 border-white/20 shadow-lg">
-                                        {btn.label}
-                                    </button>
-                                </Link>
+                                btn.link[0] === "#" ? (
+                                    <a href={btn.link}>
+                                        <button className="text-lg sm:text-xl px-8 sm:px-4 md:px-6 py-4 sm:py-2 rounded-full border text-white lg:text-black lg:border-[#767676] flex items-center justify-center leading-none backdrop-blur-md bg-white/20 border-white/20 shadow-lg">
+                                            {btn.label}
+                                        </button>
+                                    </a>
+                                ) : (
+                                    <Link to={btn.link} key={idx}>
+                                        <button className="text-lg sm:text-xl px-8 sm:px-4 md:px-6 py-4 sm:py-2 rounded-full border text-white lg:text-black lg:border-[#767676] flex items-center justify-center leading-none backdrop-blur-md bg-white/20 border-white/20 shadow-lg">
+                                            {btn.label}
+                                        </button>
+                                    </Link>
+                                )
                             ))}
                         </div>
                     </div>
