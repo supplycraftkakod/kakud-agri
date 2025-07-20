@@ -3,49 +3,118 @@ import { FiChevronDown, FiSearch } from "react-icons/fi";
 
 const filterSections = [
     {
-        title: "Treatment",
+        title: "Insecticides",
         withSearch: true,
         checkboxes: [
+            "Neem Oil-Based",
+            "Pyrethrin Spray",
+            "Imidacloprid 17.8% SL",
+            "Chlorpyrifos 20% EC",
             "Treatment Option 1",
             "Treatment Option 2"
         ]
     },
     {
-        title: "Active Ingredients",
+        title: "Fungicides",
         withSearch: true,
         checkboxes: [
             "Ametryne 80% WDG (1)",
             "A natural bio-stimulant (1)",
-            "Azoxystrobin + Tebuconazole + Prochloraz (1)"
+            "Azoxystrobin + Tebuconazole + Prochloraz (1)",
+            "Copper Oxychloride",
+            "Carbendazim 50% WP",
+            "Trichoderma Viride"
         ]
     },
     {
-        title: "Crops",
+        title: "Herbicides",
         withSearch: true,
         checkboxes: [
+            "Glyphosate 41% SL",
+            "Paraquat Dichloride",
+            "2,4-D Amine Salt",
             "Wheat",
             "Rice",
             "Corn"
         ]
     },
     {
-        title: "Formulation Type",
+        title: "Plant Growth Regulators (PGRs)",
         withSearch: true,
         checkboxes: [
+            "Gibberellic Acid 0.001% L",
+            "NAA (Naphthaleneacetic acid)",
+            "Cytokinin Based",
             "Powder",
             "Liquid",
             "Granules"
         ]
     },
     {
-        title: "Key Targets",
+        title: "Micronutrients",
         withSearch: true,
         checkboxes: [
-            "Weeds",
-            "Fungi",
-            "Pests"
+            "Zinc EDTA",
+            "Boron 20%",
+            "Iron Chelate",
+            "Manganese Sulphate",
+            "Copper Sulphate"
         ]
-    }
+    },
+    {
+        title: "Organic Fertilizers",
+        withSearch: true,
+        checkboxes: [
+            "Vermicompost",
+            "Bone Meal",
+            "Panchagavya",
+            "Neem Cake",
+            "Seaweed Extract"
+        ]
+    },
+    {
+        title: "Complex Fertilizers",
+        withSearch: true,
+        checkboxes: [
+            "NPK 19:19:19",
+            "NPK 20:20:0",
+            "NPK 10:26:26",
+            "DAP (Di-Ammonium Phosphate)"
+        ]
+    },
+    {
+        title: "Seeds",
+        withSearch: true,
+        checkboxes: [
+            "Hybrid Tomato",
+            "High-Yield Wheat",
+            "Paddy (Short Duration)",
+            "Bt Cotton",
+            "Organic Okra"
+        ]
+    },
+    {
+        title: "Soil Conditioners & Fertility Boosters",
+        withSearch: true,
+        checkboxes: [
+            "Gypsum",
+            "Humic Acid",
+            "Biochar",
+            "Compost",
+            "Lime Powder"
+        ]
+    },
+    {
+        title: "Adjuvants & Spreaders",
+        withSearch: true,
+        checkboxes: [
+            "Silicon-based Spreader",
+            "Non-Ionic Surfactant",
+            "Sticker-Spreader",
+            "Emulsifier",
+            "Wetting Agent"
+        ]
+    },
 ];
 
 const ProductsSidebar = () => {
@@ -102,7 +171,7 @@ const ProductsSidebar = () => {
                                     <div className="relative mb-4">
                                         <input
                                             type="text"
-                                            placeholder="Search the product"
+                                            placeholder="Search with type"
                                             value={searchValue}
                                             onChange={(e) =>
                                                 handleSearchChange(section.title, e.target.value)
