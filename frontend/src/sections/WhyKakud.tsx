@@ -1,35 +1,54 @@
 import expertConsultation from "../assets/images/expert-consultation.png";
-import franchiseNetwork from "../assets/images/franchise-network.png";
-import customerCentricApproach from "../assets/images/customer-centric-approach.png";
 
 const whyItems = [
     {
-        title: "Expert Consultation",
+        title: "Direct-from-Factory Advantage",
         description:
-            "Our team of agricultural specialists at Kakud Agri is dedicated to providing you with expert consultation to help you make informed decisions for your farm. We are here to support you every step of the way.",
+            "Farmers get access to high-quality and innovative products directly from our manufacturing units—ensuring better pricing, fresh inventory, and trusted quality.",
         image: expertConsultation,
     },
     {
-        title: "Franchise Network",
+        title: "High-Quality Products",
         description:
-            "Kakud Agri boasts a strong franchise network with exclusive and non-exclusive stores, ensuring that our products and services reach a wide customer base. Partner with us to expand your business reach.",
-        image: franchiseNetwork,
+            "All our products are sourced from trusted manufacturers and tested for performance, ensuring reliable results and enhanced crop productivity.",
+        image: expertConsultation,
+    },
+    {
+        title: "Expert Consultation",
+        description:
+            "Our in-house team of agronomists and agricultural specialists provides personalized guidance to farmers for better decision-making and improved yields.",
+        image: expertConsultation,
+    },
+    {
+        title: "Strong Franchise Network",
+        description:
+            "With a robust network of exclusive and non-exclusive retail stores, we ensure wide accessibility and consistent supply across regions.",
+        image: expertConsultation,
     },
     {
         title: "Customer-Centric Approach",
         description:
-            "At Kakud Agri, we prioritize our customers by offering personalized solutions tailored to their specific needs. Experience our responsive service and let us help you achieve your agricultural goals.",
-        image: customerCentricApproach,
+            "We believe in building relationships, not just sales. Our team delivers personalized solutions and prompt support tailored to each farmer’s needs.",
+        image: expertConsultation,
+    },
+    {
+        title: "Innovative Agricultural Solutions",
+        description:
+            "We promote modern farming practices and technology-driven approaches that make agriculture more sustainable, profitable, and future-ready.",
+        image: expertConsultation,
     },
 ];
+
 
 const WhyKakud = () => {
     return (
         <div className="w-full py-[2rem] sm:py-[3.5rem] px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] xl:px-[6rem] font-inter">
             <div className="pb-12 flex flex-col gap-4">
                 <h2 className="text-3xl sm:text-[2.5rem]">Why Choose Kakud Agri?</h2>
-                <h3 className="text-[#1E1E1E] sm:text-lg sm:leading-[1.5rem]">
-                    Discover the exceptional services offered by Kakud Agri. From high-quality products sourced from trusted manufacturers to expert consultation provided by our agricultural specialists, we are committed to delivering top-notch solutions for all your agricultural goals.
+                <h3 className="text-[#1E1E1E] sm:text-lg sm:leading-[1.5rem] font-light">
+                    At Kakud Agri, we are committed to transforming agriculture by delivering value, trust, and
+                    innovation to every farmer we serve. Here’s why thousands of farmers and agri-entrepreneurs
+                    choose us:
                 </h3>
             </div>
 
@@ -53,7 +72,7 @@ export const KakudAdvantageCard = ({ title, description, image }: { title: any, 
         ></div>
         <div className="flex flex-col gap-4">
             <h3 className="text-2xl">{title}</h3>
-            <p>{description}</p>
+            <p className="font-light">{description}</p>
         </div>
     </div>
 );
