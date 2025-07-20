@@ -56,7 +56,7 @@ const FranchiseOpportunities = () => {
                 <p className="text-base sm:text-lg font-light pt-1">Apply Now to explore the right franchise model for you and be part of a mission to empower
                     farmers and build a sustainable future in agriculture.
                 </p>
-                <button className="mt-4 text-lg sm:text-xl px-8 sm:px-4 md:px-6 py-4 sm:py-2 rounded-full border text-black border-[#3d3d3d] flex items-center justify-center leading-none backdrop-blur-md bg-white/20 border-white/20 shadow-lg">
+                <button className="mt-4 text-lg sm:text-xl px-8 sm:px-4 md:px-6 py-4 sm:py-2 rounded-full border text-black border-[#3d3d3d] flex items-center justify-center leading-none">
                     Apply
                 </button>
             </div>

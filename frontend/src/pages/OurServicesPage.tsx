@@ -147,7 +147,7 @@ const OurServicesPage = () => {
 
                 <div className="max-w-5xl absolute bottom-8 right-0 px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] flex flex-col-reverse md:flex-row items-start gap-4">
                     <a href="#services">
-                        <button className="text-lg sm:text-xl p-4 rounded-full border border-[#292929] flex items-center justify-center leading-none backdrop-blur-md bg-white/20 border-white/20 shadow-lg">
+                        <button className="text-lg sm:text-xl p-4 rounded-full border border-[#292929] flex items-center justify-center leading-none">
                             <ArrowDown />
                         </button>
                     </a>
