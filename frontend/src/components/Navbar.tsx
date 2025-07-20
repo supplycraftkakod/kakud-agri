@@ -96,9 +96,17 @@ export default function Navbar() {
                                 >
                                     Events
                                 </Link>
-                                <a onClick={toggleMore} href="#" className="hover:text-black">Careers</a>
-                                <a onClick={toggleMore} href="#contact" className="hover:text-black">Contact</a>
-
+                                <Link to={"/careers"}
+                                    onClick={toggleMore} className="hover:text-black"
+                                >
+                                    Careers
+                                </Link>
+                                {/* <Link to={"/contact"}
+                                    onClick={toggleMore} className="hover:text-black"
+                                >
+                                    Contact
+                                </Link> */}
+                                <a href="#footer" className="hover:text-black" onClick={toggleMenu}>Contact</a>
                             </div>
                         )}
                     </div>
@@ -163,7 +171,8 @@ export default function Navbar() {
                             className="hover:text-black"
                         >
                             Services
-                        </Link>                        <a href="#" className="hover:text-black" onClick={toggleMenu}>Franchise</a>
+                        </Link>
+                        <a href="#" className="hover:text-black" onClick={toggleMenu}>Franchise</a>
                         <Link to={"/blogs"}
                             onClick={toggleMore} className="hover:text-black"
                         >
@@ -174,8 +183,17 @@ export default function Navbar() {
                         >
                             Events
                         </Link>
-                        <a href="#" className="hover:text-black" onClick={toggleMenu}>Careers</a>
-                        <a href="#contact" className="hover:text-black" onClick={toggleMenu}>Contact</a>
+                        <Link to={"/careers"}
+                            onClick={toggleMore} className="hover:text-black"
+                        >
+                            Careers
+                        </Link>
+                        {/* <Link to={"/contact"}
+                            onClick={toggleMore} className="hover:text-black"
+                        >
+                            Contact
+                        </Link> */}
+                        <a href="#footer" className="hover:text-black" onClick={toggleMenu}>Contact</a>
 
                         {
                             token ? (
