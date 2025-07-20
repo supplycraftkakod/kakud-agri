@@ -21,7 +21,7 @@ const OurServices = () => {
                     their specific needs.
                 </p>
                 <Link to={"/services"}>
-                    <button className="text-lg sm:text-xl px-8 sm:px-4 md:px-6 py-4 sm:py-2 rounded-full border border-[#767676] flex items-center justify-center leading-none backdrop-blur-md bg-white/20 border-white/20 shadow-lg">
+                    <button className="text-lg sm:text-xl px-8 sm:px-4 md:px-6 py-4 sm:py-2 rounded-full border border-[#353535] flex items-center justify-center leading-none backdrop-blur-md bg-white/20 border-white/20 shadow-lg">
                         More
                     </button>
                 </Link>

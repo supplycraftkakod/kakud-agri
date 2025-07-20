@@ -79,7 +79,12 @@ export default function Navbar() {
                                 >
                                     Products
                                 </Link>
-                                <a onClick={toggleMore} href="#services" className="hover:text-black">Services</a>
+                                <Link to={"/services"}
+                                    onClick={toggleMore}
+                                    className="hover:text-black"
+                                >
+                                    Services
+                                </Link>
                                 <a onClick={toggleMore} href="#" className="hover:text-black">Franchise</a>
                                 <Link to={"/blogs"}
                                     onClick={toggleMore} className="hover:text-black"
@@ -153,8 +158,12 @@ export default function Navbar() {
                         >
                             Products
                         </Link>
-                        <a href="#services" className="hover:text-black" onClick={toggleMenu}>Services</a>
-                        <a href="#" className="hover:text-black" onClick={toggleMenu}>Franchise</a>
+                        <Link to={"/services"}
+                            onClick={toggleMore}
+                            className="hover:text-black"
+                        >
+                            Services
+                        </Link>                        <a href="#" className="hover:text-black" onClick={toggleMenu}>Franchise</a>
                         <Link to={"/blogs"}
                             onClick={toggleMore} className="hover:text-black"
                         >
