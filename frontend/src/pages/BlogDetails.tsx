@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import Loader from "../components/Loader";
 import axios from "axios";
 import { BE_URL } from "../../config";
+import Footer from "../components/Footer";
 
 interface ContentBlock {
     type: "bigHeading" | "subHeading" | "paragraph" | "image";
@@ -128,6 +129,8 @@ const BlogDetails = () => {
                     })}
                 </div>
             </div>
+
+            <Footer />
         </div>
     );
 };

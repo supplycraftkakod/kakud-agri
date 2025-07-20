@@ -5,6 +5,7 @@ import { fetchEventById } from "../redux/slices/event/eventSlice";
 
 import Navbar from "../components/Navbar"
 import Loader from "../components/Loader";
+import Footer from "../components/Footer";
 
 const EventDetails = () => {
     const [searchParams] = useSearchParams();
@@ -122,11 +123,13 @@ const EventDetails = () => {
                 </div>
 
                 {/* socials */}
-                <div className="mt-8 sm:mt-14">
+                {/* <div className="mt-8 sm:mt-14">
                     <h2 className="text-center">Follow us on LinkedIn | Twitter | Instagram</h2>
-                </div>
+                </div> */}
 
             </div>
+
+            <Footer />
         </div>
     )
 }
