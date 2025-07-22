@@ -82,17 +82,22 @@ export default function AboutProducts() {
                     {/* <h1 className="text-[5.5vw] sm:text-4xl font-light tracking-wide leading-none backdrop-blur-md bg-white/40 bg-opacity-90 border border-gray-400 w-fit px-4 sm:px-8 py-3 rounded-full">
                         Agricultural Input Products.
                     </h1> */}
-                    <h1 className="text[5.5vw] sm:text-5xl">
+                    <h1 className="text-2xl sm:text-5xl">
                         Agricultural Input Products.
                     </h1>
                     <p className="sm:text-xl font-light tracking-wider max-w-2xl">
                         We offer a wide range of high-quality agricultural inputs through our exclusive retail franchise stores.
                     </p>
+                    <Link to={"/products"}>
+                        <button className="w-fit text-lg p-3 px-5 rounded-full border lg:border-[#767676] flex items-center justify-center leading-none backdrop-blur-md bg-white/20 border-white/20 shadow-lg hover:bg-white/30 transition-all">
+                            Explore Products
+                        </button>
+                    </Link>
                 </div>
 
                 <div className="max-w-2xl absolute bottom-8 right-0 px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] text-white flex items-start gap-4">
                     <a href="#product-range">
-                        <button className="text-lg sm:text-xl p-4 rounded-full border lg:border-[#767676] flex items-center justify-center leading-none backdrop-blur-md bg-white/20 border-white/20 shadow-lg">
+                        <button className="text-lg sm:text-xl p-4 rounded-full border lg:border-[#767676] flex items-center justify-center leading-none backdrop-blur-md bg-white/20 border-white/20 shadow-lg hover:bg-white/30 transition-all">
                             <ArrowDown />
                         </button>
                     </a>

@@ -126,13 +126,13 @@ export default function Hero() {
                             {staticSlide.buttons.map((btn, idx) => (
                                 btn.link[0] === "#" ? (
                                     <a href={btn.link}>
-                                        <button className="text-lg sm:text-xl px-8 sm:px-4 md:px-6 py-4 sm:py-2 rounded-full border text-white lg:text-black lg:border-[#767676] flex items-center justify-center leading-none backdrop-blur-md bg-white/20 border-white/20 shadow-lg">
+                                        <button className="text-lg sm:text-xl px-8 sm:px-4 md:px-6 py-4 sm:py-2 rounded-full border text-white lg:text-black lg:border-[#767676] flex items-center justify-center leading-none backdrop-blur-md bg-white/20 border-white/20 shadow-lg hover:bg-white/30 transition-all">
                                             {btn.label}
                                         </button>
                                     </a>
                                 ) : (
                                     <Link to={btn.link} key={idx}>
-                                        <button className="text-lg sm:text-xl px-8 sm:px-4 md:px-6 py-4 sm:py-2 rounded-full border text-white lg:text-black lg:border-[#767676] flex items-center justify-center leading-none backdrop-blur-md bg-white/20 border-white/20 shadow-lg">
+                                        <button className="text-lg sm:text-xl px-8 sm:px-4 md:px-6 py-4 sm:py-2 rounded-full border text-white lg:text-black lg:border-[#767676] flex items-center justify-center leading-none backdrop-blur-md bg-white/20 border-white/20 shadow-lg hover:bg-white/30 transition-all">
                                             {btn.label}
                                         </button>
                                     </Link>
@@ -150,7 +150,7 @@ export default function Hero() {
                             {banners[currentSlideIndex - staticSlides.length]?.paragraph || "No description available."}
                         </p>
                         <Link to={"/products"}>
-                            <button className="px-8 py-3 rounded-full bg-white/20 border border-white/30 text-white hover:bg-white/30 transition-all">
+                            <button className="px-8 py-3 rounded-full bg-white/20 border border-white/30 text-white hover:bg-white/30 transition-all ">
                                 Explore Products
                             </button>
                         </Link>
@@ -177,7 +177,7 @@ export default function Hero() {
                     {/* Arrow Button */}
                     <button
                         onClick={nextSlide}
-                        className="w-[8rem] h-[8rem] absolute bottom-10 right-10 flex items-center justify-center rounded-full border text-white border-white group"
+                        className="w-[8rem] h-[8rem] absolute bottom-10 right-10 flex items-center justify-center rounded-full border text-white border-white group hover:bg-white/10 transition-all"
                     >
                         <img
                             src={arrowRight}
