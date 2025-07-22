@@ -12,11 +12,16 @@ import BlogEditor from "./page/BlogEditor";
 import ViewAllBlogs from "./page/ViewAllBlogs";
 import AddEvent from "./page/event/AddEvent";
 import VIewAllEvents from "./page/event/VIewAllEvents";
+import { ArrowDown } from "lucide-react";
 
 const AdminHome = () => {
     const [selectedComponent, setSelectedComponent] = useState("adminDashboard");
     const [userDetails, setUserDetails] = useState<any>();
     const [loading, setLoading] = useState(false);
+    const [arrowDownProductsMgm, setArrowDownProductsMgm] = useState(false);
+    const [arrowDownBlogsMgm, setArrowDownBlogsMgm] = useState(false);
+    const [arrowDownEventsMgm, setArrowDownEventsMgm] = useState(false);
+    const [arrowDownBannersMgm, setArrowDownBannersMgm] = useState(false);
 
     const handleComponentSelection = (component: string) => {
         setSelectedComponent(component)
@@ -63,8 +68,8 @@ const AdminHome = () => {
                 <Navbar />
             </div>
 
-            <div className="w-full min-h-screen pb-6 sm:pb-8 pt-20 md:pt-28 px-4 sm:px-[1rem] lg:px-[2.6rem] flex flex-col md:flex-row items-stretch md:justify-between gap-4 font-inter">
-                <div className="w-full md:max-w-[250px] md:min-h-[82vh] p-4 flex flex-col gap-10 border border-[#A69F9F] rounded-xl font-playfair">
+            <div className="w-full min-h-screen pb-6 sm:pb-8 pt-20 md:pt-28 px-4 sm:px-[1rem] lg:px-[2.6rem] flex flex-col md:flex-row items-stretch md:justify-between gap-4 font-inter font-light">
+                <div className="w-full md:max-w-[250px] md:min-h-[82vh] p-4 flex flex-col gap-10 border border-gray-300 rounded-xl ">
                     <div className="flex flex-col items-center gap-2">
                         <div className="w-[72px] h-[72px] bg-pink-300 rounded-full text-2xl flex items-center justify-center">
                             {userDetails?.name &&
@@ -79,59 +84,110 @@ const AdminHome = () => {
                         </h2>
                         {/* <h2>Abul Khasim</h2> */}
                     </div>
+
+                    <div className="flex flex-col gap-12 text-[14px]">
+                        <div className="flex flex-col gap-3">
+                            <AdminButton
+                                label="Analytics"
+                                componentName="adminDashboard"
+                                selectedComponent={selectedComponent}
+                                handleComponentSelection={handleComponentSelection}
+                            />
+                            <div className={`${arrowDownProductsMgm ? "h-fit" : "h-8"} w-full pb-2 rounded-lg pl-2 px-2 py-1 flex flex-col gap-2 bg-gray-200 overflow-hidden`}>
+                                <div
+                                    onClick={() => setArrowDownProductsMgm(!arrowDownProductsMgm)}
+                                    className="flex items-center justify-between text-[14px] cursor-pointer select-none">
+                                    <h2>Products Management</h2>
+                                    <ArrowDown
+                                        className={`w-[18px] h-[18px] ${arrowDownProductsMgm ? "rotate-180" : "rotate-0"} border p-[1px] border-gray-500 rounded-full`}
+                                    />
+                                </div>
+                                <AdminButton
+                                    label="View all products"
+                                    componentName="viewAllProducts"
+                                    selectedComponent={selectedComponent}
+                                    handleComponentSelection={handleComponentSelection}
+                                />
+                                <AdminButton
+                                    label="Add new product"
+                                    componentName="addNewProduct"
+                                    selectedComponent={selectedComponent}
+                                    handleComponentSelection={handleComponentSelection}
+                                />
+                            </div>
+                            <div className={`${arrowDownBlogsMgm ? "h-fit" : "h-8"} w-full pb-2 rounded-lg pl-2 px-2 py-1 flex flex-col gap-2 bg-gray-200 overflow-hidden`}>
+                                <div
+                                    onClick={() => setArrowDownBlogsMgm(!arrowDownBlogsMgm)}
+                                    className="flex items-center justify-between text-[14px] cursor-pointer select-none">
+                                    <h2>Blogs Management</h2>
+                                    <ArrowDown
+                                        className={`w-[18px] h-[18px] ${arrowDownBlogsMgm ? "rotate-180" : "rotate-0"} border p-[1px] border-gray-500 rounded-full`}
+                                    />
+                                </div>
+                                <AdminButton
+                                    label="Write a Blog"
+                                    componentName="blog"
+                                    selectedComponent={selectedComponent}
+                                    handleComponentSelection={handleComponentSelection}
+                                />
+                                <AdminButton
+                                    label="View All Blogs"
+                                    componentName="viewAllBlogs"
+                                    selectedComponent={selectedComponent}
+                                    handleComponentSelection={handleComponentSelection}
+                                />
+                            </div>
+
+                            <div className={`${arrowDownEventsMgm ? "h-fit" : "h-8"} w-full pb-2 rounded-lg pl-2 px-2 py-1 flex flex-col gap-2 bg-gray-200 overflow-hidden`}>
+                                <div
+                                    onClick={() => setArrowDownEventsMgm(!arrowDownEventsMgm)}
+                                    className="flex items-center justify-between text-[14px] cursor-pointer select-none">
+                                    <h2>Events Management</h2>
+                                    <ArrowDown
+                                        className={`w-[18px] h-[18px] ${arrowDownEventsMgm ? "rotate-180" : "rotate-0"} border p-[1px] border-gray-500 rounded-full`}
+                                    />
+                                </div>
+                                <AdminButton
+                                    label="Add Event"
+                                    componentName="addEvent"
+                                    selectedComponent={selectedComponent}
+                                    handleComponentSelection={handleComponentSelection}
+                                />
+                                <AdminButton
+                                    label="View All Events"
+                                    componentName="viewAllEvents"
+                                    selectedComponent={selectedComponent}
+                                    handleComponentSelection={handleComponentSelection}
+                                />
+                            </div>
+
+                            <div className={`${arrowDownBannersMgm ? "h-fit" : "h-8"} w-full pb-2 rounded-lg pl-2 px-2 py-1 flex flex-col gap-2 bg-gray-200 overflow-hidden`}>
+                                <div
+                                    onClick={() => setArrowDownBannersMgm(!arrowDownBannersMgm)}
+                                    className="flex items-center justify-between text-[14px] cursor-pointer select-none">
+                                    <h2><span className="">Banners</span> Management</h2>
+                                    <ArrowDown
+                                        className={`w-[18px] h-[18px] ${arrowDownBannersMgm ? "rotate-180" : "rotate-0"} border p-[1px] border-gray-500 rounded-full`}
+                                    />
+                                </div>
+                                <AdminButton
+                                    label="Banners"
+                                    componentName="banners"
+                                    selectedComponent={selectedComponent}
+                                    handleComponentSelection={handleComponentSelection}
+                                />
+                            </div>
+
+                        </div>
+
+                    </div>
+
                     <div className="flex flex-col gap-2">
-                        <AdminButton
-                            label="Dashboard"
-                            componentName="adminDashboard"
-                            selectedComponent={selectedComponent}
-                            handleComponentSelection={handleComponentSelection}
-                        />
-                        <AdminButton
-                            label="View all products"
-                            componentName="viewAllProducts"
-                            selectedComponent={selectedComponent}
-                            handleComponentSelection={handleComponentSelection}
-                        />
-                        <AdminButton
-                            label="Add new product"
-                            componentName="addNewProduct"
-                            selectedComponent={selectedComponent}
-                            handleComponentSelection={handleComponentSelection}
-                        />
-                        <AdminButton
-                            label="Banners"
-                            componentName="banners"
-                            selectedComponent={selectedComponent}
-                            handleComponentSelection={handleComponentSelection}
-                        />
-                        <AdminButton
-                            label="Write a Blog"
-                            componentName="blog"
-                            selectedComponent={selectedComponent}
-                            handleComponentSelection={handleComponentSelection}
-                        />
-                        <AdminButton
-                            label="View All Blogs"
-                            componentName="viewAllBlogs"
-                            selectedComponent={selectedComponent}
-                            handleComponentSelection={handleComponentSelection}
-                        />
-                        <AdminButton
-                            label="Add Event"
-                            componentName="addEvent"
-                            selectedComponent={selectedComponent}
-                            handleComponentSelection={handleComponentSelection}
-                        />
-                        <AdminButton
-                            label="View All Events"
-                            componentName="viewAllEvents"
-                            selectedComponent={selectedComponent}
-                            handleComponentSelection={handleComponentSelection}
-                        />
+
                     </div>
                 </div>
 
-                <div className="w-full sm:min-h-full p-4 md:p-8 border border-[#A69F9F] rounded-xl">
+                <div className="w-full sm:min-h-full p-4 md:p-8 border border-gray-300 rounded-xl">
                     {selectedComponent === "adminDashboard" && <AdminDashboard />}
                     {selectedComponent === "viewAllProducts" && <ViewAllProducts />}
                     {selectedComponent === "addNewProduct" && <AddProduct />}

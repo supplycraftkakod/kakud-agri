@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Eye, FileImage, SquarePen } from "lucide-react";
+import { FileImage, SquarePen } from "lucide-react";
 import axios from "axios";
 import { BE_URL } from "../../../config";
 import {
@@ -20,7 +20,7 @@ interface MostViewedProduct {
 }
 
 const AdminDashboard = () => {
-    const [totalViews, setTotalViews] = useState<number>(0);
+    // const [totalViews, setTotalViews] = useState<number>(0);
     const [totalProducts, setTotalProducts] = useState<number>(0);
     const [mostViewed, setMostViewed] = useState<MostViewedProduct[]>([]);
     const [productsByMonth, setProductsByMonth] = useState<{ [month: string]: number }>({});
@@ -45,15 +45,15 @@ const AdminDashboard = () => {
                     },
                 };
 
-                const [viewsRes, productsRes, mostViewedRes, monthlyRes, userDetails] = await Promise.all<any>([
-                    axios.get(`${BE_URL}/api/v1/admin/views`, config),
+                const [productsRes, mostViewedRes, monthlyRes, userDetails] = await Promise.all<any>([
+                    // axios.get(`${BE_URL}/api/v1/admin/views`, config),
                     axios.get(`${BE_URL}/api/v1/admin/count`, config),
                     axios.get(`${BE_URL}/api/v1/admin/most-viewed`, config),
                     axios.get(`${BE_URL}/api/v1/admin/monthly`, config),
                     axios.get(`${BE_URL}/api/v1/user/me`, config),
                 ]);
 
-                setTotalViews(viewsRes.data.totalViews);
+                // setTotalViews(viewsRes.data.totalViews);
                 setTotalProducts(productsRes.data.totalProducts);
                 setMostViewed(mostViewedRes.data.mostViewed);
                 setProductsByMonth(monthlyRes.data.productsByMonth);
@@ -75,22 +75,22 @@ const AdminDashboard = () => {
 
     return (
         <div className="font-inter flex flex-col gap-10">
-            <div className="w-full flex items-start flex-wrap gap-4 lg:grid grid-cols-3">
+            <div className="w-full flex items-start flex-wrap gap-4 lg:grid grid-cols-[1.5fr_1fr_1fr_1fr]">
 
-                <div className="w-full sm:w-[340px] lg:w-full">
+                <div className="col-span-">
                     <div className="flex items-start justify-between pb-2 border-b border-[#A69F9F] ">
-                        <h2 className="text-xl">Profile</h2>
+                        <h2 className="text-xl font-normal">Profile</h2>
                         <SquarePen className="w-6 h-6 cursor-pointer" />
                     </div>
 
                     <div className="pt-4">
-                        <h3 className="text-lg">Name: {userDetails.name}</h3>
-                        <h3 className="text-lg">Phone: +91 {userDetails.phone}</h3>
-                        <h3 className="text-lg">Email: {userDetails.email}</h3>
+                        <h3 className="">Name: {userDetails.name}</h3>
+                        <h3 className="">Phone: +91 {userDetails.phone}</h3>
+                        <h3 className="">Email: {userDetails.email}</h3>
                     </div>
                 </div>
 
-                <div className="sm:w-[210px] lg:min-w-full bg-[#DBE4FF] px-6 py-4 rounded-xl flex flex-col gap-6">
+                {/* <div className="sm:w-[210px] lg:min-w-full bg-[#DBE4FF] px-6 py-4 rounded-xl flex flex-col gap-6">
                     <Eye className="w-9 h-9" />
                     <div>
                         {
@@ -102,13 +102,27 @@ const AdminDashboard = () => {
                         }
                         <h3 className="text-lg text-[#505050]">Total Views</h3>
                     </div>
-                </div>
+                </div> */}
 
-                <div className="sm:w-[210px] lg:min-w-full bg-[#FFF1DB] px-6 py-4 rounded-xl flex flex-col gap-6">
-                    <FileImage className="w-9 h-9" />
+                <div className=" bg-[#d8d6ff] p-4 rounded-xl flex flex-col gap-6">
+                    <FileImage className="w-6 h-6" />
                     <div>
-                        <h2 className="font-medium text-xl">{totalProducts}</h2>
-                        <h3 className="text-lg text-[#505050]">Total Products</h3>
+                        <h2 className="font-medium text-lg">{totalProducts}</h2>
+                        <h3 className="text-[#505050]">Total <span className="font-semibold text-black">Products</span></h3>
+                    </div>
+                </div>
+                <div className=" bg-[#d8d6ff] px-6 py-4 rounded-xl flex flex-col gap-6">
+                    <FileImage className="w-6 h-6" />
+                    <div>
+                        <h2 className="font-medium text-lg">{totalProducts}</h2>
+                        <h3 className="text-[#505050]">Total <span className="font-semibold text-black">Blogs</span></h3>
+                    </div>
+                </div>
+                <div className=" bg-[#d8d6ff] px-6 py-4 rounded-xl flex flex-col gap-6">
+                    <FileImage className="w-6 h-6" />
+                    <div>
+                        <h2 className="font-medium text-lg">{totalProducts}</h2>
+                        <h3 className="text-[#505050]">Total <span className="font-semibold text-black">Events</span></h3>
                     </div>
                 </div>
 
@@ -118,7 +132,7 @@ const AdminDashboard = () => {
 
                 <div className="lg:w-[672px]">
                     <div className="flex items-start justify-between pb-2 border-b border-[#A69F9F] ">
-                        <h2 className="text-xl">Products added by months</h2>
+                        <h2 className="text-xl font-normal">Products added by months</h2>
                     </div>
 
                     <div className="pt-4">
@@ -142,7 +156,7 @@ const AdminDashboard = () => {
 
                 <div className="w-full xl:w-fit">
                     <div className="flex items-start justify-between pb-2 border-b border-[#A69F9F] ">
-                        <h2 className="text-xl">Most viewed products</h2>
+                        <h2 className="text-xl font-normal">Most viewed products</h2>
                     </div>
 
                     <div className="pt-4 flex flex-col justify-between gap-2">

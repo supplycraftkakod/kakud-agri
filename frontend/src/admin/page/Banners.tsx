@@ -189,8 +189,8 @@ const Banners = () => {
                 className="w-full h-48 object-cover"
               />
               <div className="p-4 space-y-2">
-                <h3 className="font-semibold">{banner.title}</h3>
-                <p className="text-sm text-gray-600">{banner.paragraph}</p>
+                <h3 className="font-semibold line-clamp-2">{banner.title}</h3>
+                <p className="text-sm text-gray-600 line-clamp-2">{banner.paragraph}</p>
                 <button
                   onClick={() => handleToggleVisibility(banner.id, banner.shouldVisible)}
                   className={`w-full py-1 px-3 rounded-full text-white ${banner.shouldVisible ? "bg-yellow-500" : "bg-green-600"
