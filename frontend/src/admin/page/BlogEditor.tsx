@@ -16,6 +16,7 @@ interface Block {
 const BlogEditor: React.FC = () => {
   const [blocks, setBlocks] = useState<Block[]>([]);
   const [title, setTitle] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   const addBlock = (type: BlockType) => {
     setBlocks([...blocks, { type, value: '', file: '' }]);
@@ -35,6 +36,10 @@ const BlogEditor: React.FC = () => {
       updatedBlocks[index].rawFile = file;                   // actual file
       setBlocks(updatedBlocks);
     }
+  };
+
+  const handleCategoryChange = (e: any) => {
+    setSelectedCategory(e.target.value);
   };
 
   const handleSubmit = async () => {
@@ -72,6 +77,7 @@ const BlogEditor: React.FC = () => {
     const filteredBlocks = processedBlocks.filter(Boolean);
 
     formData.append("title", title);
+    formData.append("category", selectedCategory);
     formData.append("blocks", JSON.stringify(filteredBlocks));
 
     const toastId = toast.loading("Creating...");
@@ -98,7 +104,7 @@ const BlogEditor: React.FC = () => {
       setBlocks([]);
       setTitle("");
       toast.success("Blog created successfully!", { id: toastId });
-    } catch (error: any) {      
+    } catch (error: any) {
       const message =
         error.response?.data?.error || "Failed to publish blog!";
       toast.error(message, { id: toastId });
@@ -269,6 +275,43 @@ const BlogEditor: React.FC = () => {
           </div>
         </div>
       </div>
+
+      <div className="relative w-full mt-10 mb-6 font-light">
+        <label className="block mb-2 text-lg pl-1 font-normal">
+          Select Blog Categories
+        </label>
+        <select
+          id="blog-category"
+          name="blog-category"
+          value={selectedCategory}
+          onChange={handleCategoryChange}
+          className="block w-full appearance-none px-4 py-2 border border-gray-300 rounded-full shadow-sm !outline-none text-base"
+        >
+          <option value="" disabled>Select a category</option>
+          <option value="expo">Expo Blog – Coverage from expos & agri summits</option>
+          <option value="workshop">Workshop Blog – Field training & meetings</option>
+          <option value="news">News Blog – Announcements & partnerships</option>
+          <option value="crop-advisory">Crop Advisory – Seasonal guidance & tips</option>
+          <option value="success-stories">Farmer Success Stories – Inspiring journeys</option>
+          <option value="product-knowledge">Product Knowledge – Guides & comparisons</option>
+          <option value="franchise">Franchise & Retail Insights – Business advice</option>
+          <option value="sustainability">Sustainability & Innovation – Eco-friendly solutions</option>
+        </select>
+
+        {/* Custom Arrow Icon */}
+        <div className="pointer-events-none absolute inset-y-0 right-3 top-9 flex items-center text-gray-500">
+          <svg
+            className="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
+      </div>
+
 
       <input
         type="text"

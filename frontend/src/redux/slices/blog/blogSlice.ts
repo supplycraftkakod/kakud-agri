@@ -35,7 +35,7 @@ const initialState: BlogState = {
 export const fetchBlogs = createAsyncThunk(
     'blogs/fetchBlogs',
     async (
-        { page, limit, search }: { page: number; limit: number; search: string },
+        { page, limit, search, selectedCategory }: { page: number; limit: number; search: string, selectedCategory: string },
         thunkAPI
     ) => {
         try {
@@ -48,11 +48,12 @@ export const fetchBlogs = createAsyncThunk(
             }
 
             const res = await axios.get<any>(`${BE_URL}/api/v1/admin/all`, {
-                params: { page, limit, search },
+                params: { page, limit, search, category: selectedCategory },
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             });
+
 
             return res.data;
         } catch (err: any) {

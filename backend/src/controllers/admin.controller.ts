@@ -260,10 +260,10 @@ export const createBlog = async (req: Request, res: Response) => {
       filesMap.set(file.fieldname, file);
     });
 
-    const { title, blocks } = req.body;
+    const { title, blocks, category } = req.body;
 
-    if (!title || !blocks) {
-      return res.status(400).json({ error: 'Title and blocks are required' });
+    if (!title || !blocks || !category) {
+      return res.status(400).json({ error: 'Inputs are required' });
     }
 
     const parsedBlocks: BlockPayload[] = JSON.parse(blocks);
@@ -304,6 +304,7 @@ export const createBlog = async (req: Request, res: Response) => {
     const newBlog = await prisma.blog.create({
       data: {
         title,
+        category,
         contentBlocks: {
           create: uploadedBlocks,
         },
@@ -326,16 +327,21 @@ export const getAllBlogs = async (req: Request, res: Response) => {
     const page = parseInt(req.query.page as string) || 1;
     const limit = parseInt(req.query.limit as string) || 6;
     const search = (req.query.search as string) || '';
+    const category = (req.query.category as string) || '';
     const skip = (page - 1) * limit;
 
-    const whereCondition = search
-      ? {
-        title: {
-          contains: search,
-          mode: Prisma.QueryMode.insensitive,
-        },
-      }
-      : {};
+    const whereCondition: any = {};
+
+    if (search) {
+      whereCondition.title = {
+        contains: search,
+        mode: Prisma.QueryMode.insensitive,
+      };
+    }
+
+    if (category) {
+      whereCondition.category = category;
+    }
 
     const [blogs, total] = await Promise.all([
       prisma.blog.findMany({
@@ -360,6 +366,7 @@ export const getAllBlogs = async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
 
 export const getBlogById = async (req: Request, res: Response) => {
   try {
