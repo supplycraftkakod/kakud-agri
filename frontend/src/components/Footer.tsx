@@ -1,4 +1,3 @@
-// import twitter from "../assets/icons/twitter.png"
 import instagram from "../assets/icons/instagram.png"
 import facebook from "../assets/icons/facebook.png"
 import linkedIn from "../assets/icons/linkedin.png"
@@ -6,8 +5,44 @@ import { Link } from "react-router-dom"
 import { FiYoutube } from "react-icons/fi"
 
 import footerImg from "../assets/images/footer.png"
+import { useState } from "react"
+import toast from "react-hot-toast"
+import axios from "axios"
+import { BE_URL } from "../../config"
+import Loader from "./Loader"
 
 const Footer = ({ heading, subHeading }: { heading?: string, subHeading?: string }) => {
+    const [email, setEmail] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    const handleSubscribe = async () => {
+        if (!email) {
+            toast.error("Please enter a valid email.");
+            return;
+        }
+
+        try {
+            setLoading(true);
+            const response = await axios.post<any>(`${BE_URL}/api/v1/subscribe`, {
+                email,
+            });
+
+            if (response.data.message) {
+                toast.success("Subscribed successfully!");
+            }
+            setEmail("");
+            setLoading(false);
+        } catch (error: any) {
+            if (error.response?.data?.message) {
+                toast.success(error.response.data.message)
+            } else {
+                toast.error("Something went wrong. Try again.")
+            }
+            setEmail("");
+            setLoading(false);
+        }
+    };
+
     return (
         <div
             id="footer"
@@ -49,10 +84,10 @@ const Footer = ({ heading, subHeading }: { heading?: string, subHeading?: string
                                 <span className="font-bold">Corporate Office</span> - C/o Sandbox Startup, Next to Airport, Gokul Road, Opp Gokul Village, HUBLI,
                                 Dharwad, Karnataka, India, 580030
                             </h4>
-                            <h4 className="pt-3">
+                            {/* <h4 className="pt-3">
                                 <span className="font-bold">Manufacturing Industry</span> - Zauca Enterprises Private Limited, Unit 01, Bennur, Annigere (T), Dharwad
                                 (D), Karnataka, India.
-                            </h4>
+                            </h4> */}
                         </div>
                         <div className="grid md:grid-cols-2 gap-y-14">
                             <div className="flex flex-col md:pl-10 gap-2">
@@ -102,12 +137,24 @@ const Footer = ({ heading, subHeading }: { heading?: string, subHeading?: string
                         </div>
                         <div className="flex flex-col gap-2 lg:pl-10">
                             <h4 className="">Subscribe to our newsletter:</h4>
-                            <input placeholder="Email" type="email" name="email" id="email"
+                            <input
+                                placeholder="Email"
+                                type="email"
+                                name="email"
+                                id="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                                 className="!outline-none px-4 p-2 rounded-full bg-[#ffffff] border border-gray-400"
                             />
-                            <button className="w-fit px-4 p-1 bg-[#272727] text-white rounded-full self-end">
-                                Submit
+                            <button
+                                onClick={handleSubscribe}
+                                disabled={loading}
+                                className={`w-fit px-4 p-1 rounded-full self-end transition ${loading ? "bg-gray-500 cursor-not-allowed" : "bg-[#272727]"
+                                    } text-white`}
+                            >
+                                {loading ? <Loader /> : "Submit"}
                             </button>
+
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Subscribers" ADD COLUMN     "subscribedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP;

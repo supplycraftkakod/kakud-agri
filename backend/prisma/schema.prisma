@@ -153,6 +153,14 @@ model WhyAttendPoint {
   eventId String
 }
 
+// ----------------------------------------------------------------------Subscribe------------------------------------------
+
+model Subscribers {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  subscribedAt DateTime @default(now())
+}
+
 enum Role {
   ADMIN
   USER
