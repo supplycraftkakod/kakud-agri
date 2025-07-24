@@ -96,7 +96,7 @@ const AdminHome = () => {
                                 selectedComponent={selectedComponent}
                                 handleComponentSelection={handleComponentSelection}
                             />
-                            <div className={`${arrowDownProductsMgm ? "h-fit" : "h-8"} w-full pb-2 rounded-lg pl-2 px-2 py-1 flex flex-col gap-2 bg-gray-200 overflow-hidden`}>
+                            <div className={`${arrowDownProductsMgm ? "h-fit" : "h-8"} w-full pb-2 rounded-lg pl-2 px-2 py-1 flex flex-col gap-2 border border-gray-300 overflow-hidden`}>
                                 <div
                                     onClick={() => setArrowDownProductsMgm(!arrowDownProductsMgm)}
                                     className="flex items-center justify-between text-[14px] cursor-pointer select-none">
@@ -118,7 +118,7 @@ const AdminHome = () => {
                                     handleComponentSelection={handleComponentSelection}
                                 />
                             </div>
-                            <div className={`${arrowDownBlogsMgm ? "h-fit" : "h-8"} w-full pb-2 rounded-lg pl-2 px-2 py-1 flex flex-col gap-2 bg-gray-200 overflow-hidden`}>
+                            <div className={`${arrowDownBlogsMgm ? "h-fit" : "h-8"} w-full pb-2 rounded-lg pl-2 px-2 py-1 flex flex-col gap-2 border border-gray-300 overflow-hidden`}>
                                 <div
                                     onClick={() => setArrowDownBlogsMgm(!arrowDownBlogsMgm)}
                                     className="flex items-center justify-between text-[14px] cursor-pointer select-none">
@@ -141,7 +141,7 @@ const AdminHome = () => {
                                 />
                             </div>
 
-                            <div className={`${arrowDownEventsMgm ? "h-fit" : "h-8"} w-full pb-2 rounded-lg pl-2 px-2 py-1 flex flex-col gap-2 bg-gray-200 overflow-hidden`}>
+                            <div className={`${arrowDownEventsMgm ? "h-fit" : "h-8"} w-full pb-2 rounded-lg pl-2 px-2 py-1 flex flex-col gap-2 border border-gray-300 overflow-hidden`}>
                                 <div
                                     onClick={() => setArrowDownEventsMgm(!arrowDownEventsMgm)}
                                     className="flex items-center justify-between text-[14px] cursor-pointer select-none">
@@ -164,7 +164,7 @@ const AdminHome = () => {
                                 />
                             </div>
 
-                            <div className={`${arrowDownBannersMgm ? "h-fit" : "h-8"} w-full pb-2 rounded-lg pl-2 px-2 py-1 flex flex-col gap-2 bg-gray-200 overflow-hidden`}>
+                            <div className={`${arrowDownBannersMgm ? "h-fit" : "h-8"} w-full pb-2 rounded-lg pl-2 px-2 py-1 flex flex-col gap-2 border border-gray-300 overflow-hidden`}>
                                 <div
                                     onClick={() => setArrowDownBannersMgm(!arrowDownBannersMgm)}
                                     className="flex items-center justify-between text-[14px] cursor-pointer select-none">
@@ -181,7 +181,7 @@ const AdminHome = () => {
                                 />
                             </div>
 
-                            <div className={`${arrowJobRole ? "h-fit" : "h-8"} w-full pb-2 rounded-lg pl-2 px-2 py-1 flex flex-col gap-2 bg-gray-200 overflow-hidden`}>
+                            <div className={`${arrowJobRole ? "h-fit" : "h-8"} w-full pb-2 rounded-lg pl-2 px-2 py-1 flex flex-col gap-2 border border-gray-300 overflow-hidden`}>
                                 <div
                                     onClick={() => setArrowJobRole(!arrowJobRole)}
                                     className="flex items-center justify-between text-[14px] cursor-pointer select-none">
