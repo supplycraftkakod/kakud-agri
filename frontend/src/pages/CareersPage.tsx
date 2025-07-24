@@ -1,3 +1,7 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 
@@ -5,6 +9,7 @@ import empIcon from "../assets/icons/emp.png"
 import earthIcon from "../assets/icons/earth.png"
 import farmerIcon from "../assets/icons/farmer.png"
 import officeIcon from "../assets/icons/office.png"
+import { BE_URL } from "../../config";
 
 type Opening = {
     role: string;
@@ -12,35 +17,25 @@ type Opening = {
     department: string;
 };
 
-const openings: Opening[] = [
-    {
-        role: "Field Sales Executive",
-        location: "Bellary, Raichur, Haveri",
-        department: "Sales & Distribution",
-    },
-    {
-        role: "Agronomy Advisor",
-        location: "Davangere, Koppal, Bagalkot",
-        department: "Agronomy Services",
-    },
-    {
-        role: "Franchise Support Manager",
-        location: "Hubballi HQ",
-        department: "Operations",
-    },
-    {
-        role: "Warehouse Supervisor",
-        location: "Dharwad",
-        department: "Logistics",
-    },
-    {
-        role: "Rural Marketing Intern",
-        location: "Remote (Karnataka Villages)",
-        department: "Marketing",
-    },
-];
-
 const CareersPage = () => {
+    const [openings, setOpenings] = useState<Opening[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchOpenings = async () => {
+            try {
+                const res = await axios.get<any>(`${BE_URL}/api/v1/job-role`);
+                setOpenings(res.data);
+            } catch (err) {
+                console.error("Failed to fetch job openings", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchOpenings();
+    }, []);
+
     return (
         <div>
             <div className="pb-16 md:pb-24">
@@ -122,13 +117,23 @@ const CareersPage = () => {
                                 </tr>
                             </thead>
                             <tbody className="bg-white">
-                                {openings.map((opening, index) => (
-                                    <tr key={index} className="border-t border-gray-200">
-                                        <td className="p-3">{opening.role}</td>
-                                        <td className="p-3">{opening.location}</td>
-                                        <td className="p-3">{opening.department}</td>
+                                {loading ? (
+                                    <tr>
+                                        <td className="p-3" colSpan={3}>Loading...</td>
                                     </tr>
-                                ))}
+                                ) : openings.length === 0 ? (
+                                    <tr>
+                                        <td className="p-3" colSpan={3}>No openings available.</td>
+                                    </tr>
+                                ) : (
+                                    openings.map((opening, index) => (
+                                        <tr key={index} className="border-t border-gray-200">
+                                            <td className="p-3">{opening.role}</td>
+                                            <td className="p-3">{opening.location}</td>
+                                            <td className="p-3">{opening.department}</td>
+                                        </tr>
+                                    ))
+                                )}
                             </tbody>
                         </table>
                     </div>

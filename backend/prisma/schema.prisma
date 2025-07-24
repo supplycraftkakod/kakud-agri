@@ -161,6 +161,16 @@ model Subscribers {
   subscribedAt DateTime @default(now())
 }
 
+// ----------------------------------------------------------------------Careers------------------------------------------
+
+model JobRole {
+  id         Int      @id @default(autoincrement())
+  role       String
+  location   String
+  department String
+  createdAt  DateTime @default(now())
+}
+
 enum Role {
   ADMIN
   USER

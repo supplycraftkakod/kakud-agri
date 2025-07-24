@@ -13,6 +13,8 @@ import ViewAllBlogs from "./page/ViewAllBlogs";
 import AddEvent from "./page/event/AddEvent";
 import VIewAllEvents from "./page/event/VIewAllEvents";
 import { ArrowDown } from "lucide-react";
+import AllJobs from "./page/job-roles/AllJobs";
+import AddNewJob from "./page/job-roles/AddNewJob";
 
 const AdminHome = () => {
     const [selectedComponent, setSelectedComponent] = useState("adminDashboard");
@@ -22,6 +24,7 @@ const AdminHome = () => {
     const [arrowDownBlogsMgm, setArrowDownBlogsMgm] = useState(false);
     const [arrowDownEventsMgm, setArrowDownEventsMgm] = useState(false);
     const [arrowDownBannersMgm, setArrowDownBannersMgm] = useState(false);
+    const [arrowJobRole, setArrowJobRole] = useState(false);
 
     const handleComponentSelection = (component: string) => {
         setSelectedComponent(component)
@@ -178,6 +181,29 @@ const AdminHome = () => {
                                 />
                             </div>
 
+                            <div className={`${arrowJobRole ? "h-fit" : "h-8"} w-full pb-2 rounded-lg pl-2 px-2 py-1 flex flex-col gap-2 bg-gray-200 overflow-hidden`}>
+                                <div
+                                    onClick={() => setArrowJobRole(!arrowJobRole)}
+                                    className="flex items-center justify-between text-[14px] cursor-pointer select-none">
+                                    <h2><span className="">Jobs</span> Management</h2>
+                                    <ArrowDown
+                                        className={`w-[18px] h-[18px] ${arrowJobRole ? "rotate-180" : "rotate-0"} border p-[1px] border-gray-500 rounded-full`}
+                                    />
+                                </div>
+                                <AdminButton
+                                    label="All Jobs"
+                                    componentName="alljobs"
+                                    selectedComponent={selectedComponent}
+                                    handleComponentSelection={handleComponentSelection}
+                                />
+                                <AdminButton
+                                    label="Add New Job"
+                                    componentName="addnewjob"
+                                    selectedComponent={selectedComponent}
+                                    handleComponentSelection={handleComponentSelection}
+                                />
+                            </div>
+
                         </div>
 
                     </div>
@@ -196,6 +222,8 @@ const AdminHome = () => {
                     {selectedComponent === "viewAllBlogs" && <ViewAllBlogs />}
                     {selectedComponent === "addEvent" && <AddEvent />}
                     {selectedComponent === "viewAllEvents" && <VIewAllEvents />}
+                    {selectedComponent === "alljobs" && <AllJobs />}
+                    {selectedComponent === "addnewjob" && <AddNewJob />}
                 </div>
             </div>
         </div>
