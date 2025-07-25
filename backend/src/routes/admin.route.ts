@@ -1,6 +1,6 @@
 import express from 'express';
 import { upload } from '../middlewares/upload';
-import { addProduct, createBlog, deleteBlogById, deleteProductById, getAllBlogs, getBlogById, getMostViewedProducts, getProductsGroupedByMonth, getTotalProductCount, getTotalProductViews, updateBlogById, updateProduct } from '../controllers/admin.controller';
+import { addProduct, createBlog, deleteBlogById, deleteProductById, getAllBlogs, getAnalytics, getBlogById, getMostViewedProducts, getProductsGroupedByMonth, getTotalProductCount, getTotalProductViews, updateBlogById, updateProduct } from '../controllers/admin.controller';
 
 
 const router = express.Router();
@@ -26,5 +26,7 @@ router.get('/blogs/:id', getBlogById);
 router.put('/blogs/:id', upload.any([]), updateBlogById);
 //@ts-ignore
 router.delete("/blogs/:id", deleteBlogById);
+
+router.get("/analytics", getAnalytics);
 
 export default router;

@@ -197,6 +197,17 @@ export const getTotalProductCount = async (_req: Request, res: Response) => {
   }
 };
 
+export const getAnalytics = async (_req: Request, res: Response) => {
+  try {
+    const totalProducts = await prisma.product.count();
+    const totalBlogs = await prisma.blog.count();
+    const totalEvents = await prisma.event.count();
+    res.json({ totalProducts, totalBlogs, totalEvents });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to get product count' });
+  }
+}
+
 // 3. Get products added by month
 export const getProductsGroupedByMonth = async (_req: Request, res: Response) => {
   try {

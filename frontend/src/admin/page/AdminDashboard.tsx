@@ -22,6 +22,8 @@ interface MostViewedProduct {
 const AdminDashboard = () => {
     // const [totalViews, setTotalViews] = useState<number>(0);
     const [totalProducts, setTotalProducts] = useState<number>(0);
+    const [totalBlogs, setTotalBlogs] = useState<number>(0);
+    const [totalEvents, setTotalevetns] = useState<number>(0);
     const [mostViewed, setMostViewed] = useState<MostViewedProduct[]>([]);
     const [productsByMonth, setProductsByMonth] = useState<{ [month: string]: number }>({});
     const [userDetails, setUserDetails] = useState<any>({});
@@ -45,16 +47,18 @@ const AdminDashboard = () => {
                     },
                 };
 
-                const [productsRes, mostViewedRes, monthlyRes, userDetails] = await Promise.all<any>([
+                const [analytics, mostViewedRes, monthlyRes, userDetails] = await Promise.all<any>([
                     // axios.get(`${BE_URL}/api/v1/admin/views`, config),
-                    axios.get(`${BE_URL}/api/v1/admin/count`, config),
+                    axios.get(`${BE_URL}/api/v1/admin/analytics`, config),
                     axios.get(`${BE_URL}/api/v1/admin/most-viewed`, config),
                     axios.get(`${BE_URL}/api/v1/admin/monthly`, config),
                     axios.get(`${BE_URL}/api/v1/user/me`, config),
                 ]);
 
                 // setTotalViews(viewsRes.data.totalViews);
-                setTotalProducts(productsRes.data.totalProducts);
+                setTotalProducts(analytics.data.totalProducts);
+                setTotalBlogs(analytics.data.totalBlogs);
+                setTotalevetns(analytics.data.totalEvents);
                 setMostViewed(mostViewedRes.data.mostViewed);
                 setProductsByMonth(monthlyRes.data.productsByMonth);
                 setUserDetails(userDetails.data.user);
@@ -114,14 +118,14 @@ const AdminDashboard = () => {
                 <div className=" bg-[#d8d6ff] px-6 py-4 rounded-xl flex flex-col gap-6">
                     <FileImage className="w-6 h-6" />
                     <div>
-                        <h2 className="font-medium text-lg">{totalProducts}</h2>
+                        <h2 className="font-medium text-lg">{totalBlogs}</h2>
                         <h3 className="text-[#505050]">Total <span className="font-semibold text-black">Blogs</span></h3>
                     </div>
                 </div>
                 <div className=" bg-[#d8d6ff] px-6 py-4 rounded-xl flex flex-col gap-6">
                     <FileImage className="w-6 h-6" />
                     <div>
-                        <h2 className="font-medium text-lg">{totalProducts}</h2>
+                        <h2 className="font-medium text-lg">{totalEvents}</h2>
                         <h3 className="text-[#505050]">Total <span className="font-semibold text-black">Events</span></h3>
                     </div>
                 </div>
