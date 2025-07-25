@@ -69,15 +69,23 @@ export const getAllProducts = async (req: Request, res: Response) => {
     const limit = parseInt(req.query.limit as string) || 8;
     const skip = (page - 1) * limit;
     const search = (req.query.search as string || "").trim();
+    const categoriesParam = (req.query.categories as string) || "";
+    const categories = categoriesParam.split(",").filter(Boolean);
 
-    const whereClause: Prisma.ProductWhereInput = search
-      ? {
+    const whereClause: Prisma.ProductWhereInput = {
+      ...(search && {
         name: {
           contains: search,
           mode: Prisma.QueryMode.insensitive,
         },
-      }
-      : {};
+      }),
+      ...(categories.length > 0 && {
+        category: {
+          in: categories,
+          mode: Prisma.QueryMode.insensitive,
+        },
+      }),
+    };
 
     const [totalProducts, products] = await Promise.all([
       prisma.product.count({ where: whereClause }),

@@ -6,7 +6,7 @@ import Footer from "../components/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store/store";
 import { fetchProducts } from "../redux/slices/productSlice";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Loader from "../components/Loader";
 
 const PRODUCTS_PER_PAGE = 8;
@@ -18,9 +18,19 @@ const Products = () => {
     const [search, setSearch] = useState("");
     const [page, setPage] = useState(1);
 
+    const location = useLocation();
+
     useEffect(() => {
-        dispatch(fetchProducts({ page, limit: PRODUCTS_PER_PAGE, search }));
-    }, [page, search, dispatch]);
+        const queryParams = new URLSearchParams(location.search);
+        const categoryQuery: string | null = queryParams.get("category");
+        const categories = categoryQuery ? categoryQuery.split(",") : [];
+        dispatch(fetchProducts({
+            page,
+            limit: PRODUCTS_PER_PAGE,
+            search,
+            categories
+        }));
+    }, [page, search, location.search, dispatch]);
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearch(e.target.value);
@@ -82,17 +92,18 @@ const Products = () => {
                                     {products.map((product, index) => (
                                         <div
                                             key={product.id || index}
-                                            className="border border-gray-200 rounded-lg p-4 hover:shadow-sm transition"
+                                            className="relative border border-gray-200 rounded-lg p-2 hover:shadow-sm transition"
                                         >
                                             <img
                                                 src={product.imageUrl}
                                                 alt={product.name}
-                                                className="w-full h-auto object-contain mb-4"
+                                                className="w-full h-auto object-contain mb-4 p-4"
                                             />
                                             <div className="flex flex-col gap-2 leading-none">
+                                                {/* <h3 className="absolute top-1 right-1 bg-[#1b1b1b] text-white py-[2px] px-3 rounded-full w-fit text-xs">{product.category}</h3> */}
                                                 <h3 className="font-medium text-xl">{product.name}</h3>
-                                                <p className="text-sm text-gray-600">
-                                                    {product.description.split(" ").slice(0, 6).join(" ")}...
+                                                <p className="text-xs text-gray-600 line-clamp-2">
+                                                    {product.description}
                                                 </p>
                                                 <Link to={`/products/${product.id}`}>
                                                     <button className="w-full py-2 rounded bg-[#338735] text-white">View</button>

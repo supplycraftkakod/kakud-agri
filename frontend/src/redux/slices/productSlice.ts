@@ -5,11 +5,32 @@ import { BE_URL } from "../../../config";
 
 export const fetchProducts = createAsyncThunk(
     "products/fetch",
-    async ({ page, limit, search }: { page: number; limit: number; search: string }) => {
-        const response = await axios.get<any>(`${BE_URL}/api/v1/product?page=${page}&limit=${limit}&search=${search}`);
+    async ({
+        page,
+        limit,
+        search,
+        categories,
+    }: {
+        page: number;
+        limit: number;
+        search: string;
+        categories?: string[];
+    }) => {
+        const params = new URLSearchParams({
+            page: String(page),
+            limit: String(limit),
+            search,
+        });
+
+        if (categories && categories.length > 0) {
+            params.set("categories", categories.join(","));
+        }
+
+        const response = await axios.get<any>(`${BE_URL}/api/v1/product?${params.toString()}`);
         return response.data;
     }
 );
+
 
 interface ProductState {
     products: any[];

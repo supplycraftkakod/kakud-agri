@@ -83,7 +83,7 @@ const AddProduct = () => {
         },
       });
 
-      if(res.data.message === "Product added successfully") {
+      if (res.data.message === "Product added successfully") {
         toast.success("Product added successfully!")
       }
     } catch (err) {
@@ -131,15 +131,47 @@ const AddProduct = () => {
 
         <div className="w-full flex flex-col gap-4">
           <div className="w-full flex flex-col gap-2">
-            <h4 className="pl-1 text-gray-900">Product Category</h4>
-            <input
-              type="text"
-              placeholder="Category"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              className="p-2 px-3 rounded-lg !outline-none border border-[#D9D9D9]"
-            />
-            <h4 className="pl-1 mt-2 text-gray-900">Product Name</h4>
+            <h4 className="pl-1 text-gray-900">Product Category.</h4>
+            <div className="relative">
+              <select
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                className="p-2 px-3 rounded-lg appearance-none !outline-none border border-[#D9D9D9] w-full"
+              >
+                <option value="" disabled>
+                  Select Category
+                </option>
+                {[
+                  'Insecticides',
+                  'Fungicides',
+                  'Herbicides',
+                  'Plant Growth Regulators (PGRs)',
+                  'Micronutrients',
+                  'Organic Fertilizers',
+                  'Complex Fertilizers',
+                  'Seeds',
+                  'Soil Conditioners & Fertility Boosters',
+                  'Adjuvants & Spreaders',
+                ].map((cat) => (
+                  <option key={cat} value={cat}>
+                    {cat}
+                  </option>
+                ))}
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-500">
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+            </div>
+
+            <h4 className="pl-1 mt-2 text-gray-900">Product Name.</h4>
             <input
               type="text"
               placeholder="Product Name"
@@ -149,7 +181,7 @@ const AddProduct = () => {
             />
           </div>
           <div>
-            <h4 className="pl-1 pb-2 mt-1 text-gray-900">Product Description</h4>
+            <h4 className="pl-1 pb-2 mt-1 text-gray-900">Product Description.</h4>
             <textarea
               name="Description"
               placeholder="Description"

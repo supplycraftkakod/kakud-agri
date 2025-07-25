@@ -1,212 +1,297 @@
-import { useState } from "react";
-import { FiChevronDown, FiSearch } from "react-icons/fi";
+// import { useState } from "react";
+// import { FiChevronDown, FiSearch } from "react-icons/fi";
+
+// const filterSections = [
+//     {
+//         title: "Insecticides",
+//         withSearch: true,
+//         checkboxes: [
+//             "Neem Oil-Based",
+//             "Pyrethrin Spray",
+//             "Imidacloprid 17.8% SL",
+//             "Chlorpyrifos 20% EC",
+//         ]
+//     },
+//     {
+//         title: "Fungicides",
+//         withSearch: true,
+//         checkboxes: [
+//             "Ametryne 80% WDG (1)",
+//             "A natural bio-stimulant (1)",
+//             "Azoxystrobin + Tebuconazole + Prochloraz (1)",
+//             "Copper Oxychloride",
+//             "Carbendazim 50% WP",
+//             "Trichoderma Viride"
+//         ]
+//     },
+//     {
+//         title: "Herbicides",
+//         withSearch: true,
+//         checkboxes: [
+//             "Glyphosate 41% SL",
+//             "Paraquat Dichloride",
+//             "2,4-D Amine Salt",
+//             "Wheat",
+//             "Rice",
+//             "Corn"
+//         ]
+//     },
+//     {
+//         title: "Plant Growth Regulators (PGRs)",
+//         withSearch: true,
+//         checkboxes: [
+//             "Gibberellic Acid 0.001% L",
+//             "NAA (Naphthaleneacetic acid)",
+//             "Cytokinin Based",
+//             "Powder",
+//             "Liquid",
+//             "Granules"
+//         ]
+//     },
+//     {
+//         title: "Micronutrients",
+//         withSearch: true,
+//         checkboxes: [
+//             "Zinc EDTA",
+//             "Boron 20%",
+//             "Iron Chelate",
+//             "Manganese Sulphate",
+//             "Copper Sulphate"
+//         ]
+//     },
+//     {
+//         title: "Organic Fertilizers",
+//         withSearch: true,
+//         checkboxes: [
+//             "Vermicompost",
+//             "Bone Meal",
+//             "Panchagavya",
+//             "Neem Cake",
+//             "Seaweed Extract"
+//         ]
+//     },
+//     {
+//         title: "Complex Fertilizers",
+//         withSearch: true,
+//         checkboxes: [
+//             "NPK 19:19:19",
+//             "NPK 20:20:0",
+//             "NPK 10:26:26",
+//             "DAP (Di-Ammonium Phosphate)"
+//         ]
+//     },
+//     {
+//         title: "Seeds",
+//         withSearch: true,
+//         checkboxes: [
+//             "Hybrid Tomato",
+//             "High-Yield Wheat",
+//             "Paddy (Short Duration)",
+//             "Bt Cotton",
+//             "Organic Okra"
+//         ]
+//     },
+//     {
+//         title: "Soil Conditioners & Fertility Boosters",
+//         withSearch: true,
+//         checkboxes: [
+//             "Gypsum",
+//             "Humic Acid",
+//             "Biochar",
+//             "Compost",
+//             "Lime Powder"
+//         ]
+//     },
+//     {
+//         title: "Adjuvants & Spreaders",
+//         withSearch: true,
+//         checkboxes: [
+//             "Silicon-based Spreader",
+//             "Non-Ionic Surfactant",
+//             "Sticker-Spreader",
+//             "Emulsifier",
+//             "Wetting Agent"
+//         ]
+//     },
+// ];
+
+// const ProductsSidebar = () => {
+//     const [searchTerms, setSearchTerms] = useState<{ [key: string]: string }>({});
+//     const [selectedFilters, setSelectedFilters] = useState<any>({});
+
+//     console.log(searchTerms);
+
+
+//     const handleSearchChange = (title: any, value: any) => {
+//         setSearchTerms((prev) => ({
+//             ...prev,
+//             [title]: value,
+//         }));
+//     };
+
+//     const handleCheckboxChange = (sectionTitle: any, label: any) => {
+//         setSelectedFilters((prev: any) => {
+//             const currentSelections = prev[sectionTitle] || [];
+//             const isAlreadySelected = currentSelections.includes(label);
+
+//             const updatedSelections = isAlreadySelected
+//                 ? currentSelections.filter((item: any) => item !== label)
+//                 : [...currentSelections, label];
+
+//             return {
+//                 ...prev,
+//                 [sectionTitle]: updatedSelections,
+//             };
+//         });
+//     };
+
+
+//     return (
+//         <aside className="w-full md:w-[250px] flex-shrink-0 py-6 font-inter">
+//             <div className="space-y-6">
+//                 {filterSections.map((section, index) => {
+//                     const searchValue = searchTerms[section.title] || "";
+//                     const filteredCheckboxes = section.checkboxes.filter((label) =>
+//                         label.toLowerCase().includes(searchValue.toLowerCase())
+//                     );
+
+//                     const selectedInSection = selectedFilters[section.title] || [];
+
+//                     return (
+//                         <details key={index} className="group pb-1">
+//                             <summary className="cursor-pointer text-xl border-b border-gray-300 pb-3 flex justify-between items-center list-none">
+//                                 {section.title}
+//                                 <FiChevronDown className="transition-transform group-open:rotate-180" />
+//                             </summary>
+
+//                             <div className="mt-3 ml-2 px-1">
+//                                 {section.withSearch && (
+//                                     <div className="relative mb-4">
+//                                         <input
+//                                             type="text"
+//                                             placeholder="Search with type"
+//                                             value={searchValue}
+//                                             onChange={(e) =>
+//                                                 handleSearchChange(section.title, e.target.value)
+//                                             }
+//                                             className="w-full px-4 py-2 border border-gray-300 rounded-full text-sm !outline-none"
+//                                         />
+//                                         <FiSearch className="cursor-pointer absolute right-3 top-2.5 text-gray-500" />
+//                                     </div>
+//                                 )}
+
+//                                 <div className="text-sm space-y-1 max-h-[150px] overflow-y-auto pr-2">
+//                                     {filteredCheckboxes.length > 0 ? (
+//                                         filteredCheckboxes.map((label, i) => (
+//                                             <label key={i} className="block">
+//                                                 <input
+//                                                     type="checkbox"
+//                                                     className="mr-2"
+//                                                     checked={selectedInSection.includes(label)}
+//                                                     onChange={() =>
+//                                                         handleCheckboxChange(section.title, label)
+//                                                     }
+//                                                 />
+//                                                 {label}
+//                                             </label>
+//                                         ))
+//                                     ) : (
+//                                         <p className="text-xs text-gray-500 italic">No matches</p>
+//                                     )}
+//                                 </div>
+//                             </div>
+//                         </details>
+//                     );
+//                 })}
+//             </div>
+
+//         </aside>
+//     );
+// };
+
+// export default ProductsSidebar;
+
+
+import { X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const filterSections = [
-    {
-        title: "Insecticides",
-        withSearch: true,
-        checkboxes: [
-            "Neem Oil-Based",
-            "Pyrethrin Spray",
-            "Imidacloprid 17.8% SL",
-            "Chlorpyrifos 20% EC",
-            "Treatment Option 1",
-            "Treatment Option 2"
-        ]
-    },
-    {
-        title: "Fungicides",
-        withSearch: true,
-        checkboxes: [
-            "Ametryne 80% WDG (1)",
-            "A natural bio-stimulant (1)",
-            "Azoxystrobin + Tebuconazole + Prochloraz (1)",
-            "Copper Oxychloride",
-            "Carbendazim 50% WP",
-            "Trichoderma Viride"
-        ]
-    },
-    {
-        title: "Herbicides",
-        withSearch: true,
-        checkboxes: [
-            "Glyphosate 41% SL",
-            "Paraquat Dichloride",
-            "2,4-D Amine Salt",
-            "Wheat",
-            "Rice",
-            "Corn"
-        ]
-    },
-    {
-        title: "Plant Growth Regulators (PGRs)",
-        withSearch: true,
-        checkboxes: [
-            "Gibberellic Acid 0.001% L",
-            "NAA (Naphthaleneacetic acid)",
-            "Cytokinin Based",
-            "Powder",
-            "Liquid",
-            "Granules"
-        ]
-    },
-    {
-        title: "Micronutrients",
-        withSearch: true,
-        checkboxes: [
-            "Zinc EDTA",
-            "Boron 20%",
-            "Iron Chelate",
-            "Manganese Sulphate",
-            "Copper Sulphate"
-        ]
-    },
-    {
-        title: "Organic Fertilizers",
-        withSearch: true,
-        checkboxes: [
-            "Vermicompost",
-            "Bone Meal",
-            "Panchagavya",
-            "Neem Cake",
-            "Seaweed Extract"
-        ]
-    },
-    {
-        title: "Complex Fertilizers",
-        withSearch: true,
-        checkboxes: [
-            "NPK 19:19:19",
-            "NPK 20:20:0",
-            "NPK 10:26:26",
-            "DAP (Di-Ammonium Phosphate)"
-        ]
-    },
-    {
-        title: "Seeds",
-        withSearch: true,
-        checkboxes: [
-            "Hybrid Tomato",
-            "High-Yield Wheat",
-            "Paddy (Short Duration)",
-            "Bt Cotton",
-            "Organic Okra"
-        ]
-    },
-    {
-        title: "Soil Conditioners & Fertility Boosters",
-        withSearch: true,
-        checkboxes: [
-            "Gypsum",
-            "Humic Acid",
-            "Biochar",
-            "Compost",
-            "Lime Powder"
-        ]
-    },
-    {
-        title: "Adjuvants & Spreaders",
-        withSearch: true,
-        checkboxes: [
-            "Silicon-based Spreader",
-            "Non-Ionic Surfactant",
-            "Sticker-Spreader",
-            "Emulsifier",
-            "Wetting Agent"
-        ]
-    },
+    "Insecticides",
+    "Fungicides",
+    "Herbicides",
+    "Plant Growth Regulators (PGRs)",
+    "Micronutrients",
+    "Organic Fertilizers",
+    "Complex Fertilizers",
+    "Seeds",
+    "Soil Conditioners & Fertility Boosters",
+    "Adjuvants & Spreaders"
 ];
 
 const ProductsSidebar = () => {
-    const [searchTerms, setSearchTerms] = useState<{ [key: string]: string }>({});
-    const [selectedFilters, setSelectedFilters] = useState<any>({});
+    const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+    const navigate = useNavigate();
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
 
-    console.log(searchTerms);
+    const categoryQuery: any = queryParams.get("category");
 
+    useEffect(() => {
+        if (categoryQuery) {
+            const categoriesArray = categoryQuery.split(","); // Split by comma
+            setSelectedCategories(categoriesArray);
+        }
+    }, [])
 
-    const handleSearchChange = (title: any, value: any) => {
-        setSearchTerms((prev) => ({
-            ...prev,
-            [title]: value,
-        }));
+    const handleCheckboxChange = (category: string) => {
+        const updatedCategories = selectedCategories.includes(category)
+            ? selectedCategories.filter((c) => c !== category)
+            : [...selectedCategories, category];
+
+        const params = new URLSearchParams(location.search);
+        if (updatedCategories.length > 0) {
+            params.set("category", updatedCategories.join(","));
+        } else {
+            params.delete("category");
+        }
+
+        navigate(`${location.pathname}?${params.toString()}`);
+        setSelectedCategories(updatedCategories);
     };
 
-    const handleCheckboxChange = (sectionTitle: any, label: any) => {
-        setSelectedFilters((prev: any) => {
-            const currentSelections = prev[sectionTitle] || [];
-            const isAlreadySelected = currentSelections.includes(label);
 
-            const updatedSelections = isAlreadySelected
-                ? currentSelections.filter((item: any) => item !== label)
-                : [...currentSelections, label];
-
-            return {
-                ...prev,
-                [sectionTitle]: updatedSelections,
-            };
-        });
-    };
-
+    const handleCheckboxClear = () => {
+        navigate(location.pathname, { replace: true });
+        setSelectedCategories([]);
+    }
 
     return (
         <aside className="w-full md:w-[250px] flex-shrink-0 py-6 font-inter">
-            <div className="space-y-6">
-                {filterSections.map((section, index) => {
-                    const searchValue = searchTerms[section.title] || "";
-                    const filteredCheckboxes = section.checkboxes.filter((label) =>
-                        label.toLowerCase().includes(searchValue.toLowerCase())
-                    );
+            <div className="mb-6 relative">
 
-                    const selectedInSection = selectedFilters[section.title] || [];
+                <h3 className="w-full px-4 py-2 border border-gray-300 text-gray-500 rounded-full text-sm !outline-none">
+                    Clear All
+                </h3>
 
-                    return (
-                        <details key={index} className="group pb-1">
-                            <summary className="cursor-pointer text-xl border-b border-gray-300 pb-3 flex justify-between items-center list-none">
-                                {section.title}
-                                <FiChevronDown className="transition-transform group-open:rotate-180" />
-                            </summary>
-
-                            <div className="mt-3 ml-2 px-1">
-                                {section.withSearch && (
-                                    <div className="relative mb-4">
-                                        <input
-                                            type="text"
-                                            placeholder="Search with type"
-                                            value={searchValue}
-                                            onChange={(e) =>
-                                                handleSearchChange(section.title, e.target.value)
-                                            }
-                                            className="w-full px-4 py-2 border border-gray-300 rounded-full text-sm !outline-none"
-                                        />
-                                        <FiSearch className="cursor-pointer absolute right-3 top-2.5 text-gray-500" />
-                                    </div>
-                                )}
-
-                                <div className="text-sm space-y-1 max-h-[150px] overflow-y-auto pr-2">
-                                    {filteredCheckboxes.length > 0 ? (
-                                        filteredCheckboxes.map((label, i) => (
-                                            <label key={i} className="block">
-                                                <input
-                                                    type="checkbox"
-                                                    className="mr-2"
-                                                    checked={selectedInSection.includes(label)}
-                                                    onChange={() =>
-                                                        handleCheckboxChange(section.title, label)
-                                                    }
-                                                />
-                                                {label}
-                                            </label>
-                                        ))
-                                    ) : (
-                                        <p className="text-xs text-gray-500 italic">No matches</p>
-                                    )}
-                                </div>
-                            </div>
-                        </details>
-                    );
-                })}
+                <X onClick={handleCheckboxClear} className="w-4 h-4 absolute right-4 top-2.5 text-gray-500 cursor-pointer" />
             </div>
+            <div className="space-y-2 text-sm">
+                {filterSections.map((category, index) => (
+                    <label key={index} className="flex items-center space-x-2 cursor-pointer">
+                        <input
+                            type="checkbox"
+                            checked={selectedCategories.includes(category)}
+                            onChange={() => handleCheckboxChange(category)}
+                            className="hidden peer"
+                        />
+                        <span className="w-4 h-4 border border-gray-400 rounded-sm peer-checked:bg-black peer-checked:border-black flex items-center justify-center transition">
+                        </span>
+                        <span className="text-sm">{category}</span>
+                    </label>
 
+                ))}
+            </div>
         </aside>
     );
 };
