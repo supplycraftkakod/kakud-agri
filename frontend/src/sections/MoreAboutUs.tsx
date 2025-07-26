@@ -39,8 +39,8 @@ const ServicesCard = ({ title, description, image, reff }: { title: any, descrip
         <div
             className="w-full h-[13rem] xs:h-[15rem] sm:h-[14rem] rounded-md bg-no-repeat bg-cover bg-center bg-gray-200"
             style={{
-                // backgroundImage: `url(${image})`,
-                // backgroundPosition: "center top",
+                backgroundImage: `url(${image})`,
+                backgroundPosition: "center top",
             }}
         ></div>
         <div className="flex flex-col gap-2 px-4">
