@@ -74,16 +74,18 @@ const AdminHome = () => {
             <div className="w-full min-h-screen pb-6 sm:pb-8 pt-20 md:pt-28 px-4 sm:px-[1rem] lg:px-[2.6rem] flex flex-col md:flex-row items-stretch md:justify-between gap-4 font-inter font-light">
                 <div className="w-full md:max-w-[250px] md:min-h-[82vh] p-4 flex flex-col gap-10 border border-gray-300 rounded-xl ">
                     <div className="flex flex-col items-center gap-2">
-                        <div className="w-[72px] h-[72px] bg-pink-300 rounded-full text-2xl flex items-center justify-center">
+                        <div className="w-[72px] h-[72px] bg-[#D8D6FF] rounded-full text-2xl flex items-center justify-center">
                             {userDetails?.name &&
                                 <h2>{userDetails.name[0]}</h2>}
                             {/* <h2>A</h2> */}
                         </div>
                         <h2 className="text-xl">
+                            <h2 className="text-center text-sm ">Welcome Admin</h2>
                             {userDetails?.name &&
                                 <h2>
                                     {userDetails?.name}
-                                </h2>}
+                                </h2>
+                            }
                         </h2>
                         {/* <h2>Abul Khasim</h2> */}
                     </div>
