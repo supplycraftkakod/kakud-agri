@@ -47,8 +47,8 @@ export const ServiceCard = ({
     description: { text: string; points: string[] };
     image: any;
 }) => (
-    <div className="w-full flex flex-col-reverse gap-y-6 lg:grid lg:grid-cols-[1.5fr_1fr] gap-x-4">
-        <div className="flex flex-col gap-6">
+    <div className="w-full flex flex-col-reverse gap-y-6 lg:grid lg:grid-cols-[1.5fr_1fr] gap-x-4 pb-4">
+        <div className="flex flex-col gap-6 border-b border-gray-400 ">
             <div className="space-y-1 sm:space-y-0">
                 <h4 className="text-lg sm:text-xl text-[#505050]">{id}</h4>
                 <h2 className="text-2xl leading-normal sm:text-[2rem] sm:leading-[2.5rem] xl:text-[2rem] uppercase">
@@ -64,7 +64,7 @@ export const ServiceCard = ({
                 </ul>
             </div>
         </div>
-        <div className="xs:w-[22rem] m-auto lg:mx-0 rounded-2xl overflow-hidden justify-self-end">
+        <div className="xs:w-[20rem] m-auto lg:mx-0 rounded-2xl overflow-hidden justify-self-end">
             <img
                 src={image}
                 alt={title}

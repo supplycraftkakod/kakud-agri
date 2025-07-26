@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar"
 import { ArrowDown } from "lucide-react";
+import { Link as ScrollLink } from "react-scroll"
 
 import service1Img from "../assets/images/service-1.png";
 import service2Img from "../assets/images/service-2.png";
@@ -126,7 +127,7 @@ const OurServicesPage = () => {
                 className="relative w-full min-h-screen bg-no-repeat bg-cover flex flex-col overflow-hidden transition-all duration-500"
             >
                 <div
-                    className="absolute inset-0 "
+                    className="absolute inset-0"
                     style={{
                         backgroundImage: `url(${servicesHeroImg})`,
                         backgroundPosition: isDesktop ? "center -6rem" : "center top",
@@ -138,29 +139,36 @@ const OurServicesPage = () => {
                 {/* <div className="absolute inset-0 bg-black/50"></div> */}
                 <Navbar />
 
-                <div className="w-full absolute top-24 md:top-32 flex flex-col gap-2 px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem]">
-                    <h1 className="text-[5.5vw] sm:text-3xl font-medium tracking-wide rounded-full">
-                        Agriculture Consultation Centre.
-                    </h1>
-                    <h1 className="text-[4.5vw] sm:text-2xl tracking-wide rounded-full">
-                        Transforming Farming Through Expert Guidance.
-                    </h1>
+                <div className="w-full absolute pt-52 xs:pt-32 sm:pt-52">
+                    <div className="w-full flex flex-col items-center gap-6 px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] text-center">
+                        <div className="flex flex-col gap-2">
+                            <h1 className="text-4xl font-medium tracking-wide  w-fit mx-auto">
+                                Agriculture Consultation Centre
+                            </h1>
+                            <h3 className="w-fit text-xl tracking-wide border-b border-black pb-1 mx-auto">
+                                Transforming Farming Through Expert Guidance
+                            </h3>
+                            <p className="max-w-5xl pt-4">
+                                The Kakud Agri Agriculture Consultation Centre is a one-stop solution for farmers seeking
+                                professional advice and technical support to improve their farming practices and increase their yield.
+                                Our consultation centre brings together a team of experienced agronomists, soil scientists, crop
+                                protection specialists, and market analysts to provide farmers with customized solutions tailored to
+                                their specific needs.
+                            </p>
+                        </div>
+
+                        <ScrollLink
+                            to="services"
+                            smooth={true}
+                            duration={500}
+                        >
+                            <button className="text-lg sm:text-xl p-4 rounded-full border border-[#292929] flex items-center justify-center leading-none bg-white/20 border-white/20 shadow-lg hover:bg-white/30 transition-all">
+                                <ArrowDown />
+                            </button>
+                        </ScrollLink>
+                    </div>
                 </div>
 
-                <div className="max-w-5xl absolute bottom-8 right-0 px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] flex flex-col-reverse md:flex-row items-start gap-4 text-white sm:text-black">
-                    <a href="#services">
-                        <button className="text-lg sm:text-xl p-4 rounded-full border border-white sm:border-[#292929] flex items-center justify-center leading-none bg-white/20 border-white/20 shadow-lg hover:bg-white/30 transition-all">
-                            <ArrowDown />
-                        </button>
-                    </a>
-                    <p className="sm:text-xl font-light">
-                        The Kakud Agri Agriculture Consultation Centre is a one-stop solution for farmers seeking
-                        professional advice and technical support to improve their farming practices and increase their yield.
-                        Our consultation centre brings together a team of experienced agronomists, soil scientists, crop
-                        protection specialists, and market analysts to provide farmers with customized solutions tailored to
-                        their specific needs.
-                    </p>
-                </div>
             </section>
 
             <div
@@ -191,7 +199,8 @@ const OurServicesPage = () => {
 
             <Footer
                 heading="Need Help with Your Farm?"
-                subHeading="Get expert guidance tailored to your crops, soil, and climate. Our agronomists are here to help you grow better." />
+                subHeading="Get expert guidance tailored to your crops, soil, and climate. Our agronomists are here to help you grow better."
+            />
 
         </div>
     )
