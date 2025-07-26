@@ -23,7 +23,7 @@ const staticSlides = [
             "At Kakud Agri, we provide high-quality agro-inputs, expert consultation, and modern agri-solutions — all under one roof. Join our mission to empower farmers and feed the future sustainably.",
         buttons: [
             { label: "Explore Our Products", link: "/products" },
-            { label: "Become a Franchise Partner", link: "#franchise" },
+            { label: "Become a Franchise Partner", link: "/franchise-opportunities" },
         ],
     },
     {
@@ -32,8 +32,8 @@ const staticSlides = [
         description:
             "Get the tools, technology, and guidance you need with direct-from-factory pricing, personalized crop consultation, and real-time support from our agriculture experts.",
         buttons: [
-            { label: "Request Agri Consultation", link: "/consultation" },
-            { label: "Visit Your Nearest Store", link: "/stores" },
+            { label: "Request Agri Consultation", link: "#" },
+            { label: "Visit Your Nearest Store", link: "#" },
         ],
     },
     {
@@ -42,8 +42,8 @@ const staticSlides = [
         description:
             "Be part of a nationwide agri-revolution. Choose from exclusive or non-exclusive franchise models and build a profitable, purpose-driven business with Kakud Agri.",
         buttons: [
-            { label: "Explore Franchise Models", link: "#franchise" },
-            { label: "Get Started Today", link: "/get-started" },
+            { label: "Explore Franchise Models", link: "/franchise-opportunities" },
+            { label: "Get Started Today", link: "/products" },
         ],
     },
 ];
@@ -118,9 +118,9 @@ export default function Hero() {
                             <h2 className="leading-[2rem] sm:leading-none text-[1.5rem] md:text-[2rem] text-white lg:text-[#1a1a1a] text-center">
                                 {staticSlide.subtitle}
                             </h2>
-                            <p className="text-base md:hidden text-center text-white">
+                            {/* <p className="text-base md:hidden text-center text-white">
                                 {staticSlide.description}
-                            </p>
+                            </p> */}
                         </div>
                         <div className="flex flex-col items-center md:flex-row gap-4">
                             {staticSlide.buttons.map((btn, idx) => (
@@ -160,7 +160,7 @@ export default function Hero() {
 
                 {/* Bottom Info */}
                 <div className="w-full">
-                    {currentSlideIndex < staticSlides.length ? (
+                    {/* {currentSlideIndex < staticSlides.length ? (
                         staticSlide && (
                             <div className="hidden w-full sm:w-[30rem] md:block md:absolute bottom-0 left-0 p-6 sm:p-10 text-white tracking-wide font-extralight">
                                 <p className="text-xl">{staticSlide.description}</p>
@@ -172,17 +172,25 @@ export default function Hero() {
                                 {banners[currentSlideIndex - staticSlides.length]?.paragraph || "No description available."}
                             </p>
                         </div>
-                    )}
+                    )} */}
+
+                    <div className="absolute bottom-0 left-0 p-6 sm:p-10 text-white tracking-wide font-extralight">
+                        <Link to={"/blogs"}>
+                            <button className="text-lg sm:text-xl px-8 sm:px-4 md:px-6 py-4 sm:py-2 rounded-full border text-white lg:border-[#767676] flex items-center justify-center leading-none backdrop-blur-md bg-white/20 border-orangebg-white/20 shadow-lg hover:bg-white/30 transition-all">
+                                View Blogs
+                            </button>
+                        </Link>
+                    </div>
 
                     {/* Arrow Button */}
                     <button
                         onClick={nextSlide}
-                        className="w-[8rem] h-[8rem] absolute bottom-10 right-10 flex items-center justify-center rounded-full border text-white border-white group hover:bg-white/10 transition-all"
+                        className="w-[4rem] h-[4rem] hidden lg:absolute bottom-6 lg:bottom-10 right-10 lg:flex items-center justify-center rounded-full border text-white border-white group hover:bg-white/10 transition-all"
                     >
                         <img
                             src={arrowRight}
                             alt="Next"
-                            className="w-[3rem] transform transition-transform duration-300 group-hover:translate-x-2"
+                            className="w-[2rem] transform transition-transform duration-300 group-hover:translate-x-2"
                         />
                     </button>
 
