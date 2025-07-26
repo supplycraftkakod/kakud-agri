@@ -36,7 +36,7 @@ const Footer = ({ heading, subHeading }: { heading?: string, subHeading?: string
             if (error.response?.data?.message) {
                 toast.success(error.response.data.message)
             } else {
-                toast.error("Something went wrong. Try again.")
+                toast.success("Email already subscribed!")
             }
             setEmail("");
             setLoading(false);
@@ -46,7 +46,7 @@ const Footer = ({ heading, subHeading }: { heading?: string, subHeading?: string
     return (
         <div
             id="footer"
-            className="w-full pb-4 pt-[4rem] sm:pt-[3.5rem] px-8  md:px-[3rem] lg:px-[3rem] xl:px-[6rem] font-inter flex flex-col bg-no-repeat gap-20"
+            className="w-full min-h-screen pb-4 pt-[4rem] sm:pt-[3.5rem] px-8 md:px-[3rem] lg:px-[3rem] xl:px-[6rem] font-inter flex flex-col justify-end bg-no-repeat gap-28"
             style={{
                 backgroundImage: `url(${footerImg})`,
                 backgroundPosition: "center bottom",
@@ -74,7 +74,7 @@ const Footer = ({ heading, subHeading }: { heading?: string, subHeading?: string
                     </div>
                 }
 
-                <div className="pt-12 sm:pt-16">
+                <div className="pt-12 sm:pt-24">
                     <h2 className="text-2xl">Kakud</h2>
                     <div className="w-full grid md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-14">
                         <div className="font-light">
