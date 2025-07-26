@@ -5,6 +5,12 @@ import Loader from "../components/Loader";
 import axios from "axios";
 import { BE_URL } from "../../config";
 import Footer from "../components/Footer";
+import { Download } from "lucide-react";
+
+import { useRef } from "react";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
+
 
 interface ContentBlock {
     type: "bigHeading" | "subHeading" | "paragraph" | "image";
@@ -14,6 +20,7 @@ interface ContentBlock {
 interface Blog {
     id: string;
     title: string;
+    category: string;
     createdAt: string;
     contentBlocks: ContentBlock[];
 }
@@ -23,6 +30,32 @@ const BlogDetails = () => {
     const [blog, setBlog] = useState<Blog | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+
+    const blogRef = useRef<HTMLDivElement>(null);
+
+    const handleDownloadPDF = async () => {
+        const input = blogRef.current;
+        if (!input) return;
+
+        const canvas = await html2canvas(input, {
+            scale: 2,
+            useCORS: true,
+        });
+
+        const imgData = canvas.toDataURL("image/png");
+
+        const pdf = new jsPDF("p", "mm", "a4");
+
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        // const pageHeight = pdf.internal.pageSize.getHeight();
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfWidth = pageWidth;
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+        pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+        pdf.save(`${blog?.title || "blog"}.pdf`);
+    };
+
 
     useEffect(() => {
         const fetchBlog = async () => {
@@ -64,12 +97,21 @@ const BlogDetails = () => {
     const firstImageBlock = blog.contentBlocks.find(b => b.type === "image");
 
     return (
-        <div className="max-w-[100em] mx-auto">
+        <div className="max-w-[100em] mx-auto bg-[#fcebbd]" ref={blogRef}>
             <div className="pb-16 md:pb-28">
                 <Navbar />
             </div>
 
-            <div className="w-full pt-6 pb-10 px-6 md:px-[1.5rem] lg:px-[8rem] xl:px-[12rem] font-inter">
+            <div className="w-full px-6 md:px-[1.5rem] lg:px-[4rem] xl:px-[6rem] py-[2rem] mb-2 bg-[#e44941] shadow-sm">
+                <h1 className="text-center text-white font-playfair text-3xl sm:text-6xl tracking-wide font-bold">{blog.title}</h1>
+                <h3 className="text-center text-yellow-200 pt-2 text-xl sm:text-2xl">{blog.contentBlocks[0].value}</h3>
+            </div>
+            <div className="mt-3 py-2 px-6 border-y border-gray-400 flex flex-col sm:flex-row sm:items-center sm:justify-center gap-4 sm:gap-10 shadow-sm">
+                <h3 className="text-left leading-none sm:text-lg"><span className="font-playfair italic font-medium">From: </span>Workshop Blog - Field training & meetings</h3>
+                <h3 className="text-left leading-none sm:text-lg"><span className="font-playfair italic font-medium">Date: </span>{new Date(blog.createdAt).toLocaleDateString()}</h3>
+            </div>
+
+            <div className="w-full pt-6 pb-10 px-6 md:px-[1.5rem] lg:px-[4rem] xl:px-[6rem] font-inter">
 
                 {/* First image as cover */}
                 {firstImageBlock && (
@@ -83,8 +125,14 @@ const BlogDetails = () => {
                 )}
 
                 {/* Created At */}
-                <div className="mt-4 flex flex-wrap items-center gap-4 sm:justify-between text-gray-600">
-                    <p>Created on: {new Date(blog.createdAt).toLocaleDateString()}</p>
+                <div className="mt-4 flex items-center justify-between">
+                    <div className="flex flex-wrap items-center gap-4 sm:justify-between text-gray-600">
+                        <p>Created on: {new Date(blog.createdAt).toLocaleDateString()}</p>
+                    </div>
+                    <div>
+                        <Download className="cursor-pointer w-6 h-6" onClick={handleDownloadPDF} />
+
+                    </div>
                 </div>
 
                 {/* Blog Content */}
