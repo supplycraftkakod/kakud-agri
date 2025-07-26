@@ -90,24 +90,27 @@ const Products = () => {
                                 {/* Product cards */}
                                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-2">
                                     {products.map((product, index) => (
-                                        <div
-                                            key={product.id || index}
-                                            className="relative border border-gray-200 rounded-lg p-2 hover:shadow-sm transition"
-                                        >
-                                            <img
-                                                src={product.imageUrl}
-                                                alt={product.name}
-                                                className="w-full h-auto object-contain mb-4 p-4"
-                                            />
-                                            <div className="flex flex-col gap-2 leading-none">
-                                                {/* <h3 className="absolute top-1 right-1 bg-[#1b1b1b] text-white py-[2px] px-3 rounded-full w-fit text-xs">{product.category}</h3> */}
-                                                <h3 className="font-medium text-xl">{product.name}</h3>
-                                                <p className="text-xs text-gray-600 line-clamp-2">
-                                                    {product.description}
-                                                </p>
-                                                <Link to={`/products/${product.id}`}>
-                                                    <button className="w-full py-2 rounded bg-[#338735] text-white">View</button>
-                                                </Link>
+                                        <div className="relative border border-gray-200 rounded-lg p-2 hover:shadow-sm transition">
+                                            <h3 className="bg-[#fdb4b4] py-[2px] px-3 rounded-full w-fit text-xs">{product.category}</h3>
+                                            <div
+                                                key={product.id || index}
+                                                className=""
+                                            >
+                                                <img
+                                                    src={product.imageUrl}
+                                                    alt={product.name}
+                                                    className="w-full h-auto object-contain mb-4 p-4"
+                                                />
+
+                                                <div className="flex flex-col gap-2 leading-none">
+                                                    <h3 className="font-medium text-xl">{product.name}</h3>
+                                                    <p className="text-xs text-gray-600 line-clamp-2">
+                                                        {product.description}
+                                                    </p>
+                                                    <Link to={`/products/${product.id}`}>
+                                                        <button className="w-full py-2 rounded bg-[#338735] text-white">View</button>
+                                                    </Link>
+                                                </div>
                                             </div>
                                         </div>
                                     ))}
