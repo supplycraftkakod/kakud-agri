@@ -1,6 +1,6 @@
 import imgSrc from "../assets/images/service-1.png"
 
-const franchiseItems = [
+export const franchiseItems = [
     {
         title: "01. Exclusive Retail Franchise Model",
         description: {
@@ -78,9 +78,9 @@ export const FranchiseCard = ({
     image: any;
 }) => (
     <div className="w-full flex flex-col-reverse gap-y-6 lg:grid lg:grid-cols-[1.5fr_1fr] gap-x-4">
-        <div className="flex flex-col  gap-6">
+        {/* Text Section */}
+        <div className="flex flex-col gap-6 border-b pb-4 border-gray-300">
             <div className="space-y-1 sm:space-y-0">
-                {/* <h4 className="text-2xl leading-normal sm:leading-[2.5rem] sm:text-2xl text-[#505050]">{id}.</h4> */}
                 <h2 className="text-xl leading-normal sm:leading-[2.5rem] sm:text-2xl">
                     {title}
                 </h2>
@@ -97,14 +97,17 @@ export const FranchiseCard = ({
                 <p className="text-base sm:text-lg ">{footer}</p>
             </div>
         </div>
-        <div className="xs:w-[22rem] m-auto lg:mx-0 rounded-2xl overflow-hidden justify-self-end">
+
+        {/* Image Section */}
+        <div className="xs:w-[20rem] w-full self-start lg:mx-0 rounded-2xl overflow-hidden justify-self-end">
             <img
                 src={image}
                 alt={title}
-                className="w-full h-full object-cover object-center"
+                className="w-full h-full object-cover object-top"
             />
         </div>
     </div>
+
 );
 
 
