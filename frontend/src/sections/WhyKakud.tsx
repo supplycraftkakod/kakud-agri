@@ -1,6 +1,6 @@
 import expertConsultation from "../assets/images/expert-consultation.png";
 
-const whyItems = [
+export const whyItems = [
     {
         title: "Direct-from-Factory Advantage",
         description:
@@ -62,7 +62,7 @@ const WhyKakud = () => {
 };
 
 export const KakudAdvantageCard = ({ title, description, image }: { title: any, description: any, image: any }) => (
-    <div className="w-full xs:w-[22rem] md:w-full mx-auto flex flex-col gap-6 border border-[#A69F9F] rounded-xl p-4">
+    <div className="w-full xs:w-[22rem] md:w-full mx-auto flex flex-col gap-6 border border-gray-300 hover:border-gray-500 hover:shadow-md rounded-xl p-2">
         <div
             className="w-full xs:w-[20rem] sm:w-full object-cover object-center bg-no-repeat h-[10.75rem] rounded-xl mx-auto"
             style={{
