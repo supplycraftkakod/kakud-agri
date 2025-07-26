@@ -14,10 +14,11 @@ import EventDetails from './pages/EventDetails';
 import EditBlog from './admin/page/EditBlog';
 import BlogDetails from './pages/BlogDetails';
 import AboutUs from './pages/AboutUs';
-import AboutProducts from './pages/AboutProducts';
 import OurServicesPage from './pages/OurServicesPage';
 import CareersPage from './pages/CareersPage';
 import ScrollToTop from './components/ScrollToTop';
+import FranchiseOpportunities from './pages/FranchiseOpportunities';
+import WhyChooseKakudAgri from './pages/WhyChooseKakudAgri';
 
 function App() {
   const token = localStorage.getItem("auth");
@@ -31,8 +32,9 @@ function App() {
         <Route path="/signin" element={!token ? <SignIn /> : <Navigate to={"/"} replace />} />
 
         <Route path="/about" element={<AboutUs />} />
-        <Route path="/about-products" element={<AboutProducts />} />
         <Route path="/services" element={<OurServicesPage />} />
+        <Route path="/franchise-opportunities" element={<FranchiseOpportunities />} />
+        <Route path="/why-choose-kakud" element={<WhyChooseKakudAgri />} />
         <Route path="/careers" element={<CareersPage />} />
 
         <Route path="/products" element={<Products />} />
