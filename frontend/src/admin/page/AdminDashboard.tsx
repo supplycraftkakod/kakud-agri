@@ -12,6 +12,7 @@ import {
     ResponsiveContainer,
 } from "recharts";
 import Loader from "../../components/Loader";
+import toast from "react-hot-toast";
 
 interface MostViewedProduct {
     id: number;
@@ -28,6 +29,68 @@ const AdminDashboard = () => {
     const [productsByMonth, setProductsByMonth] = useState<{ [month: string]: number }>({});
     const [userDetails, setUserDetails] = useState<any>({});
     const [loading, setLoading] = useState(false);
+
+    const [editMode, setEditMode] = useState(false);
+    const [editedDetails, setEditedDetails] = useState(userDetails);
+
+    const handleChange = (e: any) => {
+        const { name, value } = e.target;
+        setEditedDetails((prev: any) => ({
+            ...prev,
+            [name]: value,
+        }));
+    };
+
+    const handleEditButton = () => {
+        setEditedDetails(userDetails);
+        setEditMode(true);
+    }
+
+    const handleUpdate = async () => {
+        try {
+            const authStorage = localStorage.getItem("auth");
+            let token: any;
+
+            if (authStorage) {
+                const authData = JSON.parse(authStorage);
+                token = authData.token;
+            }
+
+            await toast.promise(
+                async () => {
+                    return await axios.put(
+                        `${BE_URL}/api/v1/user/me`,
+                        {
+                            name: editedDetails.name,
+                            phone: editedDetails.phone,
+                        },
+                        {
+                            headers: {
+                                Authorization: `Bearer ${token}`,
+                            },
+                        }
+                    );
+                },
+                {
+                    loading: "Updating profile...",
+                    success: "Profile updated successfully!",
+                    error: "Failed to update profile.",
+                }
+            );
+            // console.log("User updated:", res.data);
+            setEditMode(false);
+            window.location.reload();
+        } catch (err) {
+            toast.error("Error occcured. Try Again!")
+            // console.error("Update failed:", err);
+        }
+
+    };
+
+    const handleCancel = () => {
+        setEditedDetails(userDetails);
+        setEditMode(false);
+    };
 
     useEffect(() => {
         const fetchDashboardData = async () => {
@@ -82,15 +145,66 @@ const AdminDashboard = () => {
             <div className="w-full flex items-start flex-wrap gap-4 lg:grid grid-cols-[1.5fr_1fr_1fr_1fr]">
 
                 <div className="col-span-">
-                    <div className="flex items-start justify-between pb-2 border-b border-[#A69F9F] ">
+                    <div className="flex items-start justify-between pb-1 border-b border-[#A69F9F]">
                         <h2 className="text-xl font-normal">Profile</h2>
-                        <SquarePen className="w-6 h-6 cursor-pointer" />
+                        {!editMode && (
+                            <SquarePen
+                                className="w-6 h-6 cursor-pointer"
+                                onClick={handleEditButton}
+                            />
+                        )}
                     </div>
 
-                    <div className="pt-4">
-                        <h3 className="">Name: {userDetails.name}</h3>
-                        <h3 className="">Phone: +91 {userDetails.phone}</h3>
-                        <h3 className="">Email: {userDetails.email}</h3>
+                    <div className="pt-2 space-y-2">
+                        {editMode ? (
+                            <>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    value={editedDetails.name}
+                                    onChange={handleChange}
+                                    className="p-1 pl-2 border rounded-sm w-full !outline-none"
+                                    placeholder="Name"
+                                />
+                                <input
+                                    type="text"
+                                    name="phone"
+                                    value={editedDetails.phone}
+                                    onChange={handleChange}
+                                    className="p-1 pl-2 border rounded-sm w-full !outline-none"
+                                    placeholder="Phone"
+                                />
+                                <input
+                                    type="email"
+                                    name="email"
+                                    value={editedDetails.email}
+                                    onChange={handleChange}
+                                    className="p-1 pl-2 border rounded-sm w-full !outline-none"
+                                    placeholder="Email"
+                                />
+
+                                <div className="w-full grid grid-cols-2 gap-3 mt-2">
+                                    <button
+                                        onClick={handleUpdate}
+                                        className="px-4 py-1 bg-[#1d1d1d] text-white rounded-full hover:bg-[#111111]"
+                                    >
+                                        Update
+                                    </button>
+                                    <button
+                                        onClick={handleCancel}
+                                        className="px-4 py-1 text-gray-700 bg-gray-200 rounded-full hover:bg-gray-300"
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                <h3>Name: {userDetails.name}</h3>
+                                <h3>Phone: +91 {userDetails.phone}</h3>
+                                <h3>Email: {userDetails.email}</h3>
+                            </>
+                        )}
                     </div>
                 </div>
 
