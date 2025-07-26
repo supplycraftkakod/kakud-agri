@@ -95,7 +95,7 @@ const BlogDetails = () => {
     if (!blog) return null;
 
     const firstImageBlock = blog.contentBlocks.find(b => b.type === "image");
-    const firstHeading:any = blog.contentBlocks.find(b => b.type === "bigHeading");
+    const firstHeading:any = blog.contentBlocks.find(b => b.type === "bigHeading");    
 
     return (
         <div className="max-w-[100em] mx-auto bg-[#fcebbd]" ref={blogRef}>
@@ -105,7 +105,7 @@ const BlogDetails = () => {
 
             <div className="w-full px-6 md:px-[1.5rem] lg:px-[4rem] xl:px-[6rem] py-[2rem] mb-2 bg-[#e44941] shadow-sm">
                 <h1 className="text-center text-white font-playfair text-3xl sm:text-6xl tracking-wide font-bold">{blog.title}</h1>
-                <h3 className="text-center text-yellow-200 pt-2 text-xl sm:text-2xl">{firstHeading}</h3>
+                <h3 className="text-center text-yellow-200 pt-2 text-xl sm:text-2xl">{firstHeading.value}</h3>
             </div>
             <div className="mt-3 py-2 px-6 border-y border-gray-400 flex flex-col sm:flex-row sm:items-center sm:justify-center gap-4 sm:gap-10 shadow-sm">
                 <h3 className="text-left leading-none sm:text-lg"><span className="font-playfair italic font-medium">From: </span>Workshop Blog - Field training & meetings</h3>
