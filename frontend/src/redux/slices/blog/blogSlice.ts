@@ -35,7 +35,7 @@ const initialState: BlogState = {
 export const fetchBlogs = createAsyncThunk(
     'blogs/fetchBlogs',
     async (
-        { page, limit, search, selectedCategory }: { page: number; limit: number; search: string, selectedCategory: string },
+        { page, limit, search, selectedCategory }: { page: number; limit: number; search: string, selectedCategory?: string },
         thunkAPI
     ) => {
         try {
