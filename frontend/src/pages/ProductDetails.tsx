@@ -182,6 +182,7 @@ const ProductDetails = () => {
                                 className="w-[300px] h-[300px] object-contain"
                             />
                         </div>
+                        
 
 
                         {/* Product Title and Description */}
