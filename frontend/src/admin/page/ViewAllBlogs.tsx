@@ -97,7 +97,7 @@ const ViewAllBlogs: React.FC = () => {
                             return (
                                 <div
                                     key={blog.id}
-                                    className="w-full xs:w-[22rem] md:w-full mx-auto flex flex-col gap-4 border border-[#A69F9F] rounded-xl p-4"
+                                    className="w-full xs:w-[22rem] md:w-full mx-auto flex flex-col gap-4 border border-[#A69F9F] rounded-xl p-2"
                                 >
                                     <div
                                         className="w-full xs:w-[20rem] sm:w-full h-[8rem] object-cover object-center bg-no-repeat  rounded-xl mx-auto"

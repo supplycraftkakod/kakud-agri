@@ -20,6 +20,31 @@ const EditBlog: React.FC = () => {
     const [blocks, setBlocks] = useState<Block[]>([]);
     const [loading, setLoading] = useState(true);
 
+    const moveBlockUp = (index: number) => {
+        if (index === 0) return;
+        const updated = [...blocks];
+        [updated[index - 1], updated[index]] = [updated[index], updated[index - 1]];
+        setBlocks(updated);
+    };
+
+    const moveBlockDown = (index: number) => {
+        if (index === blocks.length - 1) return;
+        const updated = [...blocks];
+        [updated[index + 1], updated[index]] = [updated[index], updated[index + 1]];
+        setBlocks(updated);
+    };
+
+    const removeBlock = (index: number) => {
+        const updated = [...blocks];
+        updated.splice(index, 1);
+        setBlocks(updated);
+    };
+
+    const addBlock = (type: BlockType) => {
+        setBlocks([...blocks, { type, value: '', file: '' }]);
+    };
+
+
     useEffect(() => {
         const fetchBlog = async () => {
             try {
@@ -133,51 +158,78 @@ const EditBlog: React.FC = () => {
                 onChange={(e) => setTitle(e.target.value)}
                 className="text-3xl font-bold w-full border-b border-gray-300 p-2 outline-none"
             />
+            <div className="flex items-center justify-center gap-4 flex-wrap mb-6">
+                {(['bigHeading', 'subHeading', 'paragraph', 'image'] as BlockType[]).map((type) => (
+                    <button
+                        key={type}
+                        className="flex items-center gap-2 bg-gray-100 px-4 py-1 rounded-full hover:bg-gray-200"
+                        onClick={() => addBlock(type)}
+                    >
+                        {type.charAt(0).toUpperCase() + type.slice(1)}
+                        <span className="text-xl">+</span>
+                    </button>
+                ))}
+            </div>
+
             <div className="space-y-4">
-                {blocks.map((block, i) => {
-                    switch (block.type) {
-                        case 'bigHeading':
-                            return (
-                                <input
-                                    key={i}
-                                    value={block.value}
-                                    onChange={(e) => handleInputChange(i, e.target.value)}
-                                    className="text-[2rem] w-full border-b p-2 !outline-none"
-                                />
-                            );
-                        case 'subHeading':
-                            return (
-                                <input
-                                    key={i}
-                                    value={block.value}
-                                    onChange={(e) => handleInputChange(i, e.target.value)}
-                                    className="text-xl w-full border-b p-2 !outline-none"
-                                />
-                            );
-                        case 'paragraph':
-                            return (
-                                <textarea
-                                    key={i}
-                                    value={block.value}
-                                    onChange={(e) => handleInputChange(i, e.target.value)}
-                                    className="text-base w-full h-[10rem] border rounded p-3 !outline-none"
-                                />
-                            );
-                        case 'image':
-                            return (
-                                <div key={i}>
-                                    {block.file && (
-                                        <img src={block.file} className="max-h-80 object-contain mb-2" />
-                                    )}
-                                    <input
-                                        type="file"
-                                        accept="image/*"
-                                        onChange={(e) => handleImageUpload(i, e)}
+                {blocks.map((block, i) => (
+                    <div key={i} className="relative group bg-white p-3 rounded shadow-sm">
+                        <div className="absolute right-2 top-2 flex gap-1 opacity-0 group-hover:opacity-100 transition">
+                            <button
+                                className="text-xs px-2 py-1 bg-gray-200 hover:bg-gray-300 rounded"
+                                onClick={() => moveBlockUp(i)}
+                            >↑</button>
+                            <button
+                                className="text-xs px-2 py-1 bg-gray-200 hover:bg-gray-300 rounded"
+                                onClick={() => moveBlockDown(i)}
+                            >↓</button>
+                            <button
+                                className="text-xs px-2 py-1 bg-red-200 hover:bg-red-300 text-red-800 rounded"
+                                onClick={() => removeBlock(i)}
+                            >✕</button>
+                        </div>
+
+                        {/* Block content */}
+                        {block.type === 'bigHeading' && (
+                            <input
+                                value={block.value}
+                                onChange={(e) => handleInputChange(i, e.target.value)}
+                                className="text-[2rem] w-full border-b p-2 !outline-none"
+                            />
+                        )}
+                        {block.type === 'subHeading' && (
+                            <input
+                                value={block.value}
+                                onChange={(e) => handleInputChange(i, e.target.value)}
+                                className="text-xl w-full border-b p-2 !outline-none"
+                            />
+                        )}
+                        {block.type === 'paragraph' && (
+                            <textarea
+                                value={block.value}
+                                onChange={(e) => handleInputChange(i, e.target.value)}
+                                className="text-base w-full h-[10rem] border rounded p-3 !outline-none"
+                            />
+                        )}
+                        {block.type === 'image' && (
+                            <div className="mt-2">
+                                {block.file && (
+                                    <img
+                                        src={block.file}
+                                        className="max-h-80 object-contain mb-2"
+                                        alt="block preview"
                                     />
-                                </div>
-                            );
-                    }
-                })}
+                                )}
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={(e) => handleImageUpload(i, e)}
+                                />
+                            </div>
+                        )}
+                    </div>
+                ))}
+
             </div>
 
             <button

@@ -66,29 +66,30 @@ const OurProducts = () => {
                         style={{ transform: `translateX(-${startIndex * cardWidth}px)` }}
                     >
                         {categories.map((item, idx) => (
-                            <div
-                                key={idx}
-                                className={`w-[15rem] h-[23.5rem] relative shrink-0 rounded-md mx-1 flex flex-col items-center justify-end gap-8 text-center bg-gradient-to-br ${item.color}`}
-                            >
-                                <Link to={`/products?category=${item.title.charAt(0).toUpperCase() + item.title.slice(1).toLowerCase()}`}>
+                            <Link to={`/products?category=${item.title.charAt(0).toUpperCase() + item.title.slice(1).toLowerCase()}`}>
+                                <div
+                                    key={idx}
+                                    className={`w-[15rem] h-[23.5rem] relative shrink-0 rounded-md mx-1 flex flex-col items-center justify-end gap-8 text-center bg-gradient-to-br ${item.color}`}
+                                >
                                     <div className={`w-10 h-10 rounded-md absolute top-1 right-1 flex items-center justify-center cursor-pointer`}>
                                         <ArrowUpRight className="w-5 h-5 text-black" />
                                     </div>
-                                </Link>
-                                <div>
-                                    <h2 className="text-xl font-medium border-b border-black">{item.title}</h2>
-                                    <h4 className="text-xs pt-[2px]">{item.decs}</h4>
-                                </div>
+                                    <div>
+                                        <h2 className="text-xl font-medium border-b border-black">{item.title}</h2>
+                                        <h4 className="text-xs pt-[2px]">{item.decs}</h4>
+                                    </div>
 
-                                <div className="w-[70%] h-[15rem] rounded-t-md overflow-hidden">
-                                    <img
-                                        src={item.imgSrc}
-                                        alt={item.title}
-                                        className="w-full h-full rounded-t-md hover:scale-105 transition duration-200 ease-in-out"
-                                    />
-                                </div>
+                                    <div className="w-[70%] h-[15rem] rounded-t-md overflow-hidden">
+                                        <img
+                                            src={item.imgSrc}
+                                            alt={item.title}
+                                            className="w-full h-full rounded-t-md hover:scale-105 transition duration-200 ease-in-out"
+                                        />
+                                    </div>
 
-                            </div>
+                                </div>
+                            </Link>
+
                         ))}
                     </div>
                 </div>
@@ -105,28 +106,29 @@ const OurProducts = () => {
             <div className="md:hidden w-full overflow-x-auto scrollbar-hide">
                 <div className="flex gap-4 w-max px-1 py-2 snap-x snap-mandatory">
                     {categories.map((item, idx) => (
-                        <div
-                            key={idx}
-                            className={`w-[15rem] h-[23.5rem] relative shrink-0 rounded-md mx-1 flex flex-col items-center justify-end gap-8 text-center bg-gradient-to-br ${item.color}`}
-                        >
-                            <Link to={`/products?category=${item.title.toLocaleLowerCase()}`}>
+                        <Link to={`/products?category=${item.title.charAt(0).toUpperCase() + item.title.slice(1).toLowerCase()}`}>
+                            <div
+                                key={idx}
+                                className={`w-[15rem] h-[23.5rem] relative shrink-0 rounded-md mx-1 flex flex-col items-center justify-end gap-8 text-center bg-gradient-to-br ${item.color}`}
+                            >
                                 <div className={`w-10 h-10 rounded-md absolute top-1 right-1 flex items-center justify-center cursor-pointer`}>
                                     <ArrowUpRight className="w-5 h-5 text-black" />
                                 </div>
-                            </Link>
-                            <div>
-                                <h2 className="text-xl font-medium border-b border-black">{item.title}</h2>
-                                <h4 className="text-xs pt-[2px]">{item.decs}</h4>
-                            </div>
+                                <div>
+                                    <h2 className="text-xl font-medium border-b border-black">{item.title}</h2>
+                                    <h4 className="text-xs pt-[2px]">{item.decs}</h4>
+                                </div>
 
-                            <div className="w-[70%] h-[15rem] rounded-t-md bg-no-repeat bg-cover  overflow-hidden bg-white"
-                                style={{
-                                    backgroundImage: `url(${item.imgSrc})`,
-                                    backgroundPosition: "center bottom",
-                                }}
-                            >
+                                <div className="w-[70%] h-[15rem] rounded-t-md bg-no-repeat bg-cover  overflow-hidden bg-white"
+                                    style={{
+                                        backgroundImage: `url(${item.imgSrc})`,
+                                        backgroundPosition: "center bottom",
+                                    }}
+                                >
+                                </div>
                             </div>
-                        </div>
+                        </Link>
+
                     ))}
                 </div>
             </div>

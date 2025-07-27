@@ -166,6 +166,18 @@ const OurServicesPage = () => {
                                 <ArrowDown />
                             </button>
                         </ScrollLink>
+
+                        <div className="">
+                            <a
+                                href="https://wa.me/9019985136"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-lg sm:text-xl px-4 py-2 rounded-full border border-[#292929] flex items-center justify-center leading-none text-green-900 bg-white/20 border-white/20 shadow-lg hover:bg-white/30 transition-all"
+                            >
+                                Chat on WhatsApp
+                            </a>
+                        </div>
+
                     </div>
                 </div>
 

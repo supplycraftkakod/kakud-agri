@@ -41,7 +41,7 @@ export default function EventCard({
     const formattedDate = `${getOrdinal(day)} ${month} ${year}`;
 
     return (
-        <div className={`w-full xs:w-[22rem] md:w-full mx-auto flex flex-col gap-6 border ${borderColor} rounded-xl p-4`}>
+        <div className={`w-full xs:w-[22rem] md:w-full mx-auto flex flex-col gap-6 border ${borderColor} rounded-xl p-2`}>
             <div
                 className="w-full xs:w-[20rem] sm:w-full h-[10.75rem] rounded-xl mx-auto bg-no-repeat bg-center"
                 style={{

@@ -37,7 +37,7 @@ export default function Navbar() {
             dispatch,
             navigate,
             showToast: true,
-            revokeRefreshToken: false, // only if your backend supports it
+            revokeRefreshToken: false,
             refreshToken: localStorage.getItem('refreshToken') || '',
         });
     };
@@ -56,65 +56,29 @@ export default function Navbar() {
                     </Link>
 
                 </div>
-                {/* 
-                <div className="flex items-center gap-8 text-gray-700 text-[1.1rem]">
-                    <Link to="/" className="hover:text-black">Home</Link>
-                    <a href="#about" className="hover:text-black">Explore</a>
-                    <a href="#features" className="hover:text-black">About</a>
-                </div> */}
 
                 <div className="relative flex items-center text-gray-700 gap-10 text-[1.1rem]">
                     {/* More button */}
-                    <div className="relative">
-                        <button onClick={toggleMore} className="hover:text-black">
-                            More
-                        </button>
+                    <div
+                        className="relative"
+                        onMouseEnter={() => setShowMore(true)}
+                        onMouseLeave={() => setShowMore(false)}
+                    >
+                        <button className="hover:text-black py-2">More</button>
 
-                        {/* Dropdown content */}
                         {showMore && (
-                            <div className="absolute left-0 mt-2 bg-white shadow-md rounded-md p-4 z-50 flex flex-col gap-2 min-w-[150px]">
-                                <Link to={"/services"}
-                                    onClick={toggleMore}
-                                    className="hover:text-black"
-                                >
-                                    Services
-                                </Link>
-                                <Link to={"/franchise-opportunities"}
-                                    onClick={toggleMore}
-                                    className="hover:text-black"
-                                >
-                                    Franchise
-                                </Link>
-                                <Link to={"/why-choose-kakud"}
-                                    onClick={toggleMore}
-                                    className="hover:text-black"
-                                >
-                                    Why Kakud?
-                                </Link>
-                                <Link to={"/blogs"}
-                                    onClick={toggleMore} className="hover:text-black"
-                                >
-                                    Blogs
-                                </Link>
-                                <Link to={"/events"}
-                                    onClick={toggleMore} className="hover:text-black"
-                                >
-                                    Events
-                                </Link>
-                                <Link to={"/careers"}
-                                    onClick={toggleMore} className="hover:text-black"
-                                >
-                                    Careers
-                                </Link>
-                                {/* <Link to={"/contact"}
-                                    onClick={toggleMore} className="hover:text-black"
-                                >
-                                    Contact
-                                </Link> */}
+                            <div className="absolute left-0 pt-2 bg-white shadow-md rounded-md p-4 z-50 flex flex-col gap-2 min-w-[150px]">
+                                <Link to="/services" className="hover:text-black">Services</Link>
+                                <Link to="/franchise-opportunities" className="hover:text-black">Franchise</Link>
+                                <Link to="/why-choose-kakud" className="hover:text-black">Why Kakud?</Link>
+                                <Link to="/blogs" className="hover:text-black">Blogs</Link>
+                                <Link to="/events" className="hover:text-black">Events</Link>
+                                <Link to="/careers" className="hover:text-black">Careers</Link>
                                 <a href="#footer" className="hover:text-black" onClick={toggleMenu}>Contact</a>
                             </div>
                         )}
                     </div>
+
 
                     {/* Other nav links */}
                     <Link to={"/products"}
@@ -208,11 +172,6 @@ export default function Navbar() {
                         >
                             Careers
                         </Link>
-                        {/* <Link to={"/contact"}
-                            onClick={toggleMore} className="text-black"
-                        >
-                            Contact
-                        </Link> */}
                         <a href="#footer" className="text-black" onClick={toggleMenu}>Contact</a>
 
                         {

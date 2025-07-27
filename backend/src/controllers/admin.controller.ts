@@ -430,14 +430,15 @@ export const updateBlogById = async (req: Request, res: Response) => {
         const fileIndex = blocks[i].fileIndex;
         const file = filesMap.get(`file-${fileIndex}`);
 
-        if (!file) {
+        if (file) {
+          const cloudinaryResult = await uploadToCloudinary(file.path, 'blog_blocks');
+          blocks[i].value = cloudinaryResult.secure_url;
+        } else if (!blocks[i].value) {
           return res.status(400).json({
-            error: `Missing file for image block at index ${i}`,
+            error: `Missing image URL or file for image block at index ${i}`,
           });
         }
-
-        const cloudinaryResult = await uploadToCloudinary(file.path, 'blog_blocks');
-        blocks[i].value = cloudinaryResult.secure_url;
+        // else: value exists (previous image URL), do nothing
       }
     }
 

@@ -1,11 +1,13 @@
 import { useEffect } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useLocation, useParams, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEventById } from "../redux/slices/event/eventSlice";
 
 import Navbar from "../components/Navbar"
 import Loader from "../components/Loader";
 import Footer from "../components/Footer";
+import toast from "react-hot-toast";
+import { Share2 } from "lucide-react";
 
 const EventDetails = () => {
     const [searchParams] = useSearchParams();
@@ -13,6 +15,19 @@ const EventDetails = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const { data: event, loading, error } = useSelector((state: any) => state.event);
+
+    const location = useLocation();
+
+    const handleShareClick = () => {
+        const fullUrl = `${window.location.origin}${location.pathname}`;
+        navigator.clipboard.writeText(fullUrl)
+            .then(() => {
+                toast.success("Link copied to clipboard!");
+            })
+            .catch(() => {
+                toast.error("Failed to copy link.");
+            });
+    };
 
     useEffect(() => {
         //@ts-ignore
@@ -55,11 +70,18 @@ const EventDetails = () => {
                         <BgColorComponent locationName={event.timing} bgColor="bg-blue-200" textColor="text-blue-900" />
 
                     </div>
-                    <a href={event.registerLink} target="_blank" rel="noopener noreferrer">
-                        <button className={`w-full md:w-fit px-4 py-2 md:py-[2px] rounded-full bg-gray-800 text-white`}>
-                            Register Now
-                        </button>
-                    </a>
+                    <div className="flex items-center gap-4">
+                        <a href={event.registerLink} target="_blank" rel="noopener noreferrer">
+                            <button className={`w-full md:w-fit px-4 py-2 md:py-[2px] rounded-full bg-gray-800 text-white`}>
+                                Register Now
+                            </button>
+                        </a>
+                        <h3 onClick={handleShareClick}
+                            className="text-left leading-none sm:text-lg flex items-center gap-2 font-playfair italic font-medium cursor-pointer"
+                        >
+                            Share: <span><Share2 className="w-5 h-5" /></span>
+                        </h3>
+                    </div>
                 </div>
 
                 {/* title & paragraph */}

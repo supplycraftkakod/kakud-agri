@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
@@ -31,130 +32,60 @@ const ProductDetails = () => {
     }, [id]);
 
     const handleDownloadPDF = async () => {
-        const doc = new jsPDF();
-        const pageWidth = doc.internal.pageSize.getWidth();
-        const pageHeight = doc.internal.pageSize.getHeight();
+        const input = contentRef.current;
+        if (!input) return;
 
-        let y = 20;
-        let currentPage = 1;
-
-        const margin = 10;
-        const imageWidth = 50;
-        const contentWidth = pageWidth - imageWidth - margin * 3;
-
-        // --- Header/Footer ---
-        const addHeaderFooter = (pageNum: number) => {
-            doc.setFontSize(20);
-            doc.setTextColor(201, 0, 107);
-            doc.text("Kakud Agri", margin, 10);
-            doc.setFontSize(10);
-            doc.setTextColor(150, 150, 150);
-            doc.text(`Page ${pageNum}`, pageWidth - 30, pageHeight - 10);
-        };
-
-        addHeaderFooter(currentPage);
-
-        // --- Convert Image ---
-        const getImageAsBase64 = (url: string): Promise<string> => {
-            return new Promise((resolve, reject) => {
-                const img = new Image();
-                img.crossOrigin = "anonymous";
-                img.onload = () => {
-                    const canvas = document.createElement("canvas");
-                    canvas.width = img.width;
-                    canvas.height = img.height;
-                    const ctx = canvas.getContext("2d");
-                    ctx?.drawImage(img, 0, 0);
-                    resolve(canvas.toDataURL("image/png"));
-                };
-                img.onerror = reject;
-                img.src = url;
-            });
-        };
-
-        const imageBase64 = await getImageAsBase64(product.imageUrl);
-
-        // --- Add Image (Left side) ---
-        const imageHeight = 50;
-        doc.addImage(imageBase64, "PNG", margin, y, imageWidth, imageHeight);
-
-        // --- Add Right Side Info (aligned with image) ---
-        let textY = y;
-        let textX = margin + imageWidth + 10;
-
-        doc.setFontSize(12);
-        doc.setTextColor(0);
-        doc.text(`Category: ${product.category}`, textX, textY);
-        textY += 6;
-        doc.text(`Name: ${product.name}`, textX, textY);
-        textY += 6;
-
-        // Split and wrap description
-        const descLines = doc.splitTextToSize(`Description: ${product.description}`, contentWidth);
-        descLines.forEach((line: any) => {
-            doc.text(line, textX, textY);
-            textY += 6;
+        // Load logo image as base64
+        const logo = await new Promise<string>((resolve, reject) => {
+            const img = new Image();
+            img.src = "/kakud-logo.png"; // Change as needed
+            img.crossOrigin = "anonymous";
+            img.onload = () => {
+                const canvas = document.createElement("canvas");
+                canvas.width = img.width;
+                canvas.height = img.height;
+                const ctx = canvas.getContext("2d");
+                ctx?.drawImage(img, 0, 0);
+                resolve(canvas.toDataURL("image/png"));
+            };
+            img.onerror = reject;
         });
 
-        y = Math.max(y + imageHeight, textY) + 10; // Move below image & description
+        // Capture the DOM content
+        const canvas = await html2canvas(input, {
+            scale: 2,
+            useCORS: true,
+        });
 
-        // --- Generic function to write labeled list/paragraph ---
-        const addText = (label: string, content: string | string[], gap = 6) => {
-            if (y + 20 > pageHeight - 20) {
-                doc.addPage();
-                currentPage++;
-                addHeaderFooter(currentPage);
-                y = 20;
-            }
+        const contentImg = canvas.toDataURL("image/png");
 
-            doc.setFontSize(12);
-            doc.text(`${label}`, margin, y);
-            y += 6;
+        const pdf = new jsPDF("p", "mm", "a4");
+        const pageWidth = pdf.internal.pageSize.getWidth();
 
-            const lines = typeof content === "string"
-                ? doc.splitTextToSize(content, pageWidth - margin * 2)
-                : content.flatMap(item => doc.splitTextToSize(item, pageWidth - margin * 2));
+        // Logo dimensions and spacing
+        const logoWidth = 20;  // mm
+        const logoHeight = 20; // mm
+        const logoX = (pageWidth - logoWidth) / 2;
+        let y = 10; // Start from top
 
-            lines.forEach((line: any) => {
-                if (y + 10 > pageHeight - 20) {
-                    doc.addPage();
-                    currentPage++;
-                    addHeaderFooter(currentPage);
-                    y = 20;
-                }
-                doc.text(line, margin, y);
-                y += gap;
-            });
+        // Add logo to PDF
+        pdf.addImage(logo, "PNG", logoX, y, logoWidth, logoHeight);
 
-            y += 4;
-        };
+        // Add margin below logo
+        const logoBottomMargin = 15; // mm
+        y += logoHeight + logoBottomMargin;
 
-        // --- Add Remaining Fields ---
-        if (product.aboutPoints?.length) {
-            addText("About:", product.aboutPoints.map((pt: any) => `• ${pt}`));
-        }
+        // Add content image
+        const imgProps = pdf.getImageProperties(contentImg);
+        const contentWidth = pageWidth;
+        const contentHeight = (imgProps.height * contentWidth) / imgProps.width;
 
-        if (product.benefitPoints?.length) {
-            addText("Benefits:", product.benefitPoints.map((pt: any) => `• ${pt}`));
-        }
-
-        if (product.activeIngredients?.length) {
-            addText("Active Ingredients:", product.activeIngredients.join(", "));
-        }
-
-        if (product.formulationTypes?.length) {
-            addText("Formulation Types:", product.formulationTypes.join(", "));
-        }
-
-        if (product.crops?.length) {
-            addText("Crops:", product.crops.join(", "));
-        }
-
-        addText("Last Updated:", new Date(product.lastUpdated).toLocaleString());
-
-        // --- Save ---
-        doc.save(`${product.name}_Details.pdf`);
+        pdf.addImage(contentImg, "PNG", 0, y, contentWidth, contentHeight);
+        pdf.save(`${product?.name || "product"}.pdf`);
     };
+
+
+
 
     if (loading || !product) {
         return (
@@ -182,7 +113,7 @@ const ProductDetails = () => {
                                 className="w-[300px] h-[300px] object-contain"
                             />
                         </div>
-                        
+
 
 
                         {/* Product Title and Description */}

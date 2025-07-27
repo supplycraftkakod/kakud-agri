@@ -1,4 +1,4 @@
-import { Plus } from 'lucide-react';
+import { ArrowDown, ArrowUp, Plus, X } from 'lucide-react';
 import React, { useState, ChangeEvent } from 'react';
 import toast from 'react-hot-toast';
 import { BE_URL } from '../../../config';
@@ -125,6 +125,13 @@ const BlogEditor: React.FC = () => {
     [updated[index + 1], updated[index]] = [updated[index], updated[index + 1]];
     setBlocks(updated);
   };
+
+  const removeBlock = (index: number) => {
+    const updated = [...blocks];
+    updated.splice(index, 1);
+    setBlocks(updated);
+  };
+
 
   const renderBlock = (block: Block, index: number) => {
     switch (block.type) {
@@ -327,18 +334,25 @@ const BlogEditor: React.FC = () => {
             {/* Buttons */}
             <div className="absolute right-2 top-2 flex gap-1 opacity-0 group-hover:opacity-100 transition">
               <button
-                className="text-xs px-2 py-1 bg-gray-200 hover:bg-gray-300 rounded"
+                className="text-xs p-1 bg-gray-200 hover:bg-gray-300 rounded"
                 onClick={() => moveBlockUp(index)}
               >
-                ↑
+                <ArrowUp className='w-4 h-4' />
               </button>
               <button
-                className="text-xs px-2 py-1 bg-gray-200 hover:bg-gray-300 rounded"
+                className="text-xs p-1 bg-gray-200 hover:bg-gray-300 rounded"
                 onClick={() => moveBlockDown(index)}
               >
-                ↓
+                <ArrowDown className='w-4 h-4' />
+              </button>
+              <button
+                className="text-xs p-1 bg-red-200 hover:bg-red-300 text-red-800 rounded"
+                onClick={() => removeBlock(index)}
+              >
+                <X className='w-4 h-4' />
               </button>
             </div>
+
 
             {renderBlock(block, index)}
           </div>

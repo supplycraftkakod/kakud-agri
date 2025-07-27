@@ -55,6 +55,7 @@ const Blogs = () => {
                 <option value="product-knowledge">Product Knowledge – Guides & comparisons</option>
                 <option value="franchise">Franchise & Retail Insights – Business advice</option>
                 <option value="sustainability">Sustainability & Innovation – Eco-friendly solutions</option>
+                <option value="" className='text-red-700 bg-red-100 text-center'>Clear selection</option>
               </select>
 
               {/* Custom Arrow Icon */}
