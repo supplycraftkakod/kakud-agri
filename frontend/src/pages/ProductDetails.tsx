@@ -244,7 +244,7 @@ const ProductDetails = () => {
                                 product.activeIngredients?.filter((a: any) => a.trim() !== '').length > 0 && (
                                     <div className="bg-[#F0F0F0] p-3 rounded-lg">
                                         <p className="text-[#505050] font-medium leading-none pb-2">Active Ingredients</p>
-                                        <p className="md:text-xl font-light">
+                                        <p className="font-light">
                                             {product.activeIngredients?.join(", ") || "N/A"}
                                         </p>
                                     </div>
@@ -256,7 +256,7 @@ const ProductDetails = () => {
                                 product.formulationTypes?.filter((a: any) => a.trim() !== '').length > 0 && (
                                     <div className="bg-[#F0F0F0] p-3 rounded-lg">
                                         <p className="text-[#505050] font-medium leading-none pb-2">Formulation Type</p>
-                                        <p className="md:text-xl font-light">
+                                        <p className="font-light">
                                             {product.formulationTypes?.join(", ") || "N/A"}
                                         </p>
                                     </div>
@@ -271,7 +271,7 @@ const ProductDetails = () => {
                                             {product.crops?.map((crop: string) => (
                                                 <span
                                                     key={crop}
-                                                    className="bg-purple-200 text-purple-800 px-3 py-1 font-light rounded-full md:text-xl"
+                                                    className="bg-purple-200 text-purple-800 px-3 py-1 font-light rounded-full "
                                                 >
                                                     {crop}
                                                 </span>
