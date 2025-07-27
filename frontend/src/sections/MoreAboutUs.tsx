@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const MoreAboutUs = () => {
     return (
-        <div id="more-about-us" className="w-full py-[2rem] sm:py-[6rem] px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] xl:px-[6rem] font-inter bg-[#FDFEE7]">
+        <div id="more-about-us" className="w-full py-[2rem] sm:py-[3.5rem] px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] xl:px-[6rem] font-inter bg-[#FDFEE7]">
             <SectionHeading
                 heading="More About Us."
                 subHeading="Empowering Farmers, Building the Future."

@@ -46,7 +46,7 @@ const Footer = ({ heading, subHeading }: { heading?: string, subHeading?: string
     return (
         <div
             id="footer"
-            className="w-full min-h-screen pb-4 pt-[4rem] sm:pt-[3.5rem] px-8 md:px-[3rem] lg:px-[3rem] xl:px-[6rem] font-inter flex flex-col justify-end bg-no-repeat gap-28"
+            className="w-full pb-4 pt-[4rem] sm:pt-[3.5rem] px-8 md:px-[3rem] lg:px-[3rem] xl:px-[6rem] font-inter flex flex-col justify-end bg-no-repeat gap-28 bg-cover"
             style={{
                 backgroundImage: `url(${footerImg})`,
                 backgroundPosition: "center bottom",

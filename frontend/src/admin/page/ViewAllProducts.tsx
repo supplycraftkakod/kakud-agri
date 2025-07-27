@@ -82,7 +82,7 @@ const ViewAllProducts = () => {
                   <img
                     src={product.imageUrl}
                     alt={product.name}
-                    className="w-full h-auto object-contain mb-4"
+                    className="w-full h-auto object-contain mb-4 p-6 sm:p-1"
                   />
                   <div className="flex justify-between flex-col gap-2 leading-none">
                     <div>

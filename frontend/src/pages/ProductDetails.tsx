@@ -179,7 +179,7 @@ const ProductDetails = () => {
                             <img
                                 src={product.imageUrl}
                                 alt={product.name}
-                                className="w-[300px] h-[300px] object-cover"
+                                className="w-[300px] h-[300px] object-contain"
                             />
                         </div>
 
