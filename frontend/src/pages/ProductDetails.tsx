@@ -175,7 +175,7 @@ const ProductDetails = () => {
                     {/* Header */}
                     <div className="flex items-center md:items-start flex-col md:flex-row gap-8 mb-6">
                         {/* Product Image */}
-                        <div className="flex-shrink-0 w-full sm:w-[310px] lg:w-[345px] flex justify-center">
+                        <div className="flex-shrink-0 h-[260px] flex justify-center">
                             <img src={product.imageUrl} alt={product.name} />
                         </div>
 
