@@ -175,7 +175,7 @@ const ProductDetails = () => {
                     {/* Header */}
                     <div className="flex items-center md:items-start flex-col md:flex-row gap-8 mb-6">
                         {/* Product Image */}
-                        <div className="flex-shrink-0 h-[260px] flex justify-center">
+                        <div className="flex-shrink-0 h-[230px] flex justify-center px-8 lg:px-20 mb-6">
                             <img src={product.imageUrl} alt={product.name} />
                         </div>
 
@@ -183,13 +183,13 @@ const ProductDetails = () => {
                         <div className="w-full flex flex-col justify-between gap-2 lg:gap-8">
                             <div className="w-full flex items-start justify-between">
                                 <div className="flex flex-col gap-1">
-                                    <h2 className="text-xl text-[#505050] leading-none">{product.category}</h2>
-                                    <h1 className="text-[2.25rem] font-medium leading-none text-purple-700">{product.name}</h1>
+                                    <h2 className="text-lg text-[#505050] leading-none">{product.category}</h2>
+                                    <h1 className="text-[1.75rem] font-medium leading-none text-purple-700">{product.name}</h1>
                                 </div>
                                 <div
                                     onClick={handleDownloadPDF}
-                                    className="p-4 bg-purple-700 rounded-full flex items-center justify-center cursor-pointer">
-                                    <Download className="text-white" />
+                                    className="p-2 bg-purple-700 rounded-full flex items-center justify-center cursor-pointer">
+                                    <Download className="text-white w-5 h-5" />
                                 </div>
                             </div>
                             <p className="md:text-lg font-light mt-2">{product.description}</p>
