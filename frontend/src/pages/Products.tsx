@@ -99,7 +99,7 @@ const Products = () => {
                                                 <img
                                                     src={product.imageUrl}
                                                     alt={product.name}
-                                                    className="w-full h-auto object-contain mb-4 p-4"
+                                                    className="w-full h-auto object-contain mb-4 py-4 px-10 sm:px-6"
                                                 />
 
                                                 <div className="flex flex-col gap-2 leading-none">

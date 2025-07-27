@@ -159,7 +159,7 @@ const ProductDetails = () => {
     if (loading || !product) {
         return (
             <div className="min-h-screen flex items-center justify-center text-xl font-medium">
-                {loading ? <Loader/> : "Product not found"}
+                {loading ? <Loader /> : "Product not found"}
             </div>
         );
     }
@@ -175,9 +175,14 @@ const ProductDetails = () => {
                     {/* Header */}
                     <div className="flex items-center md:items-start flex-col md:flex-row gap-8 mb-6">
                         {/* Product Image */}
-                        <div className="flex-shrink-0 h-[230px] flex justify-center px-8 lg:px-20 mb-6">
-                            <img src={product.imageUrl} alt={product.name} />
+                        <div className="flex-shrink-0 flex justify-center px-10 lg:px-20 mb-6">
+                            <img
+                                src={product.imageUrl}
+                                alt={product.name}
+                                className="w-[300px] h-[300px] object-cover"
+                            />
                         </div>
+
 
                         {/* Product Title and Description */}
                         <div className="w-full flex flex-col justify-between gap-2 lg:gap-8">
