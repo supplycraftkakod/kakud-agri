@@ -116,6 +116,16 @@ const Footer = ({ heading, subHeading }: { heading?: string, subHeading?: string
                                 >
                                     Events
                                 </Link>
+                                <Link to={"/our-impact"}
+                                    className="text-gray-700 hover:text-black"
+                                >
+                                    Impact
+                                </Link>
+                                <Link to={"/our-team"}
+                                    className="text-gray-700 hover:text-black"
+                                >
+                                    Team
+                                </Link>
                             </div>
                             <div className="flex md:flex-col items-center gap-4">
                                 {/* <a href="" target="_blank">

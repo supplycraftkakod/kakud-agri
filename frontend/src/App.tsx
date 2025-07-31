@@ -19,6 +19,8 @@ import CareersPage from './pages/CareersPage';
 import ScrollToTop from './components/ScrollToTop';
 import FranchiseOpportunities from './pages/FranchiseOpportunities';
 import WhyChooseKakudAgri from './pages/WhyChooseKakudAgri';
+import OurImpact from './pages/OurImpact';
+import OurTeam from './pages/OurTeam';
 
 function App() {
   const token = localStorage.getItem("auth");
@@ -36,6 +38,8 @@ function App() {
         <Route path="/franchise-opportunities" element={<FranchiseOpportunities />} />
         <Route path="/why-choose-kakud" element={<WhyChooseKakudAgri />} />
         <Route path="/careers" element={<CareersPage />} />
+        <Route path="/our-impact" element={<OurImpact />} />
+        <Route path="/our-team" element={<OurTeam />} />
 
         <Route path="/products" element={<Products />} />
         <Route path="/products/:id" element={<ProductDetails />} />

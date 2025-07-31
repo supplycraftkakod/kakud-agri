@@ -74,6 +74,8 @@ export default function Navbar() {
                                 <Link to="/blogs" className="hover:text-black">Blogs</Link>
                                 <Link to="/events" className="hover:text-black">Events</Link>
                                 <Link to="/careers" className="hover:text-black">Careers</Link>
+                                <Link to="/our-impact" className="hover:text-black">Our Impact</Link>
+                                <Link to="/our-team" className="hover:text-black">Our Team</Link>
                                 <a href="#footer" className="hover:text-black" onClick={toggleMenu}>Contact</a>
                             </div>
                         )}
@@ -171,6 +173,16 @@ export default function Navbar() {
                             onClick={toggleMore} className="text-black"
                         >
                             Careers
+                        </Link>
+                        <Link to={"/our-impact"}
+                            onClick={toggleMore} className="text-black"
+                        >
+                            Our Impact
+                        </Link>
+                        <Link to={"/our-team"}
+                            onClick={toggleMore} className="text-black"
+                        >
+                            Our Team
                         </Link>
                         <a href="#footer" className="text-black" onClick={toggleMenu}>Contact</a>
 

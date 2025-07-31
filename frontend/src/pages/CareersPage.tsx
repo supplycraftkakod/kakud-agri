@@ -37,7 +37,7 @@ const CareersPage = () => {
     }, []);
 
     return (
-        <div>
+        <div className="bg-[#FDFEE7]">
             <div className="pb-16 md:pb-24">
                 <Navbar />
             </div>
@@ -149,7 +149,7 @@ const CareersPage = () => {
                     <h2 className="text-2xl font-semibold mb-4">How to Apply</h2>
                     <ol className="list-decimal ml-6 space-y-2">
                         <li>Choose a role from the list above</li>
-                        <li>Click “Apply Now” or email your resume to careers@kakudagri.com</li>
+                        <li>Email your resume to careers@kakudagri.com</li>
                         <li>Our HR team will contact shortlisted candidates within 3–5 working days</li>
                     </ol>
                 </section>

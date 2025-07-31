@@ -5,6 +5,7 @@ import singleProductReducer from "../slices/singleProductSlice"
 import blogReducer from "../slices/blog/blogSlice"
 import allEventsReducer from "../slices/event/allEventsSlice"
 import eventReducer from "../slices/event/eventSlice"
+import impactReducer from '../slices/impact/impactSlice';
 
 export const store = configureStore({
     reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
         blogs: blogReducer,
         events: allEventsReducer,
         event: eventReducer,
+        impact: impactReducer,
     },
 });
 
