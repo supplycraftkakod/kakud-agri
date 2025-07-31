@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { BE_URL } from "../../../config";
 import Loader from "../../components/Loader";
+import { X } from "lucide-react";
 
 interface Banner {
   id: number;
@@ -17,6 +18,7 @@ interface BannerInput {
   previewUrl: string;
   title: string;
   paragraph: string;
+  blogId?: string; // optional at first
 }
 
 const Banners = () => {
@@ -25,6 +27,9 @@ const Banners = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const [showBlogSelectorIndex, setShowBlogSelectorIndex] = useState<number | null>(null);
+
 
   const fetchBanners = async () => {
     setLoading(true);
@@ -76,7 +81,9 @@ const Banners = () => {
       formData.append("images", banner.file);
       formData.append("titles", banner.title);
       formData.append("paragraphs", banner.paragraph);
+      formData.append("blogId", banner.blogId || "");
     });
+
 
     try {
       await axios.post(`${BE_URL}/api/v1/banners/upload`, formData);
@@ -153,6 +160,20 @@ const Banners = () => {
                   }}
                   className="w-full px-3 py-1 border rounded !outline-none"
                 />
+                {banner.blogId && (
+                  <div
+                    onClick={() => setShowBlogSelectorIndex(index)}
+                    className="w-full text-center px-4 py-2 rounded-full bg-green-700 text-white text-sm"
+                  >
+                    Blog Selected
+                  </div>
+                )}
+                <button
+                  onClick={() => setShowBlogSelectorIndex(index)}
+                  className="w-full px-4 py-2 rounded-full bg-gray-700 text-white text-sm"
+                >
+                  {banner.blogId ? "Change Blog" : "Select Blog"}
+                </button>
               </div>
             ))}
           </div>
@@ -210,8 +231,105 @@ const Banners = () => {
           ))}
         </div>
       )}
+      {showBlogSelectorIndex !== null && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-start pt-10">
+          <div className="bg-white w-[90%] max-h-[80vh]  p-6 rounded-md shadow-xl relative">
+            <button
+              onClick={() => setShowBlogSelectorIndex(null)}
+              className="absolute -top-3 -right-3 text-red-500 p-2 bg-gray-300 rounded-full font-bold text-xl"
+            >
+              <X />
+            </button>
+
+            <BlogSearchList
+              onSelect={(blogId) => {
+                if (showBlogSelectorIndex !== null) {
+                  const updated = [...bannersToUpload];
+                  updated[showBlogSelectorIndex].blogId = blogId;
+                  setBannersToUpload(updated);
+                  setShowBlogSelectorIndex(null);
+                }
+              }}
+            />
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };
+
+const BlogSearchList = ({ onSelect }: { onSelect: (blogId: string) => void }) => {
+  const [search, setSearch] = useState("");
+  const [blogs, setBlogs] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  console.log(blogs);
+
+
+  useEffect(() => {
+    const delay = setTimeout(async () => {
+      setLoading(true);
+      try {
+        const res = await axios.get<any>(`${BE_URL}/api/v1/admin/blogs/preview`, {
+          params: { title: search },
+        });
+
+        if (res.data && res.data.title) {
+          setBlogs([res.data]); // wrap single object in an array
+        } else {
+          setBlogs([]);
+        }
+      } catch (error) {
+        console.error("Failed to fetch blog preview", error);
+        setBlogs([]);
+      } finally {
+        setLoading(false);
+      }
+    }, 500);
+
+    return () => clearTimeout(delay);
+  }, [search]);
+
+
+  return (
+    <div>
+      <input
+        type="text"
+        placeholder="Search blogs by title..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        className="w-full mb-4 px-4 py-2 border rounded outline-none"
+      />
+
+      {loading ? (
+        <Loader />
+      ) : blogs.length === 0 ? (
+        <p className="text-gray-500">No blogs found.</p>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          {blogs.map((blog) => {
+            return (
+              <div
+                key={blog.id}
+                className="border p-3 rounded shadow cursor-pointer hover:shadow-md transition-all"
+                onClick={() => onSelect(blog.id)}
+              >
+                <div
+                  className="w-full h-32 bg-cover bg-center rounded"
+                  style={{
+                    backgroundImage: `url(${blog.imageUrl || "/fallback.jpg"})`,
+                  }}
+                ></div>
+                <h3 className="font-semibold mt-2">{blog.title}</h3>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+};
+
 
 export default Banners;

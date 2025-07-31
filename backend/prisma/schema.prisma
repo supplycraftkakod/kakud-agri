@@ -78,6 +78,7 @@ model Banner {
   shouldVisible Boolean
   title         String
   paragraph     String
+  blogId        String
   createdAt     DateTime @default(now())
 }
 

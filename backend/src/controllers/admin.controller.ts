@@ -497,3 +497,47 @@ export const deleteBlogById = async (req: Request, res: Response) => {
   }
 };
 
+export const getBlogPreviewByTitle = async (req: Request, res: Response) => {
+  const { title } = req.query;
+
+  if (!title || typeof title !== "string") {
+    return res.status(400).json({ error: "Missing or invalid blog title." });
+  }
+
+  try {
+    const blog = await prisma.blog.findFirst({
+      where: {
+        title: {
+          contains: title,
+          mode: "insensitive",
+        },
+      },
+      include: {
+        contentBlocks: {
+          where: {
+            type: "image",
+          },
+          orderBy: {
+            order: "asc",
+          },
+          take: 1, // first image
+        },
+      },
+    });
+
+    if (!blog) {
+      return res.status(404).json({ error: "Blog not found" });
+    }
+
+    const firstImage = blog.contentBlocks[0]?.value || null;
+
+    return res.json({
+      id: blog.id,
+      title: blog.title,
+      imageUrl: firstImage,
+    });
+  } catch (err) {
+    console.error("Error fetching blog preview:", err);
+    return res.status(500).json({ error: "Internal server error." });
+  }
+};

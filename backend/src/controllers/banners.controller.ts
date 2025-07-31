@@ -6,7 +6,7 @@ import { uploadToCloudinary } from '../utils/cloudinaryUpload';
 export const uploadBanners = async (req: Request, res: Response) => {
   try {
     const files = req.files as Express.Multer.File[];
-    const { titles, paragraphs } = req.body;
+    const { titles, paragraphs, blogId } = req.body;
     
     if (!files || files.length === 0) {
       return res.status(400).json({ message: "No files uploaded" });
@@ -21,6 +21,7 @@ export const uploadBanners = async (req: Request, res: Response) => {
           shouldVisible: true,
           title: titles || "Default Title",
           paragraph: paragraphs || "Default paragraph",
+          blogId: blogId
         },
       });
     });

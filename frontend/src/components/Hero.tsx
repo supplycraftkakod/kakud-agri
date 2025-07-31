@@ -7,6 +7,7 @@ import arrowRight from "../assets/svg/arrow-right-svg.svg";
 import defaultBg from "../assets/images/hero-image.png";
 
 interface Banner {
+    blogId: string;
     id: number;
     imageUrl: string;
     title: string;
@@ -52,6 +53,8 @@ export default function Hero() {
     const [isDesktop, setIsDesktop] = useState(false);
     const [banners, setBanners] = useState<Banner[]>([]);
     const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+    console.log(banners);
+
 
     useEffect(() => {
         const handleResize = () => {
@@ -175,11 +178,23 @@ export default function Hero() {
                     )} */}
 
                     <div className="absolute bottom-0 left-0 p-6 sm:p-10 text-white tracking-wide font-extralight">
-                        <Link to={"/blogs"}>
-                            <button className="text-lg sm:text-xl px-8 sm:px-4 md:px-6 py-4 sm:py-2 rounded-full border text-white lg:border-[#767676] flex items-center justify-center leading-none backdrop-blur-md bg-white/20 border-orangebg-white/20 shadow-lg hover:bg-white/30 transition-all">
-                                View Blogs
-                            </button>
-                        </Link>
+                        {
+                            banners[currentSlideIndex - staticSlides.length]?.blogId ? (
+                                <Link to={`/blogs/${banners[currentSlideIndex - staticSlides.length]?.blogId}`}>
+                                    <button className="text-lg sm:text-xl px-8 sm:px-4 md:px-6 py-4 sm:py-2 rounded-full border text-white lg:border-[#767676] flex items-center justify-center leading-none backdrop-blur-md bg-white/20 border-orangebg-white/20 shadow-lg hover:bg-white/30 transition-all">
+                                        View Blogs
+                                    </button>
+                                </Link>
+                            ) : (
+                                <Link to={`/blogs`}>
+                                    <button className="text-lg sm:text-xl px-8 sm:px-4 md:px-6 py-4 sm:py-2 rounded-full border text-white lg:border-[#767676] flex items-center justify-center leading-none backdrop-blur-md bg-white/20 border-orangebg-white/20 shadow-lg hover:bg-white/30 transition-all">
+                                        View Blogs
+                                    </button>
+                                </Link>
+                            )
+
+                        }
+
                     </div>
 
                     {/* Arrow Button */}
