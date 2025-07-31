@@ -176,12 +176,31 @@ model JobRole {
 // ----------------------------------------------------------------------Impact------------------------------------------
 
 model ImpactStat {
-  id        Int       @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   number    String
-  label     String    @unique
+  label     String   @unique
   imageUrl  String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ----------------------------------------------------------------------Team------------------------------------------
+
+model TeamMember {
+  id        Int         @id @default(autoincrement())
+  name      String
+  role      String
+  image     String 
+  about     AboutLine[]
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+model AboutLine {
+  id           Int        @id @default(autoincrement())
+  content      String
+  teamMember   TeamMember @relation(fields: [teamMemberId], references: [id], onDelete: Cascade)
+  teamMemberId Int
 }
 
 enum Role {

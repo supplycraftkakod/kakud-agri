@@ -17,6 +17,8 @@ import AllJobs from "./page/job-roles/AllJobs";
 import AddNewJob from "./page/job-roles/AddNewJob";
 import AdminImpact from "./page/impact/AdminImpact";
 import AddImpact from "./page/impact/AddImpact";
+import TeamDetails from "./page/team/AllTeamMembers";
+import AddNewMember from "./page/team/AddNewMember";
 
 const AdminHome = () => {
     const [selectedComponent, setSelectedComponent] = useState("adminDashboard");
@@ -28,6 +30,7 @@ const AdminHome = () => {
     const [arrowDownBannersMgm, setArrowDownBannersMgm] = useState(false);
     const [arrowJobRole, setArrowJobRole] = useState(false);
     const [arrowImpact, setArrowImpact] = useState(false);
+    const [arrowTeam, setArrowTeam] = useState(false);
 
     const handleComponentSelection = (component: string) => {
         setSelectedComponent(component)
@@ -232,6 +235,29 @@ const AdminHome = () => {
                                 />
                             </div>
 
+                            <div className={`${arrowTeam ? "h-fit" : "h-8"} w-full pb-2 rounded-lg pl-2 px-2 py-1 flex flex-col gap-2 border border-gray-300 overflow-hidden`}>
+                                <div
+                                    onClick={() => setArrowTeam(!arrowTeam)}
+                                    className="flex items-center justify-between text-[14px] cursor-pointer select-none">
+                                    <h2><span className="">Team</span> Details</h2>
+                                    <ArrowDown
+                                        className={`w-[18px] h-[18px] ${arrowTeam ? "rotate-180" : "rotate-0"} border p-[1px] border-gray-500 rounded-full`}
+                                    />
+                                </div>
+                                <AdminButton
+                                    label="All Team Members"
+                                    componentName="teamdetails"
+                                    selectedComponent={selectedComponent}
+                                    handleComponentSelection={handleComponentSelection}
+                                />
+                                <AdminButton
+                                    label="Add New Members"
+                                    componentName="addnewmember"
+                                    selectedComponent={selectedComponent}
+                                    handleComponentSelection={handleComponentSelection}
+                                />
+                            </div>
+
                         </div>
 
                     </div>
@@ -254,6 +280,8 @@ const AdminHome = () => {
                     {selectedComponent === "addnewjob" && <AddNewJob />}
                     {selectedComponent === "impact" && <AdminImpact />}
                     {selectedComponent === "addnewimpact" && <AddImpact />}
+                    {selectedComponent === "teamdetails" && <TeamDetails />}
+                    {selectedComponent === "addnewmember" && <AddNewMember />}
                 </div>
             </div>
         </div>

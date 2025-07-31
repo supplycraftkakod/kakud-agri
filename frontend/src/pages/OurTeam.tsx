@@ -1,124 +1,27 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import { ArrowUpRight, X } from "lucide-react";
-import abulKhasim from "../assets/images/team/abul-khasim.jpg"; // placeholder image
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
-
-const employees = [
-    {
-        id: 1,
-        name: "Abul Khasim",
-        role: "Software Engineer & Designer",
-        image: abulKhasim,
-        about: [
-            "Software Engineer & Designer with a passion for crafting clean and impactful digital experiences.",
-            "Skilled in full-stack development, modern UI/UX design, and deploying scalable solutions.",
-            "Constantly exploring new technologies and improving user interaction."
-        ]
-    },
-    {
-        id: 2,
-        name: "Fatima Shaikh",
-        role: "Frontend Developer",
-        image: abulKhasim,
-        about: [
-            "Expert in creating responsive, fast, and accessible web interfaces.",
-            "Enjoys collaborating on creative front-end challenges."
-        ]
-    },
-    {
-        id: 3,
-        name: "Rahul Mehta",
-        role: "Backend Developer",
-        image: abulKhasim,
-        about: [
-            "Loves building robust APIs and scalable backend architectures.",
-            "Skilled in Node.js, Express, and PostgreSQL."
-        ]
-    },
-    {
-        id: 4,
-        name: "Ayesha Khan",
-        role: "Product Designer",
-        image: abulKhasim,
-        about: [
-            "Focused on creating user-first designs that align with product goals.",
-            "Enjoys crafting elegant UI systems."
-        ]
-    },
-    {
-        id: 5,
-        name: "Ishaan Verma",
-        role: "Full Stack Developer",
-        image: abulKhasim,
-        about: [
-            "Bridges the gap between front-end and back-end seamlessly.",
-            "Believes in writing clean, maintainable code."
-        ]
-    },
-    {
-        id: 6,
-        name: "Neha Rathi",
-        role: "UI/UX Designer",
-        image: abulKhasim,
-        about: [
-            "Designs interfaces that are intuitive and engaging.",
-            "Driven by research, empathy, and visual storytelling."
-        ]
-    },
-    {
-        id: 7,
-        name: "Aman Joshi",
-        role: "DevOps Engineer",
-        image: abulKhasim,
-        about: [
-            "Specializes in CI/CD, automation, and cloud deployments.",
-            "Passionate about improving system reliability."
-        ]
-    },
-    {
-        id: 8,
-        name: "Sara Ali",
-        role: "Mobile App Developer",
-        image: abulKhasim,
-        about: [
-            "Builds performant mobile apps using Flutter and React Native.",
-            "Focused on delivering seamless mobile experiences."
-        ]
-    },
-    {
-        id: 9,
-        name: "Kunal Rao",
-        role: "AI Engineer",
-        image: abulKhasim,
-        about: [
-            "Works on integrating AI to build smart applications.",
-            "Experienced with ML models and NLP."
-        ]
-    },
-    {
-        id: 10,
-        name: "Zoya Siddiqui",
-        role: "QA Engineer",
-        image: abulKhasim,
-        about: [
-            "Ensures product quality through rigorous testing.",
-            "Advocates for automated testing and QA best practices."
-        ]
-    }
-];
+import { useAppDispatch, useAppSelector } from "../utils/hooks";
+import { fetchTeam } from "../redux/slices/team/teamSlice";
 
 type Employee = {
     id: number;
     name: string;
     role: string;
     image: string;
-    about: string[];
+    about: { id: number; content: string }[];
 };
 
 const OurTeam = () => {
+    const dispatch = useAppDispatch();
+    const { data: employees, loading, error } = useAppSelector((state) => state.team);
     const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
+
+    useEffect(() => {
+        dispatch(fetchTeam());
+    }, [dispatch]);
 
     useEffect(() => {
         document.body.style.overflow = selectedEmployee ? "hidden" : "auto";
@@ -130,41 +33,43 @@ const OurTeam = () => {
     return (
         <div className="bg-[#FDFEE7]">
             <Navbar />
+
             <div className="w-full pb-6 sm:pb-8 pt-20 md:pt-36 px-[2rem] md:px-[7rem] lg:px-[3rem] xl:px-[6rem] font-inter">
                 <h2 className="text-[1.5rem] sm:text-[2rem] text-center pb-10">Meet our team.</h2>
 
-                <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 gap-y-6">
-                    {employees.map((emp) => (
-                        // <div
-                        //     key={emp.id}
-                        //     className="h-[460px] sm:h-[430px] px-1 pt-1 pb-2 rounded-xl bg-[#AD7979]"
-                        // >
-                        <div className="h-[448px] sm:h-[416px] px-1 pt-1 pb-2 rounded-lg bg-[#FFAEAD] relative">
-                            <div className="h-[435px] sm:h-[402px] px-1 pt-1 pb-2 rounded-md bg-[#DEDAF3] relative">
-                                <div
-                                    className="h-[350px] sm:h-[320px] px-1 pt-1 pb-2 rounded-t-md rounded-b-[2rem] bg-[#be9c7b] bg-cover relative"
-                                    style={{
-                                        backgroundImage: `url(${emp.image})`,
-                                        backgroundPosition: "center"
-                                    }}
-                                >
+                {loading ? (
+                    <p className="text-center">Loading...</p>
+                ) : error ? (
+                    <p className="text-center text-red-500">{error}</p>
+                ) : (
+                    <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 gap-y-6">
+                        {employees.map((emp: Employee) => (
+                            <div key={emp.id} className="h-[448px] sm:h-[416px] px-1 pt-1 pb-2 rounded-lg bg-[#FFAEAD] relative">
+                                <div className="h-[435px] sm:h-[402px] px-1 pt-1 pb-2 rounded-md bg-[#DEDAF3] relative">
                                     <div
-                                        className="w-10 h-10 bg-white rounded-full absolute bottom-2 right-2 flex items-center justify-center cursor-pointer"
-                                        onClick={() => setSelectedEmployee(emp)}
+                                        className="h-[350px] sm:h-[320px] px-1 pt-1 pb-2 rounded-t-md rounded-b-[2rem] bg-[#be9c7b] bg-cover relative"
+                                        style={{
+                                            backgroundImage: `url(${emp.image})`,
+                                            backgroundPosition: "center",
+                                        }}
                                     >
-                                        <ArrowUpRight />
+                                        <div
+                                            className="w-10 h-10 bg-white rounded-full absolute bottom-2 right-2 flex items-center justify-center cursor-pointer"
+                                            onClick={() => setSelectedEmployee(emp)}
+                                        >
+                                            <ArrowUpRight />
+                                        </div>
+                                    </div>
+
+                                    <div className="w-full absolute bottom-4">
+                                        <h2 className="text-center text-2xl text-[#820016] font-medium">{emp.name}</h2>
+                                        <h3 className="text-center text-sm text-[#2F0008]">{emp.role}</h3>
                                     </div>
                                 </div>
-
-                                <div className="w-full absolute bottom-4">
-                                    <h2 className="text-center text-2xl text-[#820016] font-medium">{emp.name}</h2>
-                                    <h3 className="text-center text-sm text-[#2F0008]">{emp.role}</h3>
-                                </div>
                             </div>
-                        </div>
-                        // {/* </div> */ }
-                    ))}
-                </div>
+                        ))}
+                    </div>
+                )}
             </div>
 
             {/* Want to Join Us Section */}
@@ -176,7 +81,8 @@ const OurTeam = () => {
                         If you're driven by creativity, innovation, and a love for technology — let's build something meaningful together.
                     </p>
 
-                    <Link to={"/careers"}
+                    <Link
+                        to={"/careers"}
                         className="inline-block bg-[#820016] hover:bg-[#9d1a24] text-white font-medium px-6 py-3 rounded-full transition duration-300"
                     >
                         See Job Openings
@@ -204,16 +110,22 @@ const OurTeam = () => {
                                 className="mx-auto md:mx-0 w-[300px] xs:w-[350px] md:min-w-[250px] h-[400px] xs:h-[500px] md:max-h-[400px] px-1 pt-1 pb-2 rounded-xl bg-[#be9c7b] bg-cover relative"
                                 style={{
                                     backgroundImage: `url(${selectedEmployee.image})`,
-                                    backgroundPosition: "center"
+                                    backgroundPosition: "center",
                                 }}
                             ></div>
 
                             <div>
-                                <h2 className="text-center md:text-left text-2xl font-bold text-[#820016]">{selectedEmployee.name}</h2>
-                                <h3 className="text-center md:text-left text-sm text-[#2F0008] mb-4">{selectedEmployee.role}</h3>
+                                <h2 className="text-center md:text-left text-2xl font-bold text-[#820016]">
+                                    {selectedEmployee.name}
+                                </h2>
+                                <h3 className="text-center md:text-left text-sm text-[#2F0008] mb-4">
+                                    {selectedEmployee.role}
+                                </h3>
 
-                                {selectedEmployee.about.map((para, idx) => (
-                                    <p key={idx} className="lg:text-lg max-w-3xl pb-8">{para}</p>
+                                {selectedEmployee.about.map((item, idx) => (
+                                    <p key={idx} className="lg:text-lg max-w-3xl pb-8">
+                                        {item.content}
+                                    </p>
                                 ))}
                             </div>
                         </div>

@@ -8,6 +8,7 @@ import eventRuter from './event.route';
 import subscribeRouter from './subscribe.route';
 import jobRoleRouter from './jobrole.route';
 import impactRouter from './impact.routes';
+import teamRouter from './team.routes';
 
 const router = express.Router();
 
@@ -16,6 +17,7 @@ router.use('/user', userRouter);
 router.use('/admin', adminRouter);
 router.use('/admin/event', eventRuter);
 router.use('/impact', impactRouter);
+router.use('/team', teamRouter);
 router.use('/banners', bannersRouter);
 router.use('/product', productRouter);
 router.use('/subscribe', subscribeRouter);
