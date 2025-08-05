@@ -71,19 +71,26 @@ export const addProduct = async (req: Request, res: Response) => {
 export const updateProduct = async (req: Request, res: Response) => {
   const productId = parseInt(req.params.id);
 
-  const {
-    name,
-    category,
-    description,
-    imageUrl,
-    aboutPoints,
-    benefitPoints,
-    activeIngredients,
-    formulationTypes,
-    crops,
-  } = req.body;
-
   try {
+    // Parse incoming fields (some will be JSON strings)
+    const {
+      name,
+      category,
+      description,
+      aboutPoints,
+      benefitPoints,
+      activeIngredients,
+      formulationTypes,
+      crops,
+    } = req.body;
+
+    const aboutPointsParsed = JSON.parse(aboutPoints || "[]");
+    const benefitPointsParsed = JSON.parse(benefitPoints || "[]");
+    const activeIngredientsParsed = JSON.parse(activeIngredients || "[]");
+    const formulationTypesParsed = JSON.parse(formulationTypes || "[]");
+    const cropsParsed = JSON.parse(crops || "[]");
+
+    // Get the current product
     const existingProduct = await prisma.product.findUnique({
       where: { id: productId },
     });
@@ -92,7 +99,7 @@ export const updateProduct = async (req: Request, res: Response) => {
       return res.status(404).json({ success: false, message: "Product not found" });
     }
 
-    // Check if another product already uses the same name
+    // Check for duplicate name
     const duplicateProduct = await prisma.product.findFirst({
       where: {
         name,
@@ -107,7 +114,14 @@ export const updateProduct = async (req: Request, res: Response) => {
       });
     }
 
-    // Update product base fields
+    // Upload new image if provided
+    let imageUrl = existingProduct.imageUrl;
+    if (req.file) {
+      const result = await uploadToCloudinary(req.file.path, "products");
+      imageUrl = result.secure_url;
+    }
+
+    // Update main product record
     await prisma.product.update({
       where: { id: productId },
       data: {
@@ -119,42 +133,42 @@ export const updateProduct = async (req: Request, res: Response) => {
       },
     });
 
-    // Delete old relations
+    // Delete old relational entries
     await prisma.aboutPoint.deleteMany({ where: { productId } });
     await prisma.benefitPoint.deleteMany({ where: { productId } });
     await prisma.activeIngredient.deleteMany({ where: { productId } });
     await prisma.formulationType.deleteMany({ where: { productId } });
     await prisma.crop.deleteMany({ where: { cropId: productId } });
 
-    // Re-insert updated related arrays
-    if (Array.isArray(aboutPoints)) {
+    // Insert new relations
+    if (Array.isArray(aboutPointsParsed)) {
       await prisma.aboutPoint.createMany({
-        data: aboutPoints.map(content => ({ content, productId })),
+        data: aboutPointsParsed.map((content: string) => ({ content, productId })),
       });
     }
 
-    if (Array.isArray(benefitPoints)) {
+    if (Array.isArray(benefitPointsParsed)) {
       await prisma.benefitPoint.createMany({
-        data: benefitPoints.map(content => ({ content, productId })),
+        data: benefitPointsParsed.map((content: string) => ({ content, productId })),
       });
     }
 
-    if (Array.isArray(activeIngredients)) {
+    if (Array.isArray(activeIngredientsParsed)) {
       await prisma.activeIngredient.createMany({
-        data: activeIngredients.map(content => ({ content, productId })),
+        data: activeIngredientsParsed.map((content: string) => ({ content, productId })),
       });
     }
 
-    if (Array.isArray(formulationTypes)) {
+    if (Array.isArray(formulationTypesParsed)) {
       await prisma.formulationType.createMany({
-        data: formulationTypes.map(content => ({ content, productId })),
+        data: formulationTypesParsed.map((content: string) => ({ content, productId })),
       });
     }
 
-    if (Array.isArray(crops)) {
+    if (Array.isArray(cropsParsed)) {
       await prisma.crop.createMany({
-        data: crops.map(content => ({ content, cropId: productId })),
-        skipDuplicates: true, // avoids error if crop already exists
+        data: cropsParsed.map((content: string) => ({ content, cropId: productId })),
+        skipDuplicates: true,
       });
     }
 

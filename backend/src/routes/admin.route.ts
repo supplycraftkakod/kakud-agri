@@ -8,7 +8,7 @@ const router = express.Router();
 //@ts-ignore
 router.post('/product', upload.single('image') as RequestHandler, addProduct);
 //@ts-ignore
-router.put('/product/:id', updateProduct);
+router.put('/product/:id', upload.single("image"), updateProduct);
 //@ts-ignore
 router.delete('/products/:id', deleteProductById);
 

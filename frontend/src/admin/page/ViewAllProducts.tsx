@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FiChevronLeft, FiChevronRight, FiSearch } from "react-icons/fi";
-import { Link } from "react-router-dom";
 import { AppDispatch, RootState } from "../../redux/store/store";
 import { fetchProducts } from "../../redux/slices/productSlice";
 import { Trash2 } from "lucide-react";
@@ -105,13 +104,13 @@ const ViewAllProducts = () => {
                       </p>
                     </div>
                     <div className="flex items-center justify-between gap-2">
-                      <Link to={`/admin/products/${product.id}/edit`}
+                      <a href={`/admin/products/${product.id}/edit`} target="_blank"
                         className="w-full py-3 bg-[#338735] rounded-full"
                       >
                         <button className="w-full text-white">
                           Edit
                         </button>
-                      </Link>
+                      </a>
                       <button
                         onClick={() => handleDelete(product.id)}
                         className="bg-[#eb1f1f] w-fit p-2 rounded-full flex items-center justify-center text-white">
