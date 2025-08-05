@@ -37,11 +37,32 @@ const EditProduct = () => {
     };
 
     const handleSubmit = async () => {
+        const authStorage = localStorage.getItem("auth");
+        let token;
+
+        if (authStorage) {
+            const authData = JSON.parse(authStorage);
+            token = authData.token;
+        }
+
+        const toastId = toast.loading("Updating...");
+
         try {
-            await axios.put(`${BE_URL}/api/v1/admin/product/${id}`, product);
-            toast.success("Product updated successfully!")
-        } catch (error) {
-            toast.error("Error occured!")
+            await axios.put(`${BE_URL}/api/v1/admin/product/${id}`, product, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            toast.dismiss(toastId);
+            toast.success("Product updated successfully!");
+        } catch (error: any) {
+            toast.dismiss(toastId);
+
+            const errorMessage =
+                error?.response?.data?.message || "Something went wrong!";
+
+            toast.error(errorMessage);
         }
     };
 

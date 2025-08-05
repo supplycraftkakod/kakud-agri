@@ -36,19 +36,32 @@ const ViewAllProducts = () => {
   const handleDelete = async (id: number) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this product?");
     if (!confirmDelete) return;
+    const authStorage = localStorage.getItem("auth");
+    let token;
+
+    if (authStorage) {
+      const authData = JSON.parse(authStorage);
+      token = authData.token;
+    }
+
+    const toastId = toast.loading("Deleting...");
 
     try {
-      toast.loading("Deleting..")
-      await axios.delete(`${BE_URL}/api/v1/admin/products/${id}`);
+      await axios.delete(`${BE_URL}/api/v1/admin/products/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      toast.dismiss(toastId);
       toast.success("Product deleted successfully");
-      // Optionally refresh product list here
-      // fetchAllProducts(); // or setProducts(...) etc.
+
       dispatch(fetchProducts({ page, limit: PRODUCTS_PER_PAGE, search }));
     } catch (error) {
+      toast.dismiss(toastId);
       toast.error("Failed to delete the product.");
     }
   };
-
 
   return (
     <div className="w-full">

@@ -92,6 +92,21 @@ export const updateProduct = async (req: Request, res: Response) => {
       return res.status(404).json({ success: false, message: "Product not found" });
     }
 
+    // Check if another product already uses the same name
+    const duplicateProduct = await prisma.product.findFirst({
+      where: {
+        name,
+        NOT: { id: productId },
+      },
+    });
+
+    if (duplicateProduct) {
+      return res.status(400).json({
+        success: false,
+        message: "Another product with this name already exists",
+      });
+    }
+
     // Update product base fields
     await prisma.product.update({
       where: { id: productId },
