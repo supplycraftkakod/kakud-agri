@@ -124,7 +124,7 @@ const AddProduct = () => {
             <img
               src={imagePreview}
               alt="Preview"
-              className="mt-2 px-2 w-full h-auto object-contain rounded-lg"
+              className="mt-2 px-2 w-full h-[200px] object-contain rounded-lg"
             />
           )}
         </label>

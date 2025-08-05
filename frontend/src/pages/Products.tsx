@@ -94,12 +94,11 @@ const Products = () => {
                                             <h3 className="bg-[#fdb4b4] py-[2px] px-3 rounded-full w-fit text-xs">{product.category}</h3>
                                             <div
                                                 key={product.id || index}
-                                                className=""
                                             >
                                                 <img
                                                     src={product.imageUrl}
                                                     alt={product.name}
-                                                    className="w-full h-auto object-contain mb-4 py-4 px-10 sm:px-6"
+                                                    className="w-full h-[12rem] object-contain mb-4 py-4 px-10 sm:px-6"
                                                 />
 
                                                 <div className="flex flex-col gap-2 leading-none">
@@ -107,7 +106,8 @@ const Products = () => {
                                                     <p className="text-xs text-gray-600 line-clamp-2">
                                                         {product.description}
                                                     </p>
-                                                    <Link to={`/products/${product.id}`}>
+                                                    <Link to={`/products/${product.id}`}
+                                                    >
                                                         <button className="w-full py-2 rounded bg-[#338735] text-white">View</button>
                                                     </Link>
                                                 </div>
