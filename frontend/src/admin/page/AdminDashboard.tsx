@@ -134,6 +134,12 @@ const AdminDashboard = () => {
         fetchDashboardData();
     }, []);
 
+    const monthMap: { [key: string]: string } = {
+        "2025-01": "Jan", "2025-02": "Feb", "2025-03": "Mar", "2025-04": "Apr",
+        "2025-05": "May", "2025-06": "Jun", "2025-07": "Jul", "2025-08": "Aug",
+        "2025-09": "Sep", "2025-010": "Oct", "2025-011": "Nov", "2025-012": "Dec",
+    };
+
     if (loading) {
         return <div className="w-full h-screen flex items-center justify-center">
             <Loader />
@@ -254,21 +260,23 @@ const AdminDashboard = () => {
                     </div>
 
                     <div className="pt-4">
+
                         <ResponsiveContainer width="100%" height={300}>
                             <BarChart
                                 data={Object.entries(productsByMonth).map(([month, count]) => ({
-                                    month,
+                                    month: monthMap[month] || month,
                                     count,
                                 }))}
                                 margin={{ top: 20, right: 30, left: 0, bottom: 5 }}
                             >
                                 <CartesianGrid strokeDasharray="3 3" />
                                 <XAxis dataKey="month" />
-                                <YAxis />
+                                <YAxis allowDecimals={false} />
                                 <Tooltip />
                                 <Bar dataKey="count" fill="#8884d8" radius={[5, 5, 0, 0]} />
                             </BarChart>
                         </ResponsiveContainer>
+
                     </div>
                 </div>
 
