@@ -27,6 +27,14 @@ export const addProduct = async (req: Request, res: Response) => {
     const result = await uploadToCloudinary(req.file.path, 'kakud_products');
     const imageUrl = result.secure_url;
 
+    const existingProduct = await prisma.product.findUnique({
+      where: { name },
+    });
+
+    if (existingProduct) {
+      return res.status(409).json({ message: 'Product with this name already exists' });
+    }
+
     const product = await prisma.product.create({
       data: {
         name,

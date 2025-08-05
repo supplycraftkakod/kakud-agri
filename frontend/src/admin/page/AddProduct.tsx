@@ -74,20 +74,30 @@ const AddProduct = () => {
     formData.append("formulationTypes", JSON.stringify(formulationType));
     formData.append("crops", JSON.stringify(crop));
 
+    const authStorage = localStorage.getItem("auth");
+    let token;
+
+    if (authStorage) {
+      const authData = JSON.parse(authStorage);
+      token = authData.token;
+    }
+
+    const toastId = toast.loading("Adding...");
+
     try {
-      toast.loading("Adding...")
       const res = await axios.post<any>(`${BE_URL}/api/v1/admin/product`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+          Authorization: `Bearer ${token || ""}`,
         },
       });
 
       if (res.data.message === "Product added successfully") {
-        toast.success("Product added successfully!")
+        toast.success("Product added successfully!", { id: toastId });
       }
-    } catch (err) {
-      toast.error("Failed to add product")
+    } catch (err: any) {
+      const errorMessage = err?.response?.data?.message || "Failed to add product";
+      toast.error(errorMessage, { id: toastId });
     }
   };
 

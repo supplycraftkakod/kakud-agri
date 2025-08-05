@@ -67,7 +67,7 @@ model FormulationType {
 
 model Crop {
   id      Int     @id @default(autoincrement())
-  content String  @unique
+  content String
   product Product @relation("ProductCrops", fields: [cropId], references: [id], onDelete: Cascade)
   cropId  Int
 }
