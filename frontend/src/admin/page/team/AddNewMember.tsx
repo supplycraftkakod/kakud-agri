@@ -9,6 +9,7 @@ const AddNewMember = () => {
     const [role, setRole] = useState("");
     const [aboutLines, setAboutLines] = useState<string[]>([""]);
     const [image, setImage] = useState<File | null>(null);
+    const [imagePreview, setImagePreview] = useState<string | null>(null);
 
     const handleAddLine = () => {
         setAboutLines([...aboutLines, ""]);
@@ -18,6 +19,17 @@ const AddNewMember = () => {
         const newLines = [...aboutLines];
         newLines[index] = value;
         setAboutLines(newLines);
+    };
+
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0] || null;
+        if (file) {
+            setImage(file);
+            setImagePreview(URL.createObjectURL(file));
+        } else {
+            setImage(null);
+            setImagePreview(null);
+        }
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -61,6 +73,7 @@ const AddNewMember = () => {
         setRole("");
         setAboutLines([""]);
         setImage(null);
+        setImagePreview(null);
     };
 
     return (
@@ -81,12 +94,21 @@ const AddNewMember = () => {
                     value={role}
                     onChange={(e) => setRole(e.target.value)}
                 />
+
                 <input
                     type="file"
                     accept="image/*"
                     className="w-full"
-                    onChange={(e) => setImage(e.target.files?.[0] || null)}
+                    onChange={handleImageChange}
                 />
+
+                {imagePreview && (
+                    <img
+                        src={imagePreview}
+                        alt="Preview"
+                        className="w-full h-[200px] object-contain rounded-lg border"
+                    />
+                )}
 
                 {aboutLines.map((line, index) => (
                     <textarea

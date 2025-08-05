@@ -7,6 +7,9 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 const AdminImpact = () => {
+    const [imagePreview, setImagePreview] = useState<string | null>(null);
+    console.log(imagePreview);
+
     const dispatch = useAppDispatch();
     const { data: impactData, loading, error } = useAppSelector((state: any) => state.impact);
 
@@ -136,13 +139,35 @@ const AdminImpact = () => {
                         <input
                             type="file"
                             accept="image/*"
-                            onChange={(e) =>
-                                setEditValues({ ...editValues, imageFile: e.target.files?.[0] || null })
-                            }
+                            onChange={(e) => {
+                                const file = e.target.files?.[0] || null;
+                                if (file) {
+                                    setEditValues({
+                                        ...editValues,
+                                        imageFile: file,
+                                    });
+                                    const preview = URL.createObjectURL(file);
+                                    setImagePreview(preview);
+                                }
+                            }}
                             className="w-full"
                         />
 
-                        <div className="grid grid-cols-2 gap-3  mt-4">
+                        {/* Image Preview */}
+                        <div className="mt-4">
+                            <p className="font-medium mb-2">Image Preview:</p>
+                            <img
+                                src={
+                                    editValues.imageFile
+                                        ? URL.createObjectURL(editValues.imageFile)
+                                        : impactData.find((i: any) => i.id === editId)?.imageUrl
+                                }
+                                alt="Preview"
+                                className="w-full h-[200px] object-contain rounded-lg border"
+                            />
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-3 mt-4">
                             <button
                                 onClick={handleUpdate}
                                 className="bg-blue-600 text-white px-4 py-2 rounded-full"
@@ -159,6 +184,7 @@ const AdminImpact = () => {
                     </div>
                 </div>
             )}
+
         </div>
     );
 };

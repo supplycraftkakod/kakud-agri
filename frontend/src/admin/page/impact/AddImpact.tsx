@@ -2,12 +2,15 @@ import { useState } from "react";
 import axios from "axios";
 import { BE_URL } from "../../../../config";
 import toast from "react-hot-toast";
+import { ImageUp } from "lucide-react";
 
 const AddImpact = () => {
     const [number, setNumber] = useState("");
     const [label, setLabel] = useState("");
     const [image, setImage] = useState<File | null>(null);
     const [loading, setLoading] = useState(false);
+    const [imagePreview, setImagePreview] = useState<string | null>(null);
+
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -78,16 +81,43 @@ const AddImpact = () => {
                 </div>
 
                 <div>
-                    <label className="block font-medium mb-1">Image</label>
-                    <input
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) =>
-                            setImage(e.target.files ? e.target.files[0] : null)
-                        }
-                        className="w-full"
-                    />
+                    <label htmlFor="image-upload" className="block font-medium mb-1">Image</label>
+
+                    <label
+                        htmlFor="image-upload"
+                        className="min-w-[150px] lg:min-w-[213px] flex flex-col items-center justify-center rounded-lg border border-dashed border-[#A69F9F] cursor-pointer"
+                    >
+                        <input
+                            type="file"
+                            id="image-upload"
+                            accept="image/*"
+                            onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) {
+                                    setImage(file);
+                                    setImagePreview(URL.createObjectURL(file));
+                                }
+                            }}
+                            className="hidden"
+                        />
+
+                        {!imagePreview && (
+                            <div className="flex flex-col items-center justify-center p-3 lg:p-6 gap-8">
+                                <ImageUp className="w-[50px] h-[50px] lg:w-[86px] lg:h-[86px]" />
+                                <h2 className="text-center">Click to impact image</h2>
+                            </div>
+                        )}
+
+                        {imagePreview && (
+                            <img
+                                src={imagePreview}
+                                alt="Preview"
+                                className="mt-2 px-2 w-full h-[200px] object-contain rounded-lg"
+                            />
+                        )}
+                    </label>
                 </div>
+
 
                 <button
                     type="submit"
