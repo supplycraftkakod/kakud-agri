@@ -4,6 +4,7 @@ import { Menu, X } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../utils/logout";
+import logo from "../../public/logo.png"
 
 export default function Navbar() {
     const [showMore, setShowMore] = useState(false);
@@ -52,6 +53,7 @@ export default function Navbar() {
             <div className={`hidden w-[95%] md:flex sha justify-between items-center px-10 h-[70px] backdrop-blur-md bg-white/40 bg-opacity-90 absolute top-6 left-1/2 transform -translate-x-1/2 rounded-full border border-gray-400 ${shadowClass} z-10`}>
                 <div className="flex items-center gap-3">
                     <Link to={"/"} className="flex items-center gap-3">
+                        <img src={logo} alt="logo" className="w-8 h-8" />
                         <span className="font-black text-lg">KAKUD</span>
                     </Link>
 
@@ -120,6 +122,7 @@ export default function Navbar() {
             {/* Mobile Navbar */}
             <div className="md:hidden flex justify-between items-center px-4 py-3 shadow-md fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/50 ">
                 <Link to="/" className="flex items-center gap-2">
+                    <img src={logo} alt="logo" className="w-8 h-8" />
                     <span className="font-black text-lg">KAKUD</span>
                 </Link>
                 <button onClick={toggleMenu}>
