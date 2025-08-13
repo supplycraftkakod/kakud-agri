@@ -15,15 +15,11 @@ jobs:
         with:
           fetch-depth: 0
       
-      - name: Debug token length
-        run: |
-          if [ -z "$TOKEN" ]; then
-            echo "TOKEN is empty"
-          else
-            echo "TOKEN length: ${#TOKEN}"
-          fi
+      - name: Test token scope
         env:
           TOKEN: ${{ secrets.COMPANY_REPO_TOKEN }}
+        run: |
+          curl -H "Authorization: token ${TOKEN}" https://api.github.com/repos/supplycraftkakod/kakud-agri
 
       - name: Test access to company repo
         env:
