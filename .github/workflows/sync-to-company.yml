@@ -15,11 +15,12 @@ jobs:
         with:
           fetch-depth: 0
       
-      - name: Test token scope
+      - name: Debug URL
+        run: |
+          echo "URL: https://x-access-token:${TOKEN}@github.com/supplycraftkakod/kakud-agri.git"
+          git remote -v
         env:
           TOKEN: ${{ secrets.COMPANY_REPO_TOKEN }}
-        run: |
-          curl -H "Authorization: token ${TOKEN}" https://api.github.com/repos/supplycraftkakod/kakud-agri
 
       - name: Test access to company repo
         env:
