@@ -10,11 +10,11 @@ jobs:
 
     steps:
       - name: Add company repo as remote
+        env:
+          TOKEN: ${{ secrets.COMPANY_REPO_TOKEN }}
         run: |
           git remote add company https://x-access-token:${TOKEN}@github.com/supplycraftkakod/kakud-agri.git
           git fetch company
-        env:
-          TOKEN: ${{ secrets.COMPANY_REPO_TOKEN }}
 
       - name: Push to company repo
         run: |
