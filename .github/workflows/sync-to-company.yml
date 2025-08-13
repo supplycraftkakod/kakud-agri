@@ -9,18 +9,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the current repo
-      - name: Checkout current repo
+      - name: Checkout personal repo
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.PERSONAL_PAT }}
 
-      # Step 2: Clone or fetch the private repo using PAT
-      - name: Clone private kakud-agri repo
+      - name: Add company repo as remote
         run: |
-          # Option A: If you just need files from kakud-agri, clone fresh
-          git clone https://x-access-token:${TOKEN}@github.com/supplycraftkakod/kakud-agri.git kakud-agri
+          git remote add company https://x-access-token:${TOKEN}@github.com/supplycraftkakod/kakud-agri.git
+          git fetch company
+        env:
+          TOKEN: ${{ secrets.COMPANY_REPO_TOKEN }}
 
-          # Option B: If you need to fetch/update it into an existing folder
-          # git remote add kakud-agri https://x-access-token:${TOKEN}@github.com/supplycraftkakod/kakud-agri.git
-          # git fetch kakud-agri
+      - name: Push to company repo
+        run: |
+          git push company HEAD:master --force
         env:
           TOKEN: ${{ secrets.COMPANY_REPO_TOKEN }}
