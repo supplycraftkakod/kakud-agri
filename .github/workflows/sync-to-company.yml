@@ -14,7 +14,17 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          
+      
+      - name: Debug token length
+        run: |
+          if [ -z "$TOKEN" ]; then
+            echo "TOKEN is empty"
+          else
+            echo "TOKEN length: ${#TOKEN}"
+          fi
+        env:
+          TOKEN: ${{ secrets.COMPANY_REPO_TOKEN }}
+
       - name: Test access to company repo
         env:
           TOKEN: ${{ secrets.COMPANY_REPO_TOKEN }}
