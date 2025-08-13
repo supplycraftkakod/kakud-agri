@@ -22,5 +22,5 @@ jobs:
           TOKEN: ${{ secrets.COMPANY_REPO_TOKEN }}
         run: |
           BRANCH=$(git branch --show-current)
-          git remote add company https://x-access-token:$TOKEN@github.com/supplycraftkakod/kakud-agri.git
+          git remote add company https://x-access-token:${{ secrets.COMPANY_REPO_TOKEN }}@github.com/supplycraftkakod/kakud-agri.git
           git push company $BRANCH:$BRANCH --force
