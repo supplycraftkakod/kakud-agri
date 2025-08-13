@@ -15,7 +15,11 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Show current branch
+        run: echo "Current branch is $(git branch --show-current)"
+
       - name: Push to company repo
         run: |
+          BRANCH=$(git branch --show-current)
           git remote add company https://x-access-token:${{ secrets.COMPANY_REPO_TOKEN }}@github.com/supplycraftkakod/kakud-agri.git
-          git push company HEAD:master --force --set-upstream
+          git push company HEAD:$BRANCH --force
