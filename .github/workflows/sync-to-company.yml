@@ -1,36 +1,26 @@
-name: Sync to Company Repo
+name: CI
 
 on:
   push:
-    branches:
-      - main
-      - master
+    branches: [ master ]
 
 jobs:
-  sync:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout personal repo
+      # Step 1: Checkout the current repo
+      - name: Checkout current repo
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      
-      - name: Debug URL
-        run: |
-          echo "URL: https://x-access-token:${TOKEN}@github.com/supplycraftkakod/kakud-agri.git"
-          git remote -v
-        env:
-          TOKEN: ${{ secrets.COMPANY_REPO_TOKEN }}
 
-      - name: Test access to company repo
-        env:
-          TOKEN: ${{ secrets.COMPANY_REPO_TOKEN }}
+      # Step 2: Clone or fetch the private repo using PAT
+      - name: Clone private kakud-agri repo
         run: |
-          git ls-remote https://x-access-token:${TOKEN}@github.com/supplycraftkakod/kakud-agri.git
+          # Option A: If you just need files from kakud-agri, clone fresh
+          git clone https://x-access-token:${TOKEN}@github.com/supplycraftkakod/kakud-agri.git kakud-agri
 
-      - name: Push to company repo
+          # Option B: If you need to fetch/update it into an existing folder
+          # git remote add kakud-agri https://x-access-token:${TOKEN}@github.com/supplycraftkakod/kakud-agri.git
+          # git fetch kakud-agri
         env:
           TOKEN: ${{ secrets.COMPANY_REPO_TOKEN }}
-        run: |
-          git remote add company https://x-access-token:${TOKEN}@github.com/supplycraftkakod/kakud-agri.git
-          git push company master --force
