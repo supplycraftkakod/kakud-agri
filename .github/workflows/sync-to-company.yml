@@ -3,7 +3,6 @@ name: Sync to Company Repo
 on:
   push:
     branches:
-      - main
       - master
 
 jobs:
@@ -22,3 +21,5 @@ jobs:
           BRANCH=$(git branch --show-current)
           git remote add company https://x-access-token:$TOKEN@github.com/supplycraftkakod/kakud-agri.git
           git push company $BRANCH:$BRANCH --force
+      - name: Debug URL
+        run: echo "https://x-access-token:***@github.com/supplycraftkakod/kakud-agri.git"
