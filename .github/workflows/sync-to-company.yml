@@ -14,12 +14,13 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Debug URL
+        run: echo "https://x-access-token:***@github.com/supplycraftkakod/kakud-agri.git"
+
       - name: Push to company repo
         env:
           TOKEN: ${{ secrets.COMPANY_REPO_TOKEN }}
         run: |
           BRANCH=$(git branch --show-current)
-          git remote add company https://x-access-token:$TOKEN@github.com/supplycraftkakod/kakud-agri
+          git remote add company https://x-access-token:$TOKEN@github.com/supplycraftkakod/kakud-agri.git
           git push company $BRANCH:$BRANCH --force
-      - name: Debug URL
-        run: echo "https://x-access-token:***@github.com/supplycraftkakod/kakud-agri"
