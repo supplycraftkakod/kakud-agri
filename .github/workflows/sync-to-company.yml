@@ -9,11 +9,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout personal repo
-        uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.PERSONAL_PAT }}
-
       - name: Add company repo as remote
         run: |
           git remote add company https://x-access-token:${TOKEN}@github.com/supplycraftkakod/kakud-agri.git
