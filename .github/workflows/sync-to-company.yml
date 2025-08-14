@@ -42,4 +42,4 @@ jobs:
 
       # Push back to company repo
       - name: Push changes
-        run: git push origin HEAD:master
+        run: git push company HEAD:master
