@@ -14,7 +14,7 @@ const ProtectedRoute: React.FC<Props> = ({ children, allowedRoles }) => {
     if (!auth || typeof auth !== 'object') return null;
 
     if (!auth.token) {
-        return <Navigate to="/login" replace />;
+        return <Navigate to="/signin" replace />;
     }
 
     if (!allowedRoles.includes(auth.role)) {
