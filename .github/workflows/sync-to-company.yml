@@ -34,10 +34,7 @@ jobs:
         env:
           COMPANY_TOKEN: ${{ secrets.COMPANY_REPO_TOKEN }}
         run: |
-          # remove any trailing slash
-          REPO_URL="https://x-access-token:${COMPANY_TOKEN}@github.com/supplycraftkakod/kakud-agri.git"
-          REPO_URL="${REPO_URL%/}"
-          git remote add company $REPO_URL
+          git remote add company https://x-access-token:${COMPANY_TOKEN}@github.com/supplycraftkakod/kakud-agri.git/
           git fetch company
 
       # Step 4: Push to company repo
@@ -45,4 +42,4 @@ jobs:
         env:
           COMPANY_TOKEN: ${{ secrets.COMPANY_REPO_TOKEN }}
         run: |
-          git push company master
+          git push company HEAD:master
