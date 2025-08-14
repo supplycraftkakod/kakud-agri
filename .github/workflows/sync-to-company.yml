@@ -31,8 +31,8 @@ jobs:
       - name: Copy files
         run: |
           cp -R personal-repo/* .
-          cp -R personal-repo/.* . 2>/dev/null || true  # copy hidden files, ignore errors
-          rm -rf .git  # remove Git folder from personal repo
+          cp -R personal-repo/.* . 2>/dev/null || true
+          rm -rf personal-repo/.git  # only delete the personal repo .git folder
 
       # Commit changes if any
       - name: Commit changes
