@@ -23,11 +23,17 @@ jobs:
           git config user.name "CI Bot"
           git config user.email "ci-bot@users.noreply.github.com"
 
-      - name: Copy files from personal repo
+      # Clone personal repo
+      - name: Clone personal repo
         run: |
-          cp -R ../<https://github.com/abulKhasim/Kakud>/* .
-          # Optionally remove .git folder from copied repo if present
-          rm -rf .git
+          git clone https://github.com/abulKhasim/Kakud.git personal-repo
+
+      # Copy files from personal repo to company repo
+      - name: Copy files
+        run: |
+          cp -R personal-repo/* .
+          cp -R personal-repo/.* . 2>/dev/null || true  # copy hidden files, ignore errors
+          rm -rf .git  # remove Git folder from personal repo
 
       # Commit changes if any
       - name: Commit changes
