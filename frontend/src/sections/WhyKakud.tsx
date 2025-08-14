@@ -61,15 +61,15 @@ const WhyKakud = () => {
     );
 };
 
-export const KakudAdvantageCard = ({ title, description, image }: { title: any, description: any, image: any }) => (
-    <div className="w-full xs:w-[22rem] md:w-full mx-auto flex flex-col gap-6 border border-gray-300 hover:border-gray-500 hover:shadow-md rounded-xl p-2">
-        <div
+export const KakudAdvantageCard = ({ title, description }: { title: any, description: any }) => (
+    <div className="w-full xs:w-[22rem] md:w-full mx-auto flex flex-col gap-6 border border-[#c5c5c5] hover:border-[#449E08] hover:shadow-md rounded-xl p-4">
+        {/* <div
             className="w-full xs:w-[20rem] sm:w-full object-cover object-center bg-no-repeat h-[10.75rem] rounded-xl mx-auto"
             style={{
                 backgroundImage: `url(${image})`,
                 backgroundPosition: "center top",
             }}
-        ></div>
+        ></div> */}
         <div className="flex flex-col gap-4">
             <h3 className="text-2xl">{title}</h3>
             <p className="font-light">{description}</p>

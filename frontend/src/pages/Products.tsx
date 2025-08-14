@@ -9,6 +9,9 @@ import { fetchProducts } from "../redux/slices/productSlice";
 import { Link, useLocation } from "react-router-dom";
 import Loader from "../components/Loader";
 
+import heroImg1 from "../assets/images/hero-bg-1.png";
+import heroImg2 from "../assets/images/hero-bg-2.png";
+
 const PRODUCTS_PER_PAGE = 8;
 
 const Products = () => {
@@ -17,6 +20,20 @@ const Products = () => {
 
     const [search, setSearch] = useState("");
     const [page, setPage] = useState(1);
+
+    const [currentImage, setCurrentImage] = useState(heroImg1);
+
+    useEffect(() => {
+        const images = [heroImg1, heroImg2];
+        let index = 0;
+
+        const interval = setInterval(() => {
+            index = (index + 1) % images.length;
+            setCurrentImage(images[index]);
+        }, 2000); // every 1 second
+
+        return () => clearInterval(interval); // clean up on unmount
+    }, []);
 
     const location = useLocation();
 
@@ -45,17 +62,29 @@ const Products = () => {
 
     return (
         <div>
-            <div className="pb-16 md:pb-28">
+            <div>
                 <Navbar />
             </div>
 
-            <div className="w-full px-6 pb-10 md:px-[1.5rem] lg:px-[2rem]">
-                <div className="hidden sm:block sm:text-[2rem] md:text-[2.5rem] py-8 text-center">
+            <div className="max-w-[100em] mx-auto w-full pt-20 sm:pt-0 px-6 pb-10 md:px-[1.5rem] lg:px-[2rem]">
+                <div
+                    className="hidden bg-red-400 sm:block bg-no-repeat bg-cover sm:text-[2rem] md:text-[2.5rem] py-14 rounded-lg text-center transition-all duration-1000"
+                    style={{
+                        backgroundImage: `url(${currentImage})`,
+                        backgroundPosition: "center bottom",
+                    }}
+                >
                     <h2>
                         <span className="font-playfair italic font-semibold">Protect your crop</span> before it's too late.
                     </h2>
                 </div>
-                <div className="sm:hidden text-[2rem] xs:text-[3rem] py-8 flex flex-col items-center justify-center">
+                <div
+                    className="sm:hidden text-[2rem] xs:text-[3rem] py-14 bg-no-repeat bg-cover flex flex-col items-center justify-center rounded-lg transition-all duration-1000"
+                    style={{
+                        backgroundImage: `url(${currentImage})`,
+                        backgroundPosition: "center bottom",
+                    }}
+                >
                     <h2 className="font-playfair italic font-semibold ">Protect your crop</h2>
                     <h2 className="leading-none"> before it's too late.</h2>
                 </div>

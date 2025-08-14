@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-// import leafBgImg from '../assets/images/leaf-bg.png'
 import SectionHeading from "../components/SectionHeading";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import bgImg from "../assets/images/hero-bg-1.png"
 
 const testimonials = [
     {
@@ -57,24 +57,24 @@ const Testimonials = () => {
     };
 
     return (
-        <div className="w-full py-[2rem] sm:py-[3.5rem] px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] xl:px-[6rem] bg-[#FDFEE7]">
+        <div className="w-full pb-[4rem] pt-[4rem] sm:pt-[5rem] px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] xl:px-[6rem] font-geist bg-[#FDFEE7]">
             <SectionHeading
                 heading="Testimonials."
                 subHeading="What our customer says about us."
             />
-            <div className="w-full font-inter">
+            <div className="w-full">
                 <div className="w-full py-40 sm:h-[24rem] px-3 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] xl:px-[6rem] flex items-center justify-between rounded-md bg-[#510c5a] bg-cover overflow-hidden"
-                // style={{
-                //     backgroundImage: `url(${leafBgImg})`,
-                //     backgroundPosition: "center",
-                // }}
+                style={{
+                    backgroundImage: `url(${bgImg})`,
+                    backgroundPosition: "center bottom",
+                }}
                 >
                     <ChevronLeft
-                        className="cursor-pointer z-10 text-white"
+                        className="cursor-pointer z-10 text-black"
                         onClick={handlePrev}
                     />
 
-                    <div className="relative w-full flex justify-center items-center text-white"
+                    <div className="relative w-full flex justify-center items-center text-[#1d1d1d]"
                     >
                         <AnimatePresence custom={direction} mode="wait">
                             <motion.div
@@ -85,13 +85,13 @@ const Testimonials = () => {
                                 initial="initial"
                                 animate="animate"
                                 exit="exit"
-                                className="absolute px-4 sm:px-[5rem] lg:px-[10rem] xl:px-[15rem] flex flex-col items-center gap-12 rounded-lg text-center"
+                                className="absolute px-4 sm:px-[5rem] lg:px-[10rem] flex flex-col items-center gap-12 rounded-lg text-center"
                             >
                                 <div>
-                                    <h3 className="text-xl sm:text-[2rem] leading-none">{testimonials[index].name}</h3>
-                                    <h4 className="text-lg sm:text-2xl text-[#c4c4c4]">{testimonials[index].location}</h4>
+                                    <h3 className="text-xl sm:text-[2rem] font-medium leading-none">{testimonials[index].name}</h3>
+                                    <h4 className="text-lg sm:text-2xl text-[#707070]">{testimonials[index].location}</h4>
                                 </div>
-                                <p className="sm:text-xl font-light tracking-wide">
+                                <p className="sm:text-lg  tracking-wide">
                                     “{testimonials[index].message}”
                                 </p>
                             </motion.div>
@@ -99,7 +99,7 @@ const Testimonials = () => {
                     </div>
 
                     <ChevronRight
-                        className="cursor-pointer z-10 text-white"
+                        className="cursor-pointer z-10 text-black"
                         onClick={handleNext}
                     />
                 </div>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import heroImg from "../assets/images/about-hero.png"
+import heroImg from "../assets/images/hero-bg-1.png"
 import Navbar from "../components/Navbar"
 import Footer from "../components/Footer";
 
@@ -15,19 +15,8 @@ import { Link as ScrollLink } from "react-scroll"
 const cardWidth = 272;
 
 const AboutUs = () => {
-  const [isDesktop, setIsDesktop] = useState(false);
   const [startIndex, setStartIndex] = useState(0);
   const [visibleCount, setVisibleCount] = useState(4);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsDesktop(window.innerWidth >= 1024);
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
 
   const offerings = [
     {
@@ -87,118 +76,95 @@ const AboutUs = () => {
   };
 
   return (
-    <div className="font-inter">
-      <section className="w-full min-h-screen bg-no-repeat bg-cover flex flex-col overflow-hidden relative transition-all duration-500"
+    <div className="max-w-[100em] mx-auto">
+      <div
+        className="min-h-screen 2xl:h-fit bg-no-repeat bg-cover flex flex-col overflow-hidden relative transition-all duration-1000 font-geist"
         style={{
           backgroundImage: `url(${heroImg})`,
-          backgroundPosition: isDesktop ? "center top" : "center top",
-        }}>
+          backgroundPosition: "center bottom",
+        }}
+      >
         <Navbar />
 
-        <div className="w-full absolute inset-0 flex flex-col justify-center items-center px-10 text-white md:text-black">
-          <h1 className="text-4xl text-center max-w-5xl">
-            Empowering <span className="font-playfair italic font-bold">Farmers</span> Through <span className="font-playfair italic font-bold">Innovation</span> and Sustainability
-          </h1>
-          <p className="text-xl mt-4 text-center">
-            An Agri-Tech Brand by Kakud Post Harvest Pvt. Ltd.
-          </p>
+        {/* HERO CONTENT */}
+        <div className="my-auto md:my-0 md:pt-24 w-full flex flex-col items-center px-6 sm:px-8 md:pb-10  text-[#1d1d1d]">
+          <div className="flex flex-col justify-center items-center gap-2">
+            <h1 className="hidden md:block text-[8vw] xs:text-[2.5rem] md:text-[4rem] leading-none font-medium">Empowering <span className="font-playfair italic font-semibold text-[#449E08]">Farmers</span></h1>
+            <h1 className="block md:hidden text-[10vw] xs:text-[3.5rem] leading-none font-medium">Empowering </h1>
+            <h1 className="block md:hidden text-[15vw] xs:text-[5rem] tracking-wide leading-none text-[#449E08] font-semibold">Farmers</h1>
+            <h1 className="text-center text-[6vw] xs:text-[2rem] md:text-[3rem] sm:leading-none  font-medium">Through Innovation and Sustainability</h1>
+          </div>
+          <p className="md:w-[40rem] text-center pt-4">We Provide advanced, reliable agrochemical solutions that enhance crop yield, protect the land, and support sustainable farming practices.</p>
+          <div className="cta flex flex-col xs:flex-row gap-4 pt-8 items-center">
+            <div className="w-[12rem] xs:w-fit p-[2px] text-center rounded-full bg-white shadow-sm inline-block">
+              <ScrollLink
+                to="explore-our-vision"
+                smooth={true}
+                duration={500}
+              >
+                <button
+                  className="w-full px-6 py-2 sm:text-xl rounded-full bg-gradient-to-r from-[#449E08] via-[#7CBC52] to-[#449E08] text-white block"
 
-          <ScrollLink
-            to="explore-our-vision"
-            smooth={true}
-            duration={500}
-          >
-            <button className="mt-6 px-8 py-3 rounded-full bg-white/20 border border-white/30 hover:bg-white/30 transition-all">
-              Explore Our Vision
-            </button>
-          </ScrollLink>
+                >
+                  Explore Our Vision
+                </button>
+              </ScrollLink>
+            </div>
+          </div>
         </div>
-      </section>
+
+
+      </div>
 
       {/* About Section */}
       <div
         id="explore-our-vision"
-        className="w-full py-10 pt-16 px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] xl:px-[6rem]"
+        className="w-full py-10 pt-16 px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] xl:px-[6rem] "
       >
-        <div className="block sm:hidden">
-          <h2 className="text-4xl mb-8 text-center font-playfair">About Kakud Agri</h2>
+        <div className="">
+          <h2 className="text-4xl mb-8 text-center">About Kakud Agri</h2>
 
           <p className="sm:text-lg mb-6 text-gray-900">
             <strong>Kakud Agri,</strong> a brand of
             <strong> Kakud Post Harvest Pvt. Ltd.</strong>,
-            is a <strong>science and technology-driven agri-tech company</strong> committed to transforming agriculture through
-            <strong> innovation, sustainability, and community empowerment.</strong> We were established with a clear purpose: to build a sustainable agricultural
-            ecosystem where farmers can access everything they need, <strong>quality products, expert advice, and reliable services—all under one roof.</strong>
+            is a <strong>Science and technology-driven agri-tech company</strong> committed to transforming agriculture through
+            <strong> Innovation, Sustainability, and Community Empowerment.</strong> We were established with a clear purpose: to build a sustainable agricultural
+            ecosystem where farmers can access everything they need, <strong>Quality products, expert advice, and reliable services—all under one roof.</strong>
           </p>
 
           <p className="sm:text-lg mb-6 text-gray-900">
-            We <strong>manufacture and supply agrochemicals, fertilizers, and agricultural machinery</strong> using
+            We <strong>Manufacture and supply Agrochemicals, Fertilizers, and Agricultural machinery</strong> using
             cutting-edge technology to help farmers grow healthy, high-yielding crops. Our solutions are designed
-            not just for productivity, but also to promote <strong>sustainable practices</strong> that protect natural
+            not just for productivity, but also to promote <strong>Sustainable practices</strong> that protect natural
             resources and support long-term food security.
           </p>
 
           <p className="sm:text-lg mb-6 text-gray-900">
-            Our network of exclusive retail <strong>franchise stores</strong> provides farmers with easy access to premium
-            agricultural inputs. In addition, our <strong>state-of-the-art Agriculture Consultation Centre</strong> offers expert guidance
+            Our network of exclusive retail <strong>Franchise Stores</strong> provides farmers with easy access to premium
+            agricultural inputs. In addition, our <strong>State-of-the-art Agriculture Consultation Centre</strong> offers expert guidance
             and practical solutions to address challenges across the farming lifecycle—from soil to harvest.
           </p>
 
           <p className="sm:text-lg mb-6 text-gray-900">
-            At Kakud Agri, we believe that <strong>empowered farmers build healthier communities and a stronger planet.</strong>
+            At Kakud Agri, we believe that <strong>Empowered farmers build healthier communities and a stronger planet.</strong>
             That’s why we are focused on enabling them with the right tools, knowledge, and support
             needed to thrive in a competitive agricultural environment.
           </p>
 
           <p className="sm:text-lg text-gray-900">
-            <strong>Headquartered in Hubli, India</strong>, we are an <strong>emerging global agri-tech leader</strong>, with a bold vision to
-            expand our footprint to <strong>over 90 countries in the next 10 years.</strong>
-          </p>
-        </div>
-
-
-        <div className="hidden sm:block">
-          <h2 className="text-4xl mb-8 sm:text-center font-playfair">About Kakud Agri</h2>
-          <p className="sm:text-lg mb-6 text-gray-900 ">
-            <span className="inline-block bg-purple-100 text-purple-900 rounded-full px-3 py-[2px] mr-2">Kakud Agri</span> a brand of
-            <span className=" inline-block bg-purple-100 text-purple-900 rounded-full px-3 py-[2px] mx-2">Kakud Post Harvest Pvt. Ltd.</span>
-            is a <strong>science and technology-driven agri-tech company</strong> committed to transforming agriculture through
-            <strong> innovation, sustainability, and community empowerment.</strong> We were established with a clear purpose: to build a sustainable agricultural
-            ecosystem where farmers can access everything they need, <strong>quality products, expert advice, and
-              reliable services—all under one roof.</strong>
-          </p>
-          <p className="sm:text-lg mb-6 text-gray-900">
-            We <strong>manufacture and supply</strong> <span className="inline-block bg-green-100 text-green-900 rounded-full px-3 py-[2px] mx-2">agrochemicals</span>
-            <span className="inline-block bg-green-100 text-green-900 rounded-full px-3 py-[2px] mx-2">fertilizers</span>
-            and <span className="inline-block bg-green-100 text-green-900 rounded-full px-3 py-[2px] mx-2">agricultural machinery</span> using
-            cutting-edge technology to help farmers grow healthy, high-yielding crops. Our solutions are designed
-            not just for productivity, but also to promote <strong></strong> that protect natural
-            resources and support long-term food security.
-          </p>
-          <p className="sm:text-lg mb-6 text-gray-900">Our network of exclusive retail
-            <span className=" inline-block bg-purple-100 text-purple-900 rounded-full px-3 py-[2px] mx-2">franchise stores</span> provides farmers with easy access to premium
-            agricultural inputs. In addition, our <strong>state-of-the-art Agriculture Consultation Centre</strong> offers expert guidance
-            and practical solutions to address challenges across the farming lifecycle—from soil to harvest.
-          </p>
-          <p className="sm:text-lg mb-6 text-gray-900">
-            At Kakud Agri, we believe that <strong>empowered farmers build healthier communities and a stronger
-              planet.</strong> That’s why we are focused on enabling them with the right tools, knowledge, and support
-            needed to thrive in a competitive agricultural environment.
-          </p>
-          <p className="sm:text-lg text-gray-900">
-            <span className=" inline-block bg-purple-100 text-purple-900 rounded-full px-3 py-[2px] mr-2">Headquartered in Hubli, India</span> we are an <strong>emerging global agri-tech leader</strong>, with a bold vision to
-            expand our footprint to <strong>over 90 countries in the next 10 years.</strong>
+            <strong>Headquartered in Hubli, India</strong>, we are an <strong>Emerging global agri-tech leader</strong>, with a bold vision to
+            expand our footprint to <strong>Over 90 countries in the next 10 years.</strong>
           </p>
         </div>
       </div>
 
       {/* Mission & Vision */}
       <section className="py-10 px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] xl:px-[6rem]">
-        <h2 className="text-4xl font-playfair text-center mb-8">Vision & Mission</h2>
+        <h2 className="text-4xl text-center mb-8">Vision & Mission</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="border border-gray-200 p-6 rounded-lg bg-gradient-to-br from-green-100 via-green-200 to-green-300">
             <h3 className="text-2xl text-center mb-2">Our Vision</h3>
-            <p className="sm:text-lg text-center font-light">
+            <p className="sm:text-lg text-center">
               To revolutionize agriculture through innovation, sustainability, and community
               empowerment, creating a future where farmers thrive, agricultural practices are efficient, and
               productivity is maximized through cutting-edge solutions.
@@ -206,7 +172,7 @@ const AboutUs = () => {
           </div>
           <div className="border border-gray-200 p-6 rounded-lg bg-gradient-to-br from-purple-100 via-purple-200 to-purple-300">
             <h3 className="text-2xl text-center mb-2">Our Mission</h3>
-            <p className="sm:text-lg text-center font-light">
+            <p className="sm:text-lg text-center">
               To empower farmers with innovative agri-input solutions, expert guidance, and a connected
               community, driving sustainable practices, improved productivity, and enriched soil health.
             </p>
@@ -216,7 +182,7 @@ const AboutUs = () => {
         </div>
       </section>
       <section className="py-10 px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] xl:px-[6rem]">
-        <h2 className="text-center text-4xl font-playfair mb-8">Our Offerings</h2>
+        <h2 className="text-center text-4xl mb-8">Our Offerings</h2>
 
         {/* Desktop Carousel */}
         <div className="hidden md:flex items-center justify-between gap-4">
@@ -281,7 +247,7 @@ const AboutUs = () => {
 
       {/* Core Values */}
       <section className="py-12 bg-white px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] xl:px-[6rem]">
-        <h2 className="text-4xl text-center font-playfair mb-8">Our Core Values</h2>
+        <h2 className="text-4xl text-center mb-8">Our Core Values</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {coreValues.map((value, i) => (
             <div

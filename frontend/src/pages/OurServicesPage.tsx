@@ -1,14 +1,22 @@
-import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar"
-import { ArrowDown } from "lucide-react";
-import { Link as ScrollLink } from "react-scroll"
 
-import service1Img from "../assets/images/service-1.png";
-import service2Img from "../assets/images/service-2.png";
-import service3Img from "../assets/images/service-3.png";
-import servicesHeroImg from "../assets/images/services-hero1.png";
+import service1Big1Img from "../assets/images/service-1.png";
+import service2Big1Img from "../assets/images/service-2.png";
+import service3Big1Img from "../assets/images/service-3.png";
 import { ServiceCard } from "../sections/OurServices";
 import Footer from "../components/Footer";
+import whatsAppIcon from "../assets/svg/whatsapp.svg"
+import { Link as ScrollLink } from "react-scroll"
+
+
+import service1Img from "../assets/icons/services/1.png"
+import service2Img from "../assets/icons/services/2.png"
+import service3Img from "../assets/icons/services/3.png"
+import service4Img from "../assets/icons/services/4.png"
+import service5Img from "../assets/icons/services/5.png"
+import service6Img from "../assets/icons/services/6.png"
+import service7Img from "../assets/icons/services/7.png"
+import { ArrowDown } from "lucide-react";
 
 const services = [
     {
@@ -23,7 +31,7 @@ const services = [
                 "Seasonal crop rotation advice to maintain soil health and increase productivity.",
             ],
         },
-        image: service1Img, // Replace with actual image
+        image: service1Big1Img,
     },
     {
         id: "02",
@@ -37,7 +45,7 @@ const services = [
                 "Monitoring and follow-up services to track improvements and ensure long-term results.",
             ],
         },
-        image: service2Img,
+        image: service2Big1Img,
     },
     {
         id: "03",
@@ -50,7 +58,7 @@ const services = [
                 "Strategies to protect crops from adverse weather events like unseasonal rains, droughts, and high winds.",
             ],
         },
-        image: service3Img,
+        image: service3Big1Img,
     },
     {
         id: "04",
@@ -64,7 +72,7 @@ const services = [
                 "Support in identifying and connecting with reliable buyers and market channels.",
             ],
         },
-        image: service3Img,
+        image: service3Big1Img,
     },
     {
         id: "05",
@@ -78,7 +86,7 @@ const services = [
                 "Supply of approved pesticides and crop protection products.",
             ],
         },
-        image: service3Img,
+        image: service3Big1Img,
     },
     {
         id: "06",
@@ -92,7 +100,7 @@ const services = [
                 "Group discussion forums where farmers can share experiences and insights.",
             ],
         },
-        image: service3Img,
+        image: service3Big1Img,
     },
     {
         id: "07",
@@ -105,89 +113,119 @@ const services = [
                 "Financial planning and credit solutions for investing in farm improvements.",
             ],
         },
-        image: service3Img,
+        image: service3Big1Img,
     },
 ];
 
-const OurServicesPage = () => {
-    const [isDesktop, setIsDesktop] = useState(false);
+const heroServices = [
+    {
+        id: "01",
+        title: "Crop Guidance",
+        image: service1Img,
+    },
+    {
+        id: "02",
+        title: "Soil Analysis",
+        image: service2Img,
+    },
+    {
+        id: "03",
+        title: "Weather Advisory",
+        image: service3Img,
+    },
+    {
+        id: "04",
+        title: "Market Insights",
+        image: service4Img,
+    },
+    {
+        id: "05",
+        title: "Pest Management",
+        image: service5Img,
+    },
+    {
+        id: "06",
+        title: "Farmer Training",
+        image: service6Img,
+    },
+    {
+        id: "07",
+        title: "Financial Support",
+        image: service7Img,
+    },
+]
 
-    useEffect(() => {
-        const handleResize = () => {
-            setIsDesktop(window.innerWidth >= 1024);
-        };
-        handleResize();
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-    }, []);
+const OurServicesPage = () => {
 
     return (
-        <div className="font-inter">
-            <section
-                className="relative w-full min-h-screen bg-no-repeat bg-cover flex flex-col overflow-hidden transition-all duration-500"
-            >
-                <div
-                    className="absolute inset-0"
-                    style={{
-                        backgroundImage: `url(${servicesHeroImg})`,
-                        backgroundPosition: isDesktop ? "center -6rem" : "center top",
-                        backgroundSize: "cover",
-                        backgroundRepeat: "no-repeat",
-                        zIndex: 0,
-                    }}
-                ></div>
-                {/* <div className="absolute inset-0 bg-black/50"></div> */}
+        <div
+            className="max-w-[100em] mx-auto font-geist bg-gradient-to-r from-[#f1ecf7] via-[#f5e6f2] to-[#fdf4ee]"
+        >
+            <div>
                 <Navbar />
 
-                <div className="w-full absolute pt-52 xs:pt-32 sm:pt-52">
-                    <div className="w-full flex flex-col items-center gap-6 px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] text-center">
-                        <div className="flex flex-col gap-2">
-                            <h1 className="text-4xl font-medium tracking-wide  w-fit mx-auto">
+                <div className="w-full min-h-[30rem] pt-28 md:pt-8">
+                    <div className="w-full flex flex-col items-center gap-6 px-7 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] text-center">
+                        <div className="flex flex-col gap-1">
+                            <h1 className="text-4xl  text-[#449E08] pb-2 w-fit mx-auto font-semibold">
                                 Agriculture Consultation Centre
                             </h1>
-                            <h3 className="w-fit text-xl tracking-wide border-b border-black pb-1 mx-auto">
-                                Transforming Farming Through Expert Guidance
-                            </h3>
-                            <p className="max-w-5xl pt-4">
-                                The Kakud Agri Agriculture Consultation Centre is a one-stop solution for farmers seeking
-                                professional advice and technical support to improve their farming practices and increase their yield.
-                                Our consultation centre brings together a team of experienced agronomists, soil scientists, crop
-                                protection specialists, and market analysts to provide farmers with customized solutions tailored to
-                                their specific needs.
+                            <p className="max-w-3xl md:pt-">
+                                Kakud Agri Consultation Centre offers expert farming advice,
+                                technical support, and tailored solutions to boost farmers’ productivity and yield.
                             </p>
                         </div>
 
-                        <ScrollLink
-                            to="services"
-                            smooth={true}
-                            duration={500}
-                        >
-                            <button className="text-lg sm:text-xl p-4 rounded-full border border-[#292929] flex items-center justify-center leading-none bg-white/20 border-white/20 shadow-lg hover:bg-white/30 transition-all">
-                                <ArrowDown />
-                            </button>
-                        </ScrollLink>
-
-                        <div className="">
+                        <div className="flex items-center justify-center gap-4">
                             <a
                                 href="https://wa.me/9019985136"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-lg sm:text-xl px-4 py-2 rounded-full border border-[#292929] flex items-center justify-center leading-none text-green-900 bg-white/20 border-white/20 shadow-lg hover:bg-white/30 transition-all"
+                                className="text-lg sm:text-xl px-4 py-2 text-[#449E08] rounded-full border flex items-center justify-center leading-none bg-white/20 border-[#acacac] shadow-sm hover:bg-white/30 transition-all"
                             >
-                                Chat on WhatsApp
+                                <img src={whatsAppIcon} alt="WhatsApp" className="w-6" />
+                                <span className=" font-medium pl-3">0000 1111 22</span>
                             </a>
+                            <ScrollLink
+                                to="services"
+                                smooth={true}
+                                duration={500}
+                            >
+                                <button className="text-lg sm:text-xl p-3 rounded-full border border-[#acacac] flex items-center justify-center leading-none transition-all">
+                                    <ArrowDown />
+                                </button>
+                            </ScrollLink>
                         </div>
 
+                        <div className="max-w-3xl grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 lg:grid-cols-4 gap-1 pt-2">
+                            {heroServices.map((service) => (
+                                <div
+                                    key={service.id}
+                                    className="w-full h-full py-3 px-3 rounded-lg border border-[#bebebe] bg-white/10 shadow-sm backdrop-blur-md flex flex-col justify-between"
+                                >
+                                    <h2 className="text-[14px] font-medium text-[#1d1d1d] pb-2">
+                                        {service.id}. {service.title}
+                                    </h2>
+                                    <div className="flex justify-center">
+                                        <img
+                                            src={service.image}
+                                            alt={service.title}
+                                            className="w-3/5 h-auto object-contain"
+                                        />
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
+            </div>
 
-            </section>
 
             <div
                 id="services"
                 className="py-20 px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] xl:px-[6rem]"
             >
-                <h3 className="font-playfair italic text-[2.25rem] sm:pb-10 text-center">Key Services Offered</h3>
+                {/* <h3 className="font-playfair italic text-[2.25rem] sm:pb-10 text-center">Key Services Offered</h3> */}
                 <div>
                     <div className="pt-[2rem] flex flex-col gap-20 sm:gap-24">
                         {services.map((service, index) => (

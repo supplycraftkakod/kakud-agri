@@ -25,12 +25,12 @@ const Blogs = () => {
   }, [page, search, selectedCategory]);
 
   return (
-    <div>
-      <div className="pb-16 md:pb-28">
+    <div className='max-w-[100em] mx-auto'>
+      <div>
         <Navbar />
       </div>
 
-      <div className="w-full px-6 pb-10 md:px-[1.5rem] lg:px-[4rem] xl:px-[6rem] font-inter">
+      <div className="w-full pt-24 md:pt-10 px-6 pb-10 md:px-[1.5rem] lg:px-[4rem] xl:px-[6rem] font-inter">
         <div className="flex gap-4 flex-col md:flex-row items-stretch justify-between mt-4 mb-8">
           <BlogsHeadingComponent
             headingName="Kakud Agri"
@@ -104,20 +104,20 @@ const Blogs = () => {
                     className="w-full xs:w-[22rem] md:w-full mx-auto flex flex-col gap-6 border border-[#A69F9F] rounded-xl p-2"
                   >
                     <div
-                      className="w-full xs:w-[20rem] sm:w-full object-cover object-center bg-no-repeat h-[10.75rem] rounded-xl mx-auto"
+                      className="w-full xs:w-[20rem] sm:w-full object-cover object-center bg-no-repeat h-[10.75rem] rounded-lg mx-auto"
                       style={{
                         backgroundImage: `url(${imageBlock?.value || '/fallback.jpg'})`,
                         backgroundPosition: 'center top',
                         backgroundSize: 'cover',
                       }}
                     ></div>
-                    <div className="flex flex-col gap-4">
-                      <h3 className="text-2xl leading-none line-clamp-1">{blog.title}</h3>
-                      <p className="text-sm text-gray-600 line-clamp-3">
+                    <div className="flex flex-col gap-2">
+                      <h3 className="text-2xl">{blog.title}</h3>
+                      <p className="text-sm text-gray-600 line-clamp-2">
                         {paragraphBlock?.value || 'No description available.'}
                       </p>
                       <Link to={`/blogs/${blog.id}`}>
-                        <button className="w-full py-2 rounded-full bg-gray-900 text-white">
+                        <button className="w-full py-2 rounded-full bg-gray-900 text-white hover:bg-gradient-to-r from-[#449E08] to-[#71b643]">
                           View
                         </button>
                       </Link>

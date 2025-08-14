@@ -20,12 +20,12 @@ const Events = () => {
     const pastEvents = events?.filter((event: any) => new Date(event.date) < today);
 
     return (
-        <div>
-            <div className="pb-16 md:pb-28">
+        <div className="max-w-[100em] mx-auto">
+            <div>
                 <Navbar />
             </div>
 
-            <div className="w-full px-6 pb-10 md:px-[1.5rem] lg:px-[4rem] xl:px-[6rem] font-inter">
+            <div className="w-full pt-24 md:pt-10 px-6 pb-10 md:px-[1.5rem] lg:px-[4rem] xl:px-[6rem] font-inter">
                 {/* Toggle Buttons */}
                 <div className="flex justify-center items-center gap-4 mb-8">
 

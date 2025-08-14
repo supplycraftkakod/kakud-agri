@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import { useLocation } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../utils/logout";
 import logo from "../../public/logo.png"
@@ -21,10 +21,10 @@ export default function Navbar() {
 
     const [isOpen, setIsOpen] = useState(false);
 
-    const location = useLocation();
+    // const location = useLocation();
 
-    const isHome = location.pathname === "/" || location.pathname === "/home";
-    const shadowClass = isHome ? "shadow-lg" : "shadow-none";
+    // const isHome = location.pathname === "/" || location.pathname === "/home";
+    // const shadowClass = isHome ? "shadow-lg" : "shadow-none";
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
@@ -50,16 +50,16 @@ export default function Navbar() {
     return (
         <div className="relative font-manrope ">
             {/* Navbar */}
-            <div className={`hidden w-[95%] md:flex sha justify-between items-center px-10 h-[70px] backdrop-blur-md bg-white/40 bg-opacity-90 absolute top-6 left-1/2 transform -translate-x-1/2 rounded-full border border-gray-400 ${shadowClass} z-10`}>
+            <div className={`hidden w-full md:flex justify-between items-center gap-4 px-8 py-6 font-geist`}>
                 <div className="flex items-center gap-3">
-                    <Link to={"/"} className="flex items-center gap-3">
-                        <img src={logo} alt="logo" className="w-8 h-8" />
-                        <span className="font-black text-lg">KAKUD</span>
+                    <Link to={"/"} className="flex items-center gap-2">
+                        <img src={logo} alt="logo" className="w-7 h-7" />
+                        <span className="font-semibold leading-3">Kakud</span>
                     </Link>
 
                 </div>
 
-                <div className="relative flex items-center text-gray-700 gap-10 text-[1.1rem]">
+                <div className="relative flex items-center gap-8 lg:gap-10">
                     {/* More button */}
                     <div
                         className="relative"
@@ -70,14 +70,9 @@ export default function Navbar() {
 
                         {showMore && (
                             <div className="absolute left-0 pt-2 bg-white shadow-md rounded-md p-4 z-50 flex flex-col gap-2 min-w-[150px]">
-                                <Link to="/services" className="hover:text-black">Services</Link>
-                                <Link to="/franchise-opportunities" className="hover:text-black">Franchise</Link>
-                                <Link to="/why-choose-kakud" className="hover:text-black">Why Kakud?</Link>
-                                <Link to="/blogs" className="hover:text-black">Blogs</Link>
-                                <Link to="/events" className="hover:text-black">Events</Link>
                                 <Link to="/careers" className="hover:text-black">Careers</Link>
-                                <Link to="/our-impact" className="hover:text-black">Our Impact</Link>
                                 <Link to="/our-team" className="hover:text-black">Our Team</Link>
+                                <Link to="/events">Events</Link>
                                 <a href="#footer" className="hover:text-black" onClick={toggleMenu}>Contact</a>
                             </div>
                         )}
@@ -85,19 +80,13 @@ export default function Navbar() {
 
 
                     {/* Other nav links */}
-                    <Link to={"/products"}
-                        className="hover:text-black"
-                    >
-                        Products
-                    </Link>
-                    <Link to={"/about"}
-                        className="hover:text-black"
-                    >
-                        About Us
-                    </Link>
+                    <Link to="/services">Services</Link>
+                    <Link to="/our-impact">Our Impact</Link>
+                    <Link to="/why-choose-kakud">Why Us?</Link>
+                    <Link to="/blogs">Blogs</Link>
 
                     {/* Auth Buttons */}
-                    {
+                    {/* {
                         token ? (
                             <div className="flex items-center gap-4">
                                 <button onClick={handleLogout} className="bg-red-500 text-white px-4 py-2 rounded-full text-sm">
@@ -116,7 +105,20 @@ export default function Navbar() {
                                 </Link>
                             </div>
                         )
-                    }
+                    } */}
+                </div>
+
+                <div>
+                    <div className="p-[1px] rounded-full bg-white inline-block">
+                        <Link
+                            to="/about"
+                            className="px-5 py-1 rounded-full bg-gradient-to-r from-[#449E08] via-[#7CBC52] to-[#449E08] text-white block"
+                        >
+                            About Us
+                        </Link>
+                    </div>
+
+
                 </div>
             </div>
             {/* Mobile Navbar */}

@@ -37,11 +37,11 @@ const CareersPage = () => {
     }, []);
 
     return (
-        <div className="bg-[#FDFEE7]">
-            <div className="pb-16 md:pb-24">
+        <div className="bg-[#FDFEE7] max-w-[100em] mx-auto">
+            <div>
                 <Navbar />
             </div>
-            <div className="mx-auto px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] xl:px-[6rem] py-12 font-inter">
+            <div className="mx-auto pt-24 md:pt-10 px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] xl:px-[6rem] py-12 font-inter">
                 <h1 className="text-3xl sm:text-4xl font-bold text-center mb-2 sm:mb-4">Careers at KAKUD Agri</h1>
                 <p className="text-center sm:text-lg mb-8">
                     <span className="text-green-700 font-semibold">Build Your Career While Growing Rural India</span>

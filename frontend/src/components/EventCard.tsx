@@ -41,9 +41,9 @@ export default function EventCard({
     const formattedDate = `${getOrdinal(day)} ${month} ${year}`;
 
     return (
-        <div className={`w-full xs:w-[22rem] md:w-full mx-auto flex flex-col gap-6 border ${borderColor} rounded-xl p-2`}>
+        <div className={`w-full xs:w-[22rem] md:w-full mx-auto flex flex-col gap-4 border ${borderColor} rounded-xl p-2`}>
             <div
-                className="w-full xs:w-[20rem] sm:w-full h-[10.75rem] rounded-xl mx-auto bg-no-repeat bg-center"
+                className="w-full xs:w-[20rem] sm:w-full h-[10.75rem] rounded-lg mx-auto bg-no-repeat bg-center"
                 style={{
                     backgroundImage: `url(${heroImageUrl})`,
                     backgroundSize: "cover",
@@ -52,17 +52,17 @@ export default function EventCard({
                 }}
             ></div>
 
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-2">
                     <LocationComponent locationName={city} bgColor="bg-purple-100" textColor="text-purple-900" />
                     <LocationComponent locationName={state} bgColor="bg-pink-100" textColor="text-pink-900" />
                     <LocationComponent locationName={formattedDate} bgColor="bg-pink-100" textColor="text-pink-900" />
                 </div>
-                <h3 className="text-2xl line-clamp-2">{name}</h3>
+                <h3 className="text-2xl">{name}</h3>
                 <p className="line-clamp-2">{shortDesc}</p>
 
                 <Link to={`/events/${id}/?upcoming=${upcoming}`}>
-                    <button className={`w-full py-2 rounded-full ${buttonColor} text-white`}>View</button>
+                    <button className={`w-full py-2 rounded-full ${buttonColor} text-white hover:bg-gradient-to-r from-[#449E08] to-[#71b643]`}>View</button>
                 </Link>
             </div>
         </div>

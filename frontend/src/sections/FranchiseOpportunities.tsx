@@ -79,9 +79,9 @@ export const FranchiseCard = ({
 }) => (
     <div className="w-full flex flex-col-reverse gap-y-6 lg:grid lg:grid-cols-[1.5fr_1fr] gap-x-4">
         {/* Text Section */}
-        <div className="flex flex-col gap-6 border-b pb-4 border-gray-300">
+        <div className="flex flex-col gap-6 border-b pb-4 border-gray-400">
             <div className="space-y-1 sm:space-y-0">
-                <h2 className="text-xl leading-normal sm:leading-[2.5rem] sm:text-2xl">
+                <h2 className="text-2xl leading-normal sm:leading-[3.5rem] sm:text-3xl font-medium text-[#1d1d1d]">
                     {title}
                 </h2>
                 <p className="text-base sm:text-lg font-light pt-2">{description.text}</p>

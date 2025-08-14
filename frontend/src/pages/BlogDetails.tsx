@@ -113,14 +113,16 @@ const BlogDetails = () => {
     const firstHeading: any = blog.contentBlocks.find(b => b.type === "bigHeading");
 
     return (
-        <div className="max-w-[100em] mx-auto bg-[#fcebbd]" ref={blogRef}>
-            <div className="pb-16 md:pb-28">
+        <div className="max-w-[100em] mx-auto from-[#f3eff7] via-[#f3eaf1] to-[#faf4f0]" ref={blogRef}>
+            <div>
                 <Navbar />
             </div>
 
-            <div ref={blogRef}>
+            <div ref={blogRef}
+                className="pt-24 md:pt-2"
+            >
 
-                <div className="w-full px-6 md:px-[1.5rem] lg:px-[4rem] xl:px-[6rem] py-[2rem] flex flex-col items-center md:flex-row md:items-start gap-4 md:gap-8 mb-2 bg-[#e44941] shadow-sm">
+                <div className="w-full px-6 md:px-[1.5rem] lg:px-[4rem] xl:px-[6rem] py-[2rem] flex flex-col items-center md:flex-row md:items-start gap-4 md:gap-8 mb-2 bg-[#f76b64] shadow-sm">
                     <div className="w-fit flex flex-col items-center gap-1">
                         <img src={kakudLogo} alt="Kakud" className="w-[40px] md:w-[70px]" />
                         <h2 className="text-sm font-medium text-white text-center">Kakud Agri</h2>

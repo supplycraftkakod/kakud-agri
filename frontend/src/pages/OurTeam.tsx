@@ -31,10 +31,10 @@ const OurTeam = () => {
     }, [selectedEmployee]);
 
     return (
-        <div className="bg-[#FDFEE7]">
+        <div className="max-w-[100em] mx-auto bg-[#FDFEE7]">
             <Navbar />
 
-            <div className="w-full pb-6 sm:pb-8 pt-20 md:pt-36 px-[2rem] md:px-[7rem] lg:px-[3rem] xl:px-[6rem] font-inter">
+            <div className="w-full pb-6 sm:pb-8 pt-24 md:pt-10 px-[2rem] md:px-[7rem] lg:px-[3rem] xl:px-[6rem] font-inter">
                 <h2 className="text-[1.5rem] sm:text-[2rem] text-center pb-10">Meet our team.</h2>
 
                 {loading ? (

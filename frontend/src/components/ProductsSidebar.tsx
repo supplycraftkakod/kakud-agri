@@ -285,7 +285,7 @@ const ProductsSidebar = () => {
                             onChange={() => handleCheckboxChange(category)}
                             className="hidden peer"
                         />
-                        <span className="w-4 h-4 border border-gray-400 rounded-sm peer-checked:bg-black peer-checked:border-black flex items-center justify-center transition">
+                        <span className="w-4 h-4 border border-gray-400 rounded-sm peer-checked:bg-[#7BBB51] peer-checked:border-[#7BBB51] flex items-center justify-center transition">
                         </span>
                         <span className="text-sm">{category}</span>
                     </label>

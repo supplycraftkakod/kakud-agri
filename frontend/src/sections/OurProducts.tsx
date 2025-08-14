@@ -45,7 +45,7 @@ const OurProducts = () => {
     };
 
     return (
-        <div id="our-products" className="w-full py-[2rem] sm:py-[3.5rem] px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] xl:px-[6rem] font-inter bg-[#FDFEE7]">
+        <div id="our-products" className="w-full pt-[4rem] pb-[1rem] sm:pt-[5rem] px-6 xs:px-[1rem] md:px-[3rem] lg:px-[3rem] xl:px-[6rem] font-geist bg-[#FDFEE7]">
             <SectionHeading
                 heading="Our Product's Range."
                 subHeading="Protect your crop before it's too late."
@@ -69,13 +69,13 @@ const OurProducts = () => {
                             <Link to={`/products?category=${item.title.charAt(0).toUpperCase() + item.title.slice(1).toLowerCase()}`}>
                                 <div
                                     key={idx}
-                                    className={`w-[15rem] h-[23.5rem] relative shrink-0 rounded-md mx-1 flex flex-col items-center justify-end gap-8 text-center bg-gradient-to-br ${item.color}`}
+                                    className={`w-[15rem] h-[23.5rem] relative shrink-0 rounded-md mx-1 flex flex-col items-center justify-end gap-8 text-center bg-gradient-to-bl from-[#418911] to-[#8BCE60]`}
                                 >
                                     <div className={`w-10 h-10 rounded-md absolute top-1 right-1 flex items-center justify-center cursor-pointer`}>
-                                        <ArrowUpRight className="w-5 h-5 text-black" />
+                                        <ArrowUpRight className="w-5 h-5 text-white" />
                                     </div>
-                                    <div>
-                                        <h2 className="text-xl font-medium border-b border-black">{item.title}</h2>
+                                    <div className="text-white">
+                                        <h2 className="text-xl font-medium text-black bg-gray-200 px-2 py-1 rounded-md">{item.title}</h2>
                                         <h4 className="text-xs pt-[2px]">{item.decs}</h4>
                                     </div>
 
@@ -109,7 +109,7 @@ const OurProducts = () => {
                         <Link to={`/products?category=${item.title.charAt(0).toUpperCase() + item.title.slice(1).toLowerCase()}`}>
                             <div
                                 key={idx}
-                                className={`w-[15rem] h-[23.5rem] relative shrink-0 rounded-md mx-1 flex flex-col items-center justify-end gap-8 text-center bg-gradient-to-br ${item.color}`}
+                                className={`w-[15rem] h-[23.5rem] relative shrink-0 rounded-md mx-1 flex flex-col items-center justify-end gap-8 text-center bg-gradient-to-bl from-[#418911] to-[#8BCE60]`}
                             >
                                 <div className={`w-10 h-10 rounded-md absolute top-1 right-1 flex items-center justify-center cursor-pointer`}>
                                     <ArrowUpRight className="w-5 h-5 text-black" />

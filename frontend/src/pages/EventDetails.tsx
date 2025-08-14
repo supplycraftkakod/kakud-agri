@@ -42,10 +42,10 @@ const EventDetails = () => {
 
     return (
         <div className="max-w-[100em] mx-auto">
-            <div className="pb-16 md:pb-28">
+            <div>
                 <Navbar />
             </div>
-            <div className="w-full pt-6 pb-10 px-6 md:px-[1.5rem] lg:px-[8rem] xl:px-[12rem] font-inter">
+            <div className="w-full pt-24 md:pt-10 pb-10 px-6 md:px-[1.5rem] lg:px-[8rem] xl:px-[12rem] font-inter">
                 {/* event image */}
                 <div
                     className="h-[13rem] xs:h-[20rem] sm:h-[24rem] md:h-[28rem] lg:h-[30rem] bg-no-repeat bg-cover bg-center rounded-lg flex flex-col overflow-hidden relative transition-all duration-500 border border-gray-300"

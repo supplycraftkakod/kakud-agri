@@ -13,6 +13,10 @@ import { BE_URL } from "../../config";
 import axios from "axios";
 import Loader from "../components/Loader";
 
+import activeIntredieantIcon from "../assets/icons/product-icons/active-ingredients.png"
+import formulationTypeIcon from "../assets/icons/product-icons/formulation-type.png"
+import cropsIcon from "../assets/icons/product-icons/crops.png"
+
 const ProductDetails = () => {
     const contentRef = useRef<HTMLDivElement>(null);
 
@@ -96,51 +100,53 @@ const ProductDetails = () => {
     }
 
     return (
-        <div>
-            <div className="pb-24 md:pb-36">
+        <div className="max-w-[100em] mx-auto">
+            <div>
                 <Navbar />
             </div>
 
-            <div ref={contentRef} className="w-full px-6 pb-16 md:px-[3rem] lg:px-[4rem] font-inter">
+            <div ref={contentRef} className="w-full pt-20 md:pt-10 px-6 pb-16 md:px-[3rem] lg:px-[4rem] font-inter">
                 <div>
                     {/* Header */}
-                    <div className="flex items-center md:items-start flex-col md:flex-row gap-8 mb-6">
+                    <div className="flex items-center md:items-stretch flex-col md:flex-row gap-8 mb-6">
                         {/* Product Image */}
-                        <div className="flex-shrink-0 flex justify-center px-10 lg:px-20 mb-6">
+                        <div className="w-full md:w-fit flex-shrink-0 flex justify-center px-10 py-8 lg:px-20 rounded-lg bg-[#F0F0F0]">
                             <img
                                 src={product.imageUrl}
                                 alt={product.name}
-                                className="w-[300px] h-[300px] object-contain"
+                                className="w-full md:w-[220px] h-[220px] object-contain"
                             />
                         </div>
 
-
-
                         {/* Product Title and Description */}
-                        <div className="w-full flex flex-col justify-between gap-2 lg:gap-8">
+                        <div className="w-full flex flex-col justify-start md:justify-between gap-2 lg:gap-4 md:min-h-[220px]">
                             <div className="w-full flex items-start justify-between">
                                 <div className="flex flex-col gap-1">
                                     <h2 className="text-lg text-[#505050] leading-none">{product.category}</h2>
-                                    <h1 className="text-[1.75rem] font-medium leading-none text-purple-700">{product.name}</h1>
-                                </div>
-                                <div
-                                    onClick={handleDownloadPDF}
-                                    className="p-2 bg-purple-700 rounded-full flex items-center justify-center cursor-pointer">
-                                    <Download className="text-white w-5 h-5" />
+                                    <h1 className="text-[1.75rem] font-medium leading-none text-[#449E08]">{product.name}</h1>
+                                    <p className="md:text-lg font-light mt-2">{product.description}</p>
                                 </div>
                             </div>
-                            <p className="md:text-lg font-light mt-2">{product.description}</p>
+                            <div>
+                                <div
+                                    onClick={handleDownloadPDF}
+                                    className="w-fit p-2 px-4 text-white mt-2 md:mt-0 bg-[#449E08] rounded-full flex gap-4 items-center justify-center cursor-pointer">
+                                    Download in PDF
+                                    <Download className="w-5 h-5" />
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div className="w-full flex flex-col lg:flex-row items-start justify-between gap-6 lg:gap-10">
-                        <div className="lg:w-[70%]">
+
+                    <div className="w-full flex flex-col items-start justify-between lg:grid grid-cols-[1.8fr,1fr] gap-6 lg:gap-10">
+                        <div className="">
                             {/* About Section */}
                             {
                                 product.aboutPoints?.filter((a: any) => a.trim() !== '').length > 0 && (
-                                    <div className="mt-10">
+                                    <div className="mt-6 md:mt-10">
                                         <h3 className="text-2xl mb-3">About {product.name}</h3>
-                                        <ul className="md:text-lg font-light list-disc space-y-1 px-8 sm:px-10">
+                                        <ul className="md:text-lg font-light list-disc px-8 sm:px-10">
                                             {product.aboutPoints?.map((point: string, i: number) => (
                                                 <li key={i}>{point}</li>
                                             ))}
@@ -154,7 +160,7 @@ const ProductDetails = () => {
                                 product.benefitPoints?.filter((a: any) => a.trim() !== '').length > 0 && (
                                     <div className="mt-10">
                                         <h3 className="text-2xl mb-3">Benefits</h3>
-                                        <ul className="md:text-lg font-light list-disc space-y-1 px-8 sm:px-10">
+                                        <ul className="md:text-lg font-light list-disc px-8 sm:px-10">
                                             {product.benefitPoints?.map((benefit: string, i: number) => (
                                                 <li key={i}>{benefit}</li>
                                             ))}
@@ -166,49 +172,67 @@ const ProductDetails = () => {
                         </div>
 
                         {/* Right Sidebar Details */}
-                        <div className="mt-10 space-y-4">
-                            <p className="font-light">
+                        <div className=" md:mt-10 space-y-4">
+                            <p className="font-light ">
                                 Last updated: {new Date(product.lastUpdated).toLocaleString()}
                             </p>
-
                             {
                                 product.activeIngredients?.filter((a: any) => a.trim() !== '').length > 0 && (
-                                    <div className="bg-[#F0F0F0] p-3 rounded-lg">
-                                        <p className="text-[#505050] font-medium leading-none pb-2">Active Ingredients</p>
-                                        <p className="font-light">
-                                            {product.activeIngredients?.join(", ") || "N/A"}
-                                        </p>
+                                    <div className="flex items-stretch gap-2">
+                                        <div className="min-w-[100px] h-[100px] rounded-lg bg-[#F0F0F0] bg-no-repeat bg-cover">
+                                            <img src={activeIntredieantIcon} alt="active" className="w-full h-full p-2" />
+                                        </div>
+                                        <div className="w-full bg-[#F0F0F0] p-3 rounded-lg">
+                                            <p className="text-[#505050] font-medium leading-none pb-2">Active Ingredients</p>
+                                            <p className="">
+                                                {product.activeIngredients?.join(", ") || "N/A"}
+                                            </p>
+                                        </div>
                                     </div>
+
                                 )
 
                             }
 
                             {
                                 product.formulationTypes?.filter((a: any) => a.trim() !== '').length > 0 && (
-                                    <div className="bg-[#F0F0F0] p-3 rounded-lg">
-                                        <p className="text-[#505050] font-medium leading-none pb-2">Formulation Type</p>
-                                        <p className="font-light">
-                                            {product.formulationTypes?.join(", ") || "N/A"}
-                                        </p>
+                                    <div className="flex items-stretch gap-2">
+                                        <div className="min-w-[100px] h-[100px] rounded-lg bg-[#F0F0F0] bg-no-repeat bg-cover"                                        >
+                                            <img src={formulationTypeIcon} alt="active" className="w-full h-full p-2" />
+                                        </div>
+                                        <div className="w-full bg-[#F0F0F0] p-3 rounded-lg">
+                                            <p className="text-[#505050] font-medium leading-none pb-2">Formulation Type</p>
+                                            <p className="">
+                                                {product.formulationTypes?.join(", ") || "N/A"}
+                                            </p>
+                                        </div>
                                     </div>
+
                                 )
                             }
 
                             {
                                 product.crops?.filter((a: any) => a.trim() !== '').length > 0 && (
-                                    <div className="bg-[#F0F0F0] p-4 rounded-lg">
-                                        <p className="text-[#505050] font-medium leading-none pb-3">Crops</p>
-                                        <div className="flex flex-wrap gap-2">
-                                            {product.crops?.map((crop: string) => (
-                                                <span
-                                                    key={crop}
-                                                    className="bg-purple-200 text-purple-800 px-3 py-1 font-light rounded-full "
-                                                >
-                                                    {crop}
-                                                </span>
-                                            ))}
+
+                                    <div className="flex items-stretch gap-2">
+                                        <div className="min-w-[100px] h-[100px] rounded-lg bg-[#F0F0F0] bg-no-repeat bg-cover">
+                                            <img src={cropsIcon} alt="active" className="w-full h-full p-2" />
+                                        </div>
+                                        <div className="w-full bg-[#F0F0F0] p-4 rounded-lg">
+                                            <p className="text-[#505050] font-medium leading-none pb-3">Crops</p>
+                                            <div className="flex flex-wrap gap-2">
+                                                {product.crops?.map((crop: string) => (
+                                                    <span
+                                                        key={crop}
+                                                        className="bg-purple-200 text-[#1f4d00] px-3 py-1 rounded-full "
+                                                    >
+                                                        {crop}
+                                                    </span>
+                                                ))}
+                                            </div>
                                         </div>
                                     </div>
+
                                 )
                             }
                         </div>

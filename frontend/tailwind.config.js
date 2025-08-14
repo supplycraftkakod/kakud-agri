@@ -14,6 +14,7 @@ export default {
         playfair: ["Playfair Display", "serif"],
         dmSans: ["DM Serif Text", "serif"],
         inter: ["Inter", "sans-serif"],
+        geist: ["Geist", "sans-serif"],
       },
     },
   },

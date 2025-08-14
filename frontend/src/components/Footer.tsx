@@ -4,7 +4,7 @@ import linkedIn from "../assets/icons/linkedin.png"
 import { Link } from "react-router-dom"
 import { FiYoutube } from "react-icons/fi"
 
-import footerImg from "../assets/images/footer.png"
+import footerImg from "../assets/images/hero-bg-1.png"
 import { useState } from "react"
 import toast from "react-hot-toast"
 import axios from "axios"
@@ -46,66 +46,98 @@ const Footer = ({ heading, subHeading }: { heading?: string, subHeading?: string
     return (
         <div
             id="footer"
-            className="w-full pb-4 pt-[4rem] sm:pt-[3.5rem] px-8 md:px-[3rem] lg:px-[3rem] xl:px-[6rem] font-inter flex flex-col justify-end bg-no-repeat gap-28 bg-cover"
-            style={{
-                backgroundImage: `url(${footerImg})`,
-                backgroundPosition: "center bottom",
-            }}
+            className="w-full sm:min-h-screen font-geist px-[1rem] sm:px-[2rem] py-10 flex flex-col justify-between bg-no-repeat gap-10 bg-cover"
+        // style={{
+        //     backgroundImage: `url(${footerImg})`,
+        //     backgroundPosition: "center bottom",
+        // }}
         >
-
             <div>
-                <div>
-                    {
-                        heading ? (
-                            <div className="pb-2 text-2xl sm:text-4xl font-light tracking-wide">
-                                <h2>{heading}</h2>
-                            </div>
-                        ) : (
-                            <div className="pb-2 text-2xl sm:text-4xl font-light tracking-wide">
-                                <h2>Get in touch today and take your farming to the next level with Kakud Agri!</h2>
-                            </div>
+                <div
+                    className="bg-no-repeat min-h-[20rem] sm:min-h-[13rem] gap-10 flex flex-col justify-between bg-cover p-4 rounded-xl overflow-hidden"
+                    style={{
+                        backgroundImage: `url(${footerImg})`,
+                        backgroundPosition: "center top",
+                    }}
+                >
+                    <div>
+                        {
+                            heading ? (
+                                <div className="pb-2 text-2xl tracking-wide">
+                                    <h2>{heading}</h2>
+                                </div>
+                            ) : (
+                                <div className="pb-2 text-2xl tracking-wide">
+                                    <h2>Get in touch today and take your farming to the next level with Kakud Agri!</h2>
+                                </div>
 
-                        )}
-                </div>
-                {
-                    subHeading &&
-                    <div className="sm:text-2xl font-light tracking-wide">
-                        <h2>{subHeading}</h2>
+                            )}
+                        {
+                            subHeading &&
+                            <div className="sm:text-2xl tracking-wide">
+                                <h2>{subHeading}</h2>
+                            </div>
+                        }
                     </div>
-                }
 
-                <div className="pt-12 sm:pt-24">
-                    <h2 className="text-2xl">Kakud</h2>
-                    <div className="w-full grid md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-14">
+                    <div className="flex flex-wrap gap-2">
+                        <input
+                            placeholder="Enter your email"
+                            type="email"
+                            name="email"
+                            id="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="!outline-none px-2 py-1 rounded-lg bg-transparent border border-gray-400 !placeholder-black"
+                        />
+                        <button
+                            onClick={handleSubscribe}
+                            disabled={loading}
+                            className={`w-fit px-3 py-1 border  rounded-lg self-end transition ${loading ? "bg-gray-500 cursor-not-allowed" : "bg-white"
+                                } text-black`}
+                        >
+                            {loading ? <Loader /> : "Subscribe"}
+                        </button>
+                    </div>
+                </div>
+
+
+                <div className="px-4 pt-12 sm:pt-10">
+                    <div className="w-full grid grid-cols-1 md:grid-cols-[2fr,1fr,1fr,1fr] lg:grid-cols-[1.5fr,1fr,1fr,1fr] gap-x-10 gap-y-14">
                         <div className="font-light">
+                            <h2 className="text-2xl">Kakud</h2>
                             <h4 >Tel: 123-456-7890</h4>
                             <h4 >Email: info@kakudagri.in</h4>
                             <h4 className="pt-3">
                                 <span className="font-bold">Corporate Office</span> - C/o Sandbox Startup, Next to Airport, Gokul Road, Opp Gokul Village, HUBLI,
                                 Dharwad, Karnataka, India, 580030
                             </h4>
-                            {/* <h4 className="pt-3">
-                                <span className="font-bold">Manufacturing Industry</span> - Zauca Enterprises Private Limited, Unit 01, Bennur, Annigere (T), Dharwad
-                                (D), Karnataka, India.
-                            </h4> */}
                         </div>
-                        <div className="grid md:grid-cols-2 gap-y-14">
-                            <div className="flex flex-col md:pl-10 gap-2">
+
+                        <div className="md:mx-auto hidden md:block">
+                            <h2 className="text-lg pb-4">Company</h2>
+                            <div className="flex flex-col">
                                 <Link to={"/about"}
                                     className="text-gray-700 hover:text-black"
                                 >
                                     About Us
-                                </Link>
-                                <Link to={"/careers"}
-                                    className="text-gray-700 hover:text-black"
-                                >
-                                    Careers
                                 </Link>
                                 <Link to={"/services"}
                                     className="text-gray-700 hover:text-black"
                                 >
                                     Services
                                 </Link>
+                                <Link to={"/our-impact"}
+                                    className="text-gray-700 hover:text-black"
+                                >
+                                    Impact
+                                </Link>
+                            </div>
+                        </div>
+
+                        <div className="md:mx-auto hidden md:block">
+                            <h2 className="text-lg pb-4">Resources</h2>
+                            <div className="flex flex-col">
                                 <Link to={"/blogs"}
                                     className="text-gray-700 hover:text-black"
                                 >
@@ -116,55 +148,103 @@ const Footer = ({ heading, subHeading }: { heading?: string, subHeading?: string
                                 >
                                     Events
                                 </Link>
-                                <Link to={"/our-impact"}
-                                    className="text-gray-700 hover:text-black"
-                                >
-                                    Impact
-                                </Link>
+
                                 <Link to={"/our-team"}
                                     className="text-gray-700 hover:text-black"
                                 >
-                                    Team
+                                    Kakud Team
+                                </Link>
+                                <Link to={"/careers"}
+                                    className="text-gray-700 hover:text-black"
+                                >
+                                    Careers
                                 </Link>
                             </div>
-                            <div className="flex md:flex-col items-center gap-4">
-                                {/* <a href="" target="_blank">
-                                    <img src={twitter} alt="twitter" className="w-8" />
-                                </a> */}
+                        </div>
+                        <div className="md:mx-auto hidden md:block">
+                            <h2 className="text-lg pb-4">Socials</h2>
+                            <div className="flex flex-col gap-2">
                                 <a href="https://www.facebook.com/Kakudpostharvest?mibextid=rS40aB7S9Ucbxw6v" target="_blank">
-                                    <img src={facebook} alt="facebook" className="w-8" />
+                                    <img src={facebook} alt="facebook" className="w-5" />
                                 </a>
                                 <a href="https://www.instagram.com/kakud_agri_center/" target="_blank">
-                                    <img src={instagram} alt="instagram" className="w-8" />
+                                    <img src={instagram} alt="instagram" className="w-5" />
                                 </a>
                                 <a href="https://www.linkedin.com/company/kakud-agri/" target="_blank">
-                                    <img src={linkedIn} alt="linkedIn" className="w-8" />
+                                    <img src={linkedIn} alt="linkedIn" className="w-5" />
                                 </a>
                                 <a href="https://youtube.com/@kakudagri?si=Mt-eO04xfQHZSowY" target="_blank">
-                                    <FiYoutube className="w-8 h-8 p-1 rounded-full bg-black text-white" />
+                                    <FiYoutube className="w-5 h-5 p-[2px] rounded-full bg-black text-white" />
                                 </a>
                             </div>
                         </div>
-                        <div className="flex flex-col gap-2 lg:pl-10">
-                            <h4 className="">Subscribe to our newsletter:</h4>
-                            <input
-                                placeholder="Email"
-                                type="email"
-                                name="email"
-                                id="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                className="!outline-none px-4 p-2 rounded-full bg-[#ffffff] border border-gray-400"
-                            />
-                            <button
-                                onClick={handleSubscribe}
-                                disabled={loading}
-                                className={`w-fit px-4 p-1 rounded-full self-end transition ${loading ? "bg-gray-500 cursor-not-allowed" : "bg-[#272727]"
-                                    } text-white`}
-                            >
-                                {loading ? <Loader /> : "Submit"}
-                            </button>
 
+                        {/* mobile */}
+                        <div className="flex md:hidden justify-between gap-10 flex-wrap">
+                            <div className="md:mx-auto">
+                                <h2 className="text-lg pb-2">Company</h2>
+                                <div className="flex flex-col">
+                                    <Link to={"/about"}
+                                        className="text-gray-700 hover:text-black"
+                                    >
+                                        About Us
+                                    </Link>
+                                    <Link to={"/services"}
+                                        className="text-gray-700 hover:text-black"
+                                    >
+                                        Services
+                                    </Link>
+                                    <Link to={"/our-impact"}
+                                        className="text-gray-700 hover:text-black"
+                                    >
+                                        Impact
+                                    </Link>
+                                </div>
+                            </div>
+
+                            <div className="md:mx-auto">
+                                <h2 className="text-lg pb-2">Resources</h2>
+                                <div className="flex flex-col">
+                                    <Link to={"/blogs"}
+                                        className="text-gray-700 hover:text-black"
+                                    >
+                                        Blogs
+                                    </Link>
+                                    <Link to={"/events"}
+                                        className="text-gray-700 hover:text-black"
+                                    >
+                                        Events
+                                    </Link>
+
+                                    <Link to={"/our-team"}
+                                        className="text-gray-700 hover:text-black"
+                                    >
+                                        Kakud Team
+                                    </Link>
+                                    <Link to={"/careers"}
+                                        className="text-gray-700 hover:text-black"
+                                    >
+                                        Careers
+                                    </Link>
+                                </div>
+                            </div>
+                            <div className="md:mx-auto">
+                                <h2 className="text-lg pb-2">Socials</h2>
+                                <div className="flex flex-col gap-1">
+                                    <a href="https://www.facebook.com/Kakudpostharvest?mibextid=rS40aB7S9Ucbxw6v" target="_blank">
+                                        <img src={facebook} alt="facebook" className="w-5" />
+                                    </a>
+                                    <a href="https://www.instagram.com/kakud_agri_center/" target="_blank">
+                                        <img src={instagram} alt="instagram" className="w-5" />
+                                    </a>
+                                    <a href="https://www.linkedin.com/company/kakud-agri/" target="_blank">
+                                        <img src={linkedIn} alt="linkedIn" className="w-5" />
+                                    </a>
+                                    <a href="https://youtube.com/@kakudagri?si=Mt-eO04xfQHZSowY" target="_blank">
+                                        <FiYoutube className="w-5 h-5 p-[2px] rounded-full bg-black text-white" />
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
