@@ -13,6 +13,16 @@ jobs:
       - name: Checkout personal repo
         uses: actions/checkout@v3
 
+      - name: Debug secret
+        run: |
+          if [ -z "${COMPANY_TOKEN}" ]; then
+            echo "Token is empty!"
+          else
+            echo "Token is set."
+          fi
+        env:
+          COMPANY_TOKEN: ${{ secrets.COMPANY_REPO_TOKEN }} 
+
       # Step 2: Configure Git (needed for pushes)
       - name: Configure Git
         run: |
