@@ -9,28 +9,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout your personal repo
-      - name: Checkout personal repo
+      # Checkout the company repo directly using PAT
+      - name: Checkout company repo
         uses: actions/checkout@v3
+        with:
+          repository: supplycraftkakod/kakud-agri
+          token: ${{ secrets.COMPANY_REPO_TOKEN }}
+          ref: master
 
-      # Step 2: Configure Git
+      # Configure Git for commits
       - name: Configure Git
         run: |
           git config user.name "CI Bot"
           git config user.email "ci-bot@users.noreply.github.com"
 
-      # Step 3: Add company repo as remote using PAT
-      - name: Add company repo
-        run: |
-          git remote add company https://x-access-token:${{ secrets.COMPANY_REPO_TOKEN }}@github.com/supplycraftkakod/kakud-agri.git
-          git fetch company
-
-      # Step 4: Commit changes if any
+      # Commit changes if any
       - name: Commit changes
         run: |
           git add .
           git commit -m "CI update" || echo "No changes to commit"
 
-      # Step 5: Push to company repo
-      - name: Push to company repo
-        run: git push company HEAD:master
+      # Push back to company repo
+      - name: Push changes
+        run: git push origin HEAD:master
