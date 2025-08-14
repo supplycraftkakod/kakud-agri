@@ -45,4 +45,4 @@ jobs:
         env:
           COMPANY_TOKEN: ${{ secrets.COMPANY_REPO_TOKEN }}
         run: |
-          git push company HEAD:master
+          git push company master
