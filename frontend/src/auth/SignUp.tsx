@@ -75,7 +75,7 @@ const SignUp: React.FC = () => {
             <div className="relative z-20">
                 <Navbar />
             </div>
-            <div className="w-full pt-20 sm:pt-8 px-6  mt-20 flex items-center justify-center">
+            <div className="w-full pt-20 sm:pt-8 px-6 flex items-center justify-center">
                 <div className="w-[400px] h-fit flex flex-col items-center border-[1px] p-6 border-gray-300 rounded-2xl">
                     <h2 className="text-[1.5rem] font-extrabold">Create Account!</h2>
                     <h2 className="text-[1.1rem] font-light mb-8">To get started create your account.</h2>

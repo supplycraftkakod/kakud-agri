@@ -19,6 +19,9 @@ import AdminImpact from "./page/impact/AdminImpact";
 import AddImpact from "./page/impact/AddImpact";
 import TeamDetails from "./page/team/AllTeamMembers";
 import AddNewMember from "./page/team/AddNewMember";
+import { logoutUser } from "../utils/logout";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const AdminHome = () => {
     const [selectedComponent, setSelectedComponent] = useState("adminDashboard");
@@ -35,6 +38,19 @@ const AdminHome = () => {
     const handleComponentSelection = (component: string) => {
         setSelectedComponent(component)
     }
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        await logoutUser({
+            dispatch,
+            navigate,
+            showToast: true,
+            revokeRefreshToken: false,
+            refreshToken: localStorage.getItem('refreshToken') || '',
+        });
+    };
 
     useEffect(() => {
         const fetchDashboardData = async () => {
@@ -259,6 +275,9 @@ const AdminHome = () => {
                             </div>
 
                         </div>
+                        <button onClick={handleLogout} className="bg-red-500 text-white px-4 py-2 rounded-full text-sm">
+                            Logout
+                        </button>
 
                     </div>
 

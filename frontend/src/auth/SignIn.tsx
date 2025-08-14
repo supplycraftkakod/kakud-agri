@@ -58,7 +58,7 @@ const SignIn: React.FC = () => {
             <div className="relative z-20">
                 <Navbar />
             </div>
-            <div className="w-full pt-20 mt-20 sm:pt-8 px-6 flex items-center justify-center pb-20">
+            <div className="w-full pt-20 sm:pt-8 px-6 flex items-center justify-center pb-20">
                 <div className="w-[400px] h-fit flex flex-col items-center border-[1px] p-6 border-gray-400 rounded-2xl">
                     <h2 className="text-[1.5rem] font-extrabold">Welcome Back!</h2>
                     <h2 className="text-[1.1rem] font-light mb-8">To get started signin to your account.</h2>
