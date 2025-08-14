@@ -4,3 +4,4 @@ node_modules
 dist
 
 .env.production
+.env.production.company
