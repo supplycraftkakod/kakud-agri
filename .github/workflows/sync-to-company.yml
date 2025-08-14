@@ -13,33 +13,24 @@ jobs:
       - name: Checkout personal repo
         uses: actions/checkout@v3
 
-      - name: Debug secret
-        run: |
-          if [ -z "${COMPANY_TOKEN}" ]; then
-            echo "Token is empty!"
-          else
-            echo "Token is set."
-          fi
-        env:
-          COMPANY_TOKEN: ${{ secrets.COMPANY_REPO_TOKEN }} 
-
-      # Step 2: Configure Git (needed for pushes)
+      # Step 2: Configure Git
       - name: Configure Git
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "CI Bot"
+          git config user.email "ci-bot@users.noreply.github.com"
 
-      # Step 3: Add company repo as remote
+      # Step 3: Add company repo as remote using PAT
       - name: Add company repo
-        env:
-          COMPANY_TOKEN: ${{ secrets.COMPANY_REPO_TOKEN }}
         run: |
-          git remote add company https://x-access-token:${COMPANY_TOKEN}@github.com/supplycraftkakod/kakud-agri.git
+          git remote add company https://x-access-token:${{ secrets.COMPANY_REPO_TOKEN }}@github.com/supplycraftkakod/kakud-agri.git
           git fetch company
 
-      # Step 4: Push to company repo
-      - name: Push changes
-        env:
-          COMPANY_TOKEN: ${{ secrets.COMPANY_REPO_TOKEN }}
+      # Step 4: Commit changes if any
+      - name: Commit changes
         run: |
-          git push company HEAD:master
+          git add .
+          git commit -m "CI update" || echo "No changes to commit"
+
+      # Step 5: Push to company repo
+      - name: Push to company repo
+        run: git push company HEAD:master
