@@ -51,12 +51,11 @@ export default function Navbar() {
         <div className="relative font-manrope ">
             {/* Navbar */}
             <div className={`hidden w-full md:flex justify-between items-center gap-4 px-8 py-6 font-geist`}>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 uppercase">
                     <Link to={"/"} className="flex items-center gap-2">
                         <img src={logo} alt="logo" className="w-7 h-7" />
-                        <span className="font-semibold leading-3">Kakud</span>
+                        <span className="font-semibold leading-3">Kakud Agri</span>
                     </Link>
-
                 </div>
 
                 <div className="relative flex items-center gap-8 lg:gap-10">
@@ -72,6 +71,8 @@ export default function Navbar() {
                             <div className="absolute left-0 pt-2 bg-white shadow-md rounded-md p-4 z-50 flex flex-col gap-2 min-w-[150px]">
                                 <Link to="/careers" className="hover:text-black">Careers</Link>
                                 <Link to="/our-team" className="hover:text-black">Our Team</Link>
+                                <Link to="/our-impact">Our Impact</Link>
+
                                 <Link to="/events">Events</Link>
                                 <a href="#footer" className="hover:text-black" onClick={toggleMenu}>Contact</a>
                             </div>
@@ -81,9 +82,9 @@ export default function Navbar() {
 
                     {/* Other nav links */}
                     <Link to="/services">Services</Link>
-                    <Link to="/our-impact">Our Impact</Link>
                     <Link to="/why-choose-kakud">Why Us?</Link>
                     <Link to="/blogs">Blogs</Link>
+                    <Link to="/products">Products</Link>
 
                     {/* Auth Buttons */}
                     {/* {
@@ -123,7 +124,7 @@ export default function Navbar() {
             <div className="md:hidden flex justify-between items-center px-4 py-3 shadow-md fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/50 ">
                 <Link to="/" className="flex items-center gap-2">
                     <img src={logo} alt="logo" className="w-8 h-8" />
-                    <span className="font-black text-lg">KAKUD</span>
+                    <span className="font-black text-lg uppercase">Kakud Agri</span>
                 </Link>
                 <button onClick={toggleMenu}>
                     {isOpen ? <X size={24} /> : <Menu size={24} />}
