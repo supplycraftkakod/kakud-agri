@@ -1,23 +1,23 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 // import { useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { logoutUser } from "../utils/logout";
+// import { useDispatch } from "react-redux";
+// import { logoutUser } from "../utils/logout";
 import logo from "../../public/logo.png"
 
 export default function Navbar() {
     const [showMore, setShowMore] = useState(false);
 
-    const authStorage = localStorage.getItem("auth");
-    let token;
-    let userRole;
+    // const authStorage = localStorage.getItem("auth");
+    // let token;
+    // let userRole;
 
-    if (authStorage) {
-        const authData = JSON.parse(authStorage);
-        token = authData.token;
-        userRole = authData.role;
-    }
+    // if (authStorage) {
+    //     const authData = JSON.parse(authStorage);
+    //     token = authData.token;
+    //     userRole = authData.role;
+    // }
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -30,18 +30,18 @@ export default function Navbar() {
         setIsOpen(!isOpen);
     };
 
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+    // const dispatch = useDispatch();
+    // const navigate = useNavigate();
 
-    const handleLogout = async () => {
-        await logoutUser({
-            dispatch,
-            navigate,
-            showToast: true,
-            revokeRefreshToken: false,
-            refreshToken: localStorage.getItem('refreshToken') || '',
-        });
-    };
+    // const handleLogout = async () => {
+    //     await logoutUser({
+    //         dispatch,
+    //         navigate,
+    //         showToast: true,
+    //         revokeRefreshToken: false,
+    //         refreshToken: localStorage.getItem('refreshToken') || '',
+    //     });
+    // };
 
     const toggleMore = () => {
         setShowMore(prev => !prev);
@@ -117,8 +117,6 @@ export default function Navbar() {
                             About Us
                         </Link>
                     </div>
-
-
                 </div>
             </div>
             {/* Mobile Navbar */}
@@ -135,7 +133,7 @@ export default function Navbar() {
             {/* Mobile Menu Drawer */}
             {
                 isOpen && (
-                    <div className="md:hidden font-medium text-xl fixed top-11 left-0 w-full shadow-md p-4 z-50 flex flex-col items-center gap-4 backdrop-blur-md bg-white/50 ">
+                    <div className="md:hidden min-h-screen font-medium text-xl fixed top-11 left-0 w-full shadow-md p-4 z-50 flex flex-col items-start pl-12 pt-6 gap-6 backdrop-blur-md bg-white/50 ">
                         <Link to={"/about"}
                             className="text-black"
                         >
@@ -191,7 +189,7 @@ export default function Navbar() {
                         </Link>
                         <a href="#footer" className="text-black" onClick={toggleMenu}>Contact</a>
 
-                        {
+                        {/* {
                             token ? (
                                 <div className="w-full grid grid-cols-2 gap-6">
                                     <button onClick={handleLogout} className="bg-red-500 text-white px-4 py-2 rounded-full text-sm ">Logout</button>
@@ -210,7 +208,7 @@ export default function Navbar() {
                                     </Link>
                                 </>
                             )
-                        }
+                        } */}
                     </div>
                 )
             }
