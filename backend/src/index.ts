@@ -11,12 +11,28 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors(
-  {
-    origin: process.env.CORS_ORIGIN,
-    credentials: true,
-  }
-));
+const allowedOrigins = [
+  'https://www.kakudagri.in',
+  'https://kakudagri.in',
+  'https://www.kakud.in',
+  'https://kakud.in',
+  'https://kakud-agri.vercel.app',
+  'http://localhost:5173',
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true); // origin allowed
+    } else {
+      callback(new Error('Not allowed by CORS')); // origin not allowed
+    }
+  },
+  credentials: true,
+}));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
