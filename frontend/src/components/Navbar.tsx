@@ -134,7 +134,7 @@ export default function Navbar() {
             {/* Mobile Menu Drawer */}
             {
                 isOpen && (
-                    <div className="md:hidden min-h-screen font-medium text-xl fixed top-11 left-0 w-full shadow-md p-4 z-50 flex flex-col items-start pl-12 pt-6 gap-6 backdrop-blur-md bg-white/50 ">
+                    <div className="md:hidden min-h-screen font-medium text-xl fixed top-14 left-0 w-full shadow-md p-4 z-50 flex flex-col items-start pl-12 pt-6 gap-6 backdrop-blur-md bg-white/50 ">
                         <Link to={"/about"}
                             className="text-black"
                         >
